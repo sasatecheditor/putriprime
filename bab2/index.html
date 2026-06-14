@@ -1,0 +1,188 @@
+import IPython
+
+# KOD MODULAR: KHUSUS BAB 5 (SERBUAN LRT MASJID JAMEK)
+html_bab5 = """
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PutriPrime: Bab 5 - Serbuan LRT Masjid Jamek</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .glow-red { text-shadow: 0 0 10px rgba(239, 68, 68, 0.8); }
+        .glow-purple { text-shadow: 0 0 10px rgba(168, 85, 247, 0.8); }
+        .glow-blue { text-shadow: 0 0 10px rgba(59, 130, 246, 0.8); }
+    </style>
+</head>
+<body class="bg-gray-950 text-gray-100 font-sans p-4 flex flex-col justify-between min-h-[650px]">
+
+    <header class="p-4 bg-gray-900 border-b border-red-900/60 flex justify-between items-center rounded-t-lg shadow-md">
+        <div>
+            <h1 class="text-base font-bold text-red-400 glow-red tracking-wide">PUTRI AISYAH ZAHRA</h1>
+            <div class="flex gap-3 text-[11px] text-gray-400 mt-0.5">
+                <span>Gelar: <span class="text-purple-400 font-semibold">PutriPrime (Beginner)</span></span>
+                <span>LVL: <b>2</b></span>
+            </div>
+            <div class="flex gap-4 text-[11px] mt-1 font-mono">
+                <span id="hp-display" class="text-emerald-400 font-bold">HP: 100/100</span>
+                <span id="mp-display" class="text-blue-400 font-bold">MP: 100/100</span>
+            </div>
+        </div>
+        <div class="bg-purple-950 border border-purple-700/50 text-purple-200 text-[11px] px-2.5 py-1.5 rounded font-mono">
+            🗡️ Karambit Equipped (+25 STR)
+        </div>
+    </header>
+
+    <div class="w-full h-48 bg-black relative overflow-hidden flex items-center justify-center">
+        <img id="scene-img" src="https://images.unsplash.com/photo-1509114397022-ed747cca3f65?w=500&auto=format&fit=crop&q=60" class="w-full h-full object-cover opacity-50" alt="Masjid Jamek">
+        <div class="absolute top-2 left-2 bg-red-600/80 text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase font-mono animate-pulse">
+            🚨 Kawasan Serbuan Gred-D
+        </div>
+        <div class="absolute bottom-0 bg-gradient-to-t from-black to-transparent w-full p-2 text-center">
+            <p id="scene-desc" class="text-[11px] text-gray-400 italic">[ Stesen LRT Masjid Jamek. Kabus Jingga tebal memayungi ruang udara. ]</p>
+        </div>
+    </div>
+
+    <main class="flex-1 bg-gray-900/90 border border-gray-800 p-5 shadow-xl relative flex flex-col justify-between">
+        <div>
+            <div id="speaker" class="text-xs text-red-400 font-bold uppercase tracking-wider mb-1">Naratif</div>
+            <p id="story-p" class="text-sm leading-relaxed text-gray-300">
+                Siren kecemasan bandar raya Kuala Lumpur berbunyi nyaring. Di hadapan stesen LRT Masjid Jamek, ruang udara retak terbelah. Seekor makhluk gergasi batu setinggi 3 meter melangkah keluar dari portal!
+            </p>
+        </div>
+
+        <div id="boss-panel" class="hidden mt-4 bg-black/80 border border-red-900 p-3 rounded">
+            <div class="text-xs text-red-500 font-bold font-mono flex justify-between mb-1">
+                <span>⚠️ BOS: STONE GOLEM BRUTE</span>
+                <span id="boss-hp-text">HP: 300/300</span>
+            </div>
+            <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden">
+                <div id="boss-hp-bar" class="bg-red-600 h-full w-full transition-all duration-300"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="p-3 bg-gray-900/30 rounded-b-lg border-x border-b border-gray-900 flex flex-col gap-2">
+        <button id="action-btn" onclick="majuKePertempuran()" class="w-full bg-red-700 hover:bg-red-600 text-white font-semibold py-2.5 rounded-lg text-sm transition tracking-wide cursor-pointer text-center">
+            Maju Ke Hadapan ➔
+        </button>
+
+        <div id="battle-controls" class="hidden grid grid-cols-2 gap-2">
+            <button onclick="gunaSkilAsap()" class="bg-blue-900 hover:bg-blue-800 border border-blue-600 text-white p-2.5 rounded-lg text-xs font-bold cursor-pointer transition">
+                💨 Kabus Khayalan (Kos: 30 MP)
+            </button>
+            <button onclick="serangKarambit()" class="bg-purple-900 hover:bg-purple-800 border border-purple-600 text-white p-2.5 rounded-lg text-xs font-bold cursor-pointer transition">
+                🗡️ Libasan Karambit (Damaj Fizikal)
+            </button>
+        </div>
+    </footer>
+
+    <script>
+        let bab5Index = 0;
+        let putriHP = 100;
+        let putriMP = 100;
+        let bossHP = 300;
+        let bosButa = false; // Status jika terkena Kabus Khayalan
+
+        const imgGolem = "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=60";
+        const imgHancur = "https://images.unsplash.com/photo-1599733589046-10c005739ef9?w=500&auto=format&fit=crop&q=60";
+
+        function majuKePertempuran() {
+            bab5Index++;
+            if (bab5Index === 1) {
+                document.getElementById("speaker").innerText = "Sistem SasaTech";
+                document.getElementById("speaker").className = "text-xs text-blue-400 font-bold uppercase tracking-widest glow-blue";
+                document.getElementById("story-p").innerText = "[AMARAN QUEST SERBUAN AUTOMATIK]: Hapuskan Golem Brute Gred-D untuk menutup herotan ruang stesen LRT. Kegagalan bertindak dalam masa 10 minit akan mencetuskan kemusnahan zon!";
+                document.getElementById("action-btn").innerText = "Aktifkan Mod Tempur! ⚔️";
+            } 
+            else if (bab5Index === 2) {
+                document.getElementById("speaker").innerText = "Putri";
+                document.getElementById("speaker").className = "text-xs text-purple-400 font-bold uppercase tracking-wider glow-purple";
+                document.getElementById("story-p").innerText = "Tak guna... saiz dia tiga kali ganda lagi besar daripada raksasa tanah semalam. Tapi aku ada Karambit Retakan Asap sekarang. Mari kita cuba!";
+                document.getElementById("scene-img").src = imgGolem;
+                document.getElementById("scene-desc").innerText = "[ Golem Brute mengangkat tangan batunya yang besar, sedia menghempas Putri! ]";
+                
+                // Buka panel bos dan tukar kawalan butang kepada mod aksi pertempuran
+                document.getElementById("boss-panel").classList.remove("hidden");
+                document.getElementById("action-btn").classList.add("hidden");
+                document.getElementById("battle-controls").classList.remove("hidden");
+            }
+        }
+
+        function gunaSkilAsap() {
+            if (putriMP < 30) {
+                alert("[SISTEM]: Mana Poin (MP) tidak mencukupi untuk mengaktifkan kabus!");
+                return;
+            }
+            putriMP -= 30;
+            document.getElementById("mp-display").innerText = `MP: ${putriMP}/100`;
+            bosButa = true;
+
+            document.getElementById("speaker").innerText = "Sistem SasaTech";
+            document.getElementById("story-p").innerText = "[SKIL AKTIF]: Kabus Khayalan menyelubungi Golem Brute. Koordinasi mata Golem terganggu! Serangan fizikal anda seterusnya akan mendapat gandaan damaj kritikal (+CRIT).";
+        }
+
+        function serangKarambit() {
+            let damaj = 40; // Damaj asas Karambit + STR Putri
+            let teksSerangan = "";
+
+            if (bosButa) {
+                damaj = 120; // Gandaan damaj 3x ganda kerana bos dalam khayalan kabus
+                teksSerangan = "💥 KRITIKAL! Putri melesap di sebalik kabus asap dan menghunjamkan Karambit tepat ke celah sendi batu Golem! ";
+                bosButa = false; // Status buta tamat
+            } else {
+                teksSerangan = "🗡️ Libasan Karambit hinggap di kaki Golem. Serpihan batu berterbangan! ";
+                // Golem balas serang jika dia tidak buta
+                putriHP -= 20;
+                document.getElementById("hp-display").innerText = `HP: ${putriHP}/100`;
+                teksSerangan += "Namun, Golem sempat menghempas tangannya menyebabkan HP Putri berkurang sebanyak 20 Poin!";
+            }
+
+            bossHP -= damaj;
+            if (bossHP < 0) bossHP = 0;
+
+            // Kemas kini UI Nyawa Bos
+            document.getElementById("boss-hp-text").innerText = `HP: ${bossHP}/300`;
+            let peratusBoss = (bossHP / 300) * 100;
+            document.getElementById("boss-hp-bar").style.width = peratusBoss + "%";
+
+            document.getElementById("speaker").innerText = "Naratif";
+            document.getElementById("story-p").innerText = `${teksSerangan} (Damaj terhasil: ${damaj} Poin).`;
+
+            if (putriHP <= 0) {
+                alert("Game Over! Putri tewas di tangan Golem. Sila muat semula kod untuk cuba lagi.");
+                location.reload();
+            }
+
+            if (bossHP <= 0) {
+                menangPertempuran();
+            }
+        }
+
+        function menangPertempuran() {
+            document.getElementById("battle-controls").classList.add("hidden");
+            document.getElementById("boss-panel").classList.add("hidden");
+            
+            document.getElementById("scene-img").src = imgHancur;
+            document.getElementById("scene-desc").innerText = "[ Golem Brute hancur menjadi debu tanah. Pintu sempadan ditutup. ]";
+
+            document.getElementById("speaker").innerText = "Sistem SasaTech";
+            document.getElementById("speaker").className = "text-xs text-yellow-400 font-bold uppercase tracking-widest glow-gold";
+            document.getElementById("story-p").innerText = "[TAHNIAH! SERBUAN BERJAYA]: Pintu sempadan LRT Masjid Jamek berjaya dikunci. Ganjaran Khas: [Kristal Batuan Teras Gred-D] dan [Ekstrak Herba Cecair Suci] telah dimasukkan ke dalam peti sistem. Tahap kepatuhan meningkat!";
+            
+            // Kembalikan butang tamat babak
+            document.getElementById("action-btn").classList.remove("hidden");
+            document.getElementById("action-btn").innerText = "Tamatkan Bab 5 🎉";
+            document.getElementById("action-btn").className = "w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 rounded-lg text-sm text-center cursor-pointer";
+            document.getElementById("action-btn").onclick = function() {
+                alert("Sesi simulasi modular Bab 5 selesai dengan jayanya! Tiada kod Bab 1-4 yang terganggu.");
+            };
+        }
+    </script>
+
+</body>
+</html>
+"""
+
+IPython.display.display(IPython.display.HTML(html_bab5))

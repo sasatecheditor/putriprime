@@ -1,0 +1,381 @@
+import IPython
+
+# KOD NOVEL VISUAL INTERAKTIF V7 (FIXED INVENTORY & NAVIGATION BUG)
+html_lengkap_v7 = """
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PutriPrime: Pasaran Gelap Chow Kit</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .glow-blue { text-shadow: 0 0 10px rgba(59, 130, 246, 0.8); }
+        .glow-gold { text-shadow: 0 0 10px rgba(234, 179, 8, 0.8); }
+        .glow-red { text-shadow: 0 0 10px rgba(239, 68, 68, 0.8); }
+        .glow-purple { text-shadow: 0 0 10px rgba(168, 85, 247, 0.8); }
+        .transition-all-500 { transition: all 0.5s ease-in-out; }
+    </style>
+</head>
+<body id="main-body" class="bg-gray-950 text-gray-100 font-sans p-4 flex flex-col justify-between min-h-[680px] relative transition-all-500">
+
+    <!-- 1. BAR STATUS SYSTEM -->
+    <header id="status-header" class="p-4 bg-gray-900 border-b border-blue-900/40 flex justify-between items-center rounded-t-lg shadow-md relative z-10 transition-all-500">
+        <div>
+            <h1 id="player-name" class="text-base font-bold text-blue-400 glow-blue tracking-wide">PUTRI AISYAH ZAHRA</h1>
+            <div class="flex gap-3 text-[11px] text-gray-400 mt-0.5">
+                <span>Gelar: <span id="gelar-wira" class="text-gray-400 font-semibold">Manusia Biasa</span></span>
+                <span>LVL: <span id="lvl-display" class="font-bold">1</span></span>
+            </div>
+            <!-- STATUS BAR UTAMA -->
+            <div class="flex gap-4 text-[11px] mt-1">
+                <span id="hp-bar" class="text-emerald-400 font-bold">HP: 100%</span>
+                <span id="mp-bar" class="text-blue-400 font-bold">MP: 100/100</span>
+                <!-- DOMPET MATA WANG -->
+                <span id="wallet-display" class="hidden text-amber-400 font-mono font-bold">Wallet: <span id="cash-val">RM 0</span> | <span id="gold-val">0 SG</span></span>
+            </div>
+            <!-- POIN STATUS FIZIKAL -->
+            <div id="stats-panel" class="hidden flex gap-3 text-[10px] text-amber-400 font-mono mt-1 border-t border-gray-800 pt-1">
+                <span>STR: <span id="stat-str">10</span></span>
+                <span>AGI: <span id="stat-agi">10</span></span>
+                <span>SEN: <span id="stat-sen">10</span></span>
+            </div>
+        </div>
+        <button onclick="bukaTutupInventory()" class="bg-blue-950 hover:bg-blue-900 border border-blue-700/50 text-blue-300 text-xs px-3 py-1.5 rounded-md font-semibold cursor-pointer transition">
+            🎒 Beg (🎒 <span id="inv-count">0</span>/5)
+        </button>
+    </header>
+
+    <!-- INVENTORY POP-UP -->
+    <div id="inventory-popup" class="hidden absolute top-20 right-4 w-64 bg-gray-900/95 border border-blue-900/60 rounded-lg p-4 shadow-2xl z-50 backdrop-blur-md">
+        <h3 class="text-xs font-bold text-blue-400 uppercase tracking-wider border-b border-gray-800 pb-1.5 mb-2 flex justify-between">
+            <span>Isi Beg Putri</span>
+            <span class="text-gray-500 font-mono text-[10px]">Slot x5</span>
+        </h3>
+        <div id="inventory-slots" class="flex flex-col gap-1.5 text-xs">
+            <p class="text-gray-500 italic text-center py-4">Beg anda kosong.</p>
+        </div>
+    </div>
+
+    <!-- 2. KOTAK KELUARAN GAMBAR -->
+    <div class="w-full h-52 bg-black border-x border-gray-900 relative overflow-hidden flex items-center justify-center">
+        <img id="comic-image" src="https://images.unsplash.com/photo-1515621061946-eff1c2a352bd?w=500&auto=format&fit=crop&q=60" class="w-full h-full object-cover opacity-60 transition-all duration-500" alt="Visual">
+        <div class="absolute bottom-0 bg-gradient-to-t from-black via-black/70 to-transparent w-full p-2 text-center">
+            <p id="visual-desc" class="text-[11px] text-gray-300 italic">[ Lorong belakang Bukit Bintang. Jam 9:30 malam. ]</p>
+        </div>
+    </div>
+
+    <!-- 3. KOTAK TEKS CERITA -->
+    <main class="flex-1 bg-gray-900/90 border border-gray-800 p-5 shadow-xl relative min-h-[150px]">
+        <div id="speaker-tag" class="text-xs text-yellow-500 font-bold uppercase tracking-wider mb-1">Naratif</div>
+        <p id="story-text" class="text-sm leading-relaxed text-gray-300 transition-all duration-300">
+            Jam menunjukkan pukul 9:30 malam. Lorong belakang bangunan kedai di Bukit Bintang itu gelap dan sunyi. Putri menyeka air hujan di dahi. Jaket penghantar makanannya sudah lencun.
+        </p>
+
+        <!-- PAPAN TUGASAN HARIAN (BAB 3) -->
+        <div id="daily-quest-panel" class="hidden mt-4 bg-black/60 border border-blue-900/50 rounded-lg p-3">
+            <div class="text-xs text-blue-400 font-bold font-mono tracking-widest border-b border-blue-900/30 pb-1 mb-2 flex justify-between">
+                <span>⚡ SASATECH DAILY QUEST</span>
+                <span id="quest-status" class="text-red-400">[0/3 SELESAI]</span>
+            </div>
+            <div id="quest-list" class="flex flex-col gap-2">
+                <button id="q1-btn" onclick="buatTugasan(1)" class="w-full bg-gray-900 hover:bg-blue-950/40 border border-gray-800 text-left p-2 rounded text-xs flex justify-between items-center cursor-pointer">
+                    <span>🏃 [TUGASAN 1]: Larian 5KM di Tasik Titiwangsa</span><span class="text-amber-400">+5 STR</span>
+                </button>
+                <button id="q2-btn" onclick="buatTugasan(2)" class="w-full bg-gray-900 hover:bg-blue-950/40 border border-gray-800 text-left p-2 rounded text-xs flex justify-between items-center cursor-pointer">
+                    <span>🛵 [TUGASAN 2]: Hantar makanan 10 trip waktu puncak</span><span class="text-amber-400">+5 AGI</span>
+                </button>
+                <button id="q3-btn" onclick="buatTugasan(3)" class="w-full bg-gray-900 hover:bg-blue-950/40 border border-gray-800 text-left p-2 rounded text-xs flex justify-between items-center cursor-pointer">
+                    <span>🧘 [TUGASAN 3]: Meditasi fokus minda di FRIM</span><span class="text-amber-400">+5 SEN</span>
+                </button>
+                <button id="sleep-btn" onclick="picuPenalti()" class="w-full bg-red-950/40 hover:bg-red-900/50 border border-red-900/40 text-center py-2 rounded text-xs text-red-300 font-semibold cursor-pointer transition">
+                    💤 Tidur Tanpa Siapkan Tugas
+                </button>
+            </div>
+        </div>
+
+        <!-- INTERFAS KEDAI & TRANSAKSI (BAB 4) -->
+        <div id="dark-market-shop" class="hidden mt-4 bg-purple-950/20 border border-purple-900/50 rounded-lg p-3">
+            <div class="text-xs text-purple-400 font-bold font-mono tracking-widest border-b border-purple-900/30 pb-1 mb-2 flex justify-between">
+                <span>🏪 KEDAI SENJATA AH SENG</span>
+                <span class="text-amber-400">[ZON NEUTRAL]</span>
+            </div>
+            <p class="text-[11px] text-gray-400 mb-2">Gunakan ganjaran anda untuk menaik taraf kelengkapan:</p>
+            <div class="flex flex-col gap-2">
+                <button id="buy-weapon-btn" onclick="beliSenjataBaru()" class="w-full bg-gray-900 hover:bg-purple-950/40 border border-purple-900/40 text-left p-2 rounded text-xs flex justify-between items-center cursor-pointer transition">
+                    <span>🗡️ [Dagger Karambit Retakan Asap]</span>
+                    <span class="text-amber-400 font-mono">Kos: 200 SG (+25 STR)</span>
+                </button>
+                <div class="text-[10px] text-gray-500 italic px-1">*Nota: Senjata ini hanya boleh dibeli jika anda mempunyai mata wang Sasa-Gold (SG).</div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 4. BAHAGIAN BUTANG INTERAKSI -->
+    <footer class="p-3 bg-gray-900/30 rounded-b-lg border-x border-b border-gray-900 flex flex-col gap-2">
+        <button id="next-btn" onclick="gerakCerita()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-2.5 px-4 rounded-lg text-sm transition shadow-lg cursor-pointer text-center">
+            Seterusnya ➔
+        </button>
+
+        <!-- KOTAK PILIHAN BAB 1 -->
+        <div id="choice-container" class="hidden flex flex-col gap-2">
+            <button onclick="pilihSenjata('Besi Tajam')" class="w-full bg-slate-900 border border-blue-900/50 py-2 text-xs rounded-lg text-left px-3 cursor-pointer">[PILIHAN 1] Cari sebatang besi tajam berdekatan.</button>
+            <button onclick="pilihSenjata('Pisau Pemotong')" class="w-full bg-slate-900 border border-blue-900/50 py-2 text-xs rounded-lg text-left px-3 cursor-pointer">[PILIHAN 2] Guna sisa pisau pemotong sayur restoran.</button>
+        </div>
+
+        <!-- KOTAK PILIHAN BAB 2 -->
+        <div id="bab2-choice-container" class="hidden flex flex-col gap-2">
+            <button onclick="pilihLaluanPotion('A')" class="w-full bg-slate-900 border border-emerald-900/50 py-2 text-xs rounded-lg text-left px-3 cursor-pointer">[PILIHAN A] Gunakan Teh Tarik HP Potion serta-merta.</button>
+            <button onclick="pilihLaluanPotion('B')" class="w-full bg-slate-900 border border-amber-900/50 py-2 text-xs rounded-lg text-left px-3 cursor-pointer">[PILIHAN B] Simpan ramuan dalam beg demi jimat barang.</button>
+        </div>
+
+        <!-- KOTAK PILIHAN PEMBAYARAN WAK JONO (BAB 4) -->
+        <div id="bab4-choice-container" class="hidden flex flex-col gap-2">
+            <p class="text-[10px] text-center text-gray-500 font-medium uppercase mb-1">Tentukan Kaedah Bayaran Teras Tenaga:</p>
+            <button onclick="pilihBayaran('CASH')" class="w-full bg-slate-900 hover:bg-emerald-950 text-emerald-200 border border-emerald-900/50 py-2 text-xs rounded-lg text-left px-3 cursor-pointer">
+                [PILIHAN A] Ambil Wang Tunai Dunia Nyata (RM 2,000) - Untuk keperluan keluarga.
+            </button>
+            <button onclick="pilihanBayaranGold()" class="w-full bg-slate-900 hover:bg-purple-950 text-purple-200 border border-purple-900/50 py-2 text-xs rounded-lg text-left px-3 cursor-pointer">
+                [PILIHAN B] Ambil Mata Wang Sistem (200 Sasa-Gold) - Untuk kelengkapan wira.
+            </button>
+        </div>
+    </footer>
+
+    <!-- LOGIK JAVASCRIPT FIXED -->
+    <script>
+        const imgLorongHujan = "https://images.unsplash.com/photo-1515621061946-eff1c2a352bd?w=500&auto=format&fit=crop&q=60";
+        const imgMotorRider = "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=500&auto=format&fit=crop&q=60";
+        const imgPortalUngu = "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=500&auto=format&fit=crop&q=60";
+        const imgAsapPutih = "https://images.unsplash.com/photo-1542840410-3092f99611a3?w=500&auto=format&fit=crop&q=60";
+        const imgRumahFlat = "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=500&auto=format&fit=crop&q=60";
+        const imgIbuMuka = "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=500&auto=format&fit=crop&q=60";
+        const imgLatihan = "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=500&auto=format&fit=crop&q=60";
+        const imgZonAnomali = "https://images.unsplash.com/photo-1509114397022-ed747cca3f65?w=500&auto=format&fit=crop&q=60";
+        const imgChowKitPasar = "https://images.unsplash.com/photo-1506157786151-b8491531f063?w=500&auto=format&fit=crop&q=60";
+        const imgWakJono = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&auto=format&fit=crop&q=60";
+
+        let inventory = [];
+        let senjataDipilih = "Senjata Biasa";
+        let pilihanPotionBab2 = "";
+        let kaedahBayaranBab4 = "";
+        let indexSemasa = 0;
+
+        // EKONOMI & STATUS DATA
+        let strPoin = 10; let agiPoin = 10; let senPoin = 10;
+        let cashPoin = 0; let goldPoin = 0;
+        let questSelesai = { 1: false, 2: false, 3: false };
+        let jumlahSelesai = 0;
+
+        const skripCerita = [
+            // --- BAB 1 ---
+            { speaker: "Naratif", text: "Jam menunjukkan pukul 9:30 malam. Lorong belakang bangunan kedai di Bukit Bintang itu gelap dan sunyi.", visual: "[ Lorong belakang Bukit Bintang. ]", img: imgLorongHujan },
+            { speaker: "Putri", text: "Fuh... selesai order terakhir malam ni. Boleh balik rehat.", visual: "[ Putri di atas motor kapcainya. ]", img: imgMotorRider },
+            { speaker: "Naratif", text: "VREEEAM! Ruang udara terbelah. Muncul seekor Raksasa Tanah mengaum kuat!", visual: "[ Portal Ungu terbuka! ]", img: imgPortalUngu, cederakanPutri: true },
+            { speaker: "Sistem SasaTech", text: "[AMARAN: Hayat kritikal (4%). Adakah anda bersetuju mengaktifkan Protokol: PutriPrime?]", visual: "[ Skrin hologram biru menyala! ]", img: imgAsapPutih, sasaTechStyle: true },
+            { speaker: "Putri", text: "Aku tak boleh mati kat sini! AKU SETUJU!!", visual: "[ Putri menjerit pasrah! ]", img: imgAsapPutih },
+            { speaker: "Sistem SasaTech", text: "[Protokol AKTIF. Membuka kunci elemen: ASAP (Gred E). Fizikal meningkat 150%!]", visual: "[ Letusan asap putih keluar! ]", img: imgAsapPutih, wiraBangkit: true },
+            { speaker: "Putri", text: "Aku kena menyorok di sebalik tangki air tu untuk cari tempat selamat!", visual: "[ Putri mengheret kaki. ]", img: imgLorongHujan, tunjukPilihanBab1: true },
+            
+            // --- BAB 2 ---
+            { speaker: "Naratif", text: "Di sebalik tangki air, Putri menggenggam erat [SENJATA] yang mula diredai asap kelabu pekat.", visual: "[ Bersedia dengan senjata pilihan. ]", img: imgLorongHujan },
+            { speaker: "Sistem SasaTech", text: "[Panduan: Alirkan 20 Poin Mana ke dalam tapak tangan dan hembus 'Kabus Khayalan'.]", visual: "[ Sistem mengaktifkan panduan skil. ]", sasaTechStyle: true, gunaMana: true },
+            { speaker: "Naratif", text: "CRAAACK! Putri melompat dan menikam tepat ke Teras Tenaga Merah di dada raksasa hingga ia hancur berkecai!", visual: "[ Raksasa tumbang! ]", img: imgAsapPutih },
+            { speaker: "Sistem SasaTech", text: "[TAHNIAH! Raksasa tewas. LVL 1 ➔ LVL 2! Ganjaran: HP Potion (Teh Tarik Gred E) dimasukkan ke Inventory.]", visual: "[ Skrin kejayaan warna emas! ]", wiraLevelUp: true, tambahPotion: true },
+            
+            // --- BAB 3 ---
+            { speaker: "Naratif", text: "[LALUAN_POTION_TEXT] Putri menaiki tren LRT terakhir untuk pulang.", visual: "[ Tren LRT bergerak membelah malam. ]", img: imgLorongHujan, checkLaluan3: true },
+            { speaker: "Ibu", text: "Putri? Dah balik dah anak ibu? Risau ibu. Motor okay?", visual: "[ Ibu batuk kecil di atas sofa usang. ]", img: imgIbuMuka },
+            { speaker: "Putri", text: "Motor rosak kejap bu, tinggal kat kedai. Ibu jangan risau, Putri ada.", visual: "[ Putri bertekad mengubah nasib keluarga. ]", img: imgRumahFlat },
+            { speaker: "Sistem SasaTech", text: "[Sistem SasaTech dikemaskini. Membuka Papan Status Utama dan Panel Tugasan Harian Pengguna.]", visual: "[ Papan senarai tugasan harian kini dibuka! ]", img: imgLatihan, sasaTechStyle: true, bukaQuestPanel: true },
+
+            // --- BAB 4 ---
+            { speaker: "Naratif", text: "Jam 1:15 pagi. Berpandukan isyarat radar tersembunyi SasaTech, Putri melangkah melepasi tirai kanvas sebuah kedai bundle usang di lorong belakang Chow Kit.", visual: "[ Pasaran Gelap Chow Kit - Pintu Masuk Anomali. ]", img: imgChowKitPasar, masukBab4: true },
+            { speaker: "Sistem SasaTech", text: "[NOTIFIKASI: Anda telah memasuki Zon Neutral – Pasaran Gelap Chow Kit (Gred-E). Kuasa menyerang dinyahaktifkan sementara.]", visual: "[ Skrin sistem memaparkan kod undang-undang zon selamat. ]", sasaTechStyle: true },
+            { speaker: "Putri", text: "Gila... ada tempat rahsia macam ni bawah jambatan monorel? Pedagang kat sini semua pakai topeng dengan hiasan hologram.", visual: "[ Pandangan takjub Putri melihat pemburu (hunters) tawar-menawar. ]", img: imgChowKitPasar },
+            { speaker: "Naratif", text: "Putri berjalan menuju ke sebuah meja kayu di sudut paling gelap. Di sebalik meja itu, duduk seorang lelaki tua berjaket kulit lusuh sedang menghisap rokok daun.", visual: "[ Wak Jono, Peraih Barangan Anomali. ]", img: imgWakJono },
+            { speaker: "Wak Jono", text: "Budak baru... Aku nampak wap asap kat celah jari kau. Elemen Asap, gred bawahan. Tapi kau ada barang berharga nak tolak kat aku, kan? Keluarkan.", visual: "[ Mata mekanikal biru Wak Jono berpusing mengimbas Putri. ]", img: imgWakJono },
+            { speaker: "Putri", text: "Saya nak jual ni. Teras Tenaga Merah daripada Raksasa Tanah Gred-E malam tadi. Berapa pakcik boleh bayar?", visual: "[ Putri meletakkan kristal merah menyala di atas meja. ]", img: imgWakJono },
+            { speaker: "Wak Jono", text: "Ketumpatan Mana dia bersih. Cantik. Aku bagi kau dua jalan. Pilihan di tangan kau, budak.", visual: "[ Wak Jono menghembus asap rokok daunnya yang pekat. ]", img: imgWakJono, panggilPilihanBab4: true },
+            
+            { speaker: "Naratif", text: "[OUTCOME_TEXT_BAB4]", visual: "[ Selesai urusan transaksi barangan anomali. ]", img: imgChowKitPasar, semakKedaiAhSeng: true },
+            { speaker: "Sistem SasaTech", text: "[AMARAN AMUKAN: Breakout dialami! Pintu Sempadan Gred-D dikesan runtuh di Stesen LRT Masjid Jamek. Masa kecemasan: 15 minit!]", visual: "[ Sistem bertukar warna jingga amaran bahaya! ]", img: imgZonAnomali, sasaTechMerah: true, tamatBab4: true }
+        ];
+
+        function gerakCerita() {
+            if (indexSemasa >= skripCerita.length - 1) return;
+            indexSemasa++;
+
+            const skrin = skripCerita[indexSemasa];
+            let ayatCerita = skrin.text;
+
+            if (ayatCerita.includes("[SENJATA]")) ayatCerita = ayatCerita.replace("[SENJATA]", senjataDipilih);
+            if (ayatCerita.includes("[LALUAN_POTION_TEXT]")) {
+                ayatCerita = (pilihanPotionBab2 === "A") ? "Selepas meminum Teh Tarik HP Potion, kaki Putri sembuh serta-merta." : "Memandangkan ramuan disimpan, Putri pulang dengan kaki berenjut-enjut perit.";
+            }
+            if (ayatCerita.includes("[OUTCOME_TEXT_BAB4]")) {
+                if (kaedahBayaranBab4 === "CASH") {
+                    ayatCerita = "Putri memilih wang tunai RM 2,000. Dia memeluk erat sampul duit itu, bersyukur kerana boleh melunaskan sewa rumah dan membeli ubat hospital untuk ibunya esok.";
+                } else {
+                    ayatCerita = "Putri memilih 200 Sasa-Gold (SG). Akaun dompet digitalnya berbunyi 'Kaching!'. Wak Jono tersenyum dan memberi isyarat agar Putri melihat kedai Ah Seng di sebelah untuk urusan naik taraf.";
+                }
+            }
+
+            document.getElementById("speaker-tag").innerText = skrin.speaker;
+            document.getElementById("story-text").innerText = ayatCerita;
+            document.getElementById("visual-desc").innerText = skrin.visual;
+            document.getElementById("comic-image").src = skrin.img;
+
+            // FIX BUG NAVIGASI MASUK BAB 4
+            if (skrin.masukBab4) {
+                document.getElementById("next-btn").classList.remove("hidden"); // Memastikan butang dipaparkan semula
+                document.getElementById("stats-panel").classList.add("hidden"); 
+                document.getElementById("wallet-display").classList.remove("hidden"); 
+                document.getElementById("status-header").className = "p-4 bg-gray-900 border-b border-purple-900/60 flex justify-between items-center rounded-t-lg shadow-md relative z-10 transition-all-500";
+                document.getElementById("player-name").className = "text-base font-bold text-purple-400 glow-purple tracking-wide";
+            }
+
+            if (skrin.cederakanPutri) document.getElementById("hp-bar").innerText = "HP: 4% (Kritikal)";
+            
+            if (skrin.sasaTechStyle) document.getElementById("speaker-tag").className = "text-xs text-blue-400 font-bold uppercase tracking-widest glow-blue";
+            if (skrin.sasaTechMerah) document.getElementById("speaker-tag").className = "text-xs text-red-500 font-bold uppercase tracking-widest glow-red";
+            
+            if (skrin.wiraBangkit) {
+                document.getElementById("hp-bar").innerText = "HP: 100%";
+                document.getElementById("gelar-wira").innerText = "PutriPrime (Beginner)";
+                document.getElementById("gelar-wira").className = "text-yellow-400 font-semibold glow-gold";
+            }
+            if (skrin.tunjukPilihanBab1) {
+                document.getElementById("next-btn").classList.add("hidden");
+                document.getElementById("choice-container").classList.remove("hidden");
+            }
+            if (skrin.wiraLevelUp) {
+                document.getElementById("lvl-display").innerText = "2";
+                document.getElementById("next-btn").classList.add("hidden");
+                document.getElementById("bab2-choice-container").classList.remove("hidden");
+            }
+            if (skrin.bukaQuestPanel) {
+                document.getElementById("next-btn").classList.add("hidden");
+                document.getElementById("stats-panel").classList.remove("hidden");
+                document.getElementById("daily-quest-panel").classList.remove("hidden");
+            }
+
+            if (skrin.panggilPilihanBab4) {
+                document.getElementById("next-btn").classList.add("hidden");
+                document.getElementById("bab4-choice-container").classList.remove("hidden");
+            }
+
+            if (skrin.semakKedaiAhSeng) {
+                if (goldPoin >= 200) {
+                    document.getElementById("dark-market-shop").classList.remove("hidden");
+                }
+            }
+
+            if (skrin.tamatBab4) {
+                document.getElementById("dark-market-shop").classList.add("hidden");
+                document.getElementById("next-btn").innerText = "Sertai Serbuan LRT Masjid Jamek! 🚨";
+                document.getElementById("next-btn").className = "w-full bg-amber-600 hover:bg-amber-500 text-white font-bold py-2.5 rounded-lg text-sm text-center cursor-pointer";
+                document.getElementById("next-btn").onclick = function() { 
+                    alert("Tahniah! Anda telah tamat menguji Bab 4 Pasaran Gelap dengan sistem kedai bersepadu."); 
+                };
+            }
+        }
+
+        function buatTugasan(id) {
+            if (questSelesai[id]) return;
+            questSelesai[id] = true; jumlahSelesai++;
+            if (id === 1) { strPoin += 5; document.getElementById("stat-str").innerText = strPoin; document.getElementById("q1-btn").className = "w-full bg-emerald-950/20 border border-emerald-900/40 text-left p-2 rounded text-xs flex justify-between items-center opacity-50 line-through text-gray-500"; }
+            if (id === 2) { agiPoin += 5; document.getElementById("stat-agi").innerText = agiPoin; document.getElementById("q2-btn").className = "w-full bg-emerald-950/20 border border-emerald-900/40 text-left p-2 rounded text-xs flex justify-between items-center opacity-50 line-through text-gray-500"; }
+            if (id === 3) { senPoin += 5; document.getElementById("stat-sen").innerText = senPoin; document.getElementById("q3-btn").className = "w-full bg-emerald-950/20 border border-emerald-900/40 text-left p-2 rounded text-xs flex justify-between items-center opacity-50 line-through text-gray-500"; }
+            document.getElementById("quest-status").innerText = `[${jumlahSelesai}/3 SELESAI]`;
+            if (jumlahSelesai === 3) {
+                document.getElementById("quest-status").innerText = "[MISI LENGKAP! 🎉]";
+                document.getElementById("sleep-btn").classList.add("hidden");
+                setTimeout(() => { document.getElementById("daily-quest-panel").classList.add("hidden"); gerakCerita(); }, 1000);
+            }
+        }
+
+        function picuPenalti() {
+            alert("[SISTEM]: Tugas diabaikan!");
+            document.getElementById("main-body").className = "bg-red-950 text-red-100 font-sans p-4 flex flex-col justify-between min-h-[680px] relative transition-all-500";
+            document.getElementById("hp-bar").innerText = "HP: 1% (Tenat)";
+            document.getElementById("daily-quest-panel").classList.add("hidden");
+            document.getElementById("next-btn").classList.remove("hidden");
+            indexSemasa = 14; gerakCerita();
+        }
+
+        function pilihBayaran(jenis) {
+            kaedahBayaranBab4 = jenis;
+            if (jenis === "CASH") {
+                cashPoin = 2000;
+                document.getElementById("cash-val").innerText = "RM 2,000";
+                alert("[TRANS-BERJAYA]: Wang tunai RM 2,000 dimasukkan ke dalam poket.");
+            }
+            document.getElementById("bab4-choice-container").classList.add("hidden");
+            document.getElementById("next-btn").classList.remove("hidden");
+            gerakCerita();
+        }
+
+        function pilihanBayaranGold() {
+            kaedahBayaranBab4 = "GOLD";
+            goldPoin = 200;
+            document.getElementById("gold-val").innerText = "200 SG";
+            alert("[TRANS-BERJAYA]: 200 Sasa-Gold (SG) dikreditkan.");
+            document.getElementById("bab4-choice-container").classList.add("hidden");
+            document.getElementById("next-btn").classList.remove("hidden");
+            gerakCerita();
+        }
+
+        function beliSenjataBaru() {
+            if (goldPoin < 200) {
+                alert("[SISTEM]: Baki Sasa-Gold tidak mencukupi untuk membeli Karambit.");
+                return;
+            }
+            goldPoin -= 200;
+            document.getElementById("gold-val").innerText = goldPoin + " SG";
+            senjataDipilih = "Dagger Karambit Retakan Asap";
+            
+            inventory.push("Dagger Karambit (+25 STR)");
+            kemaskiniInventoryUI();
+
+            alert("[TAHNIAH]: Anda berjaya membeli Dagger Karambit Retakan Asap! Sila periksa Beg anda.");
+            document.getElementById("buy-weapon-btn").className = "w-full bg-purple-950/10 border border-purple-900/20 text-left p-2 rounded text-xs flex justify-between items-center opacity-40 line-through text-gray-500 cursor-not-allowed";
+            document.getElementById("buy-weapon-btn").onclick = null;
+        }
+
+        function pilihSenjata(j) { senjataDipilih = j; document.getElementById("choice-container").classList.add("hidden"); document.getElementById("next-btn").classList.remove("hidden"); gerakCerita(); }
+        
+        // FIX BUG INVENTORY: MEMASUKKAN ITEM JIKA PILIHAN B DIPILIH
+        function pilihLaluanPotion(p) { 
+            pilihanPotionBab2 = p; 
+            if (p === "B") { 
+                inventory.push("Teh Tarik HP Potion (Gred E)"); 
+            } else {
+                inventory = []; // Bersihkan jika diminum serta-merta
+            }
+            kemaskiniInventoryUI(); 
+            document.getElementById("bab2-choice-container").classList.add("hidden"); 
+            document.getElementById("next-btn").classList.remove("hidden"); 
+            gerakCerita(); 
+        }
+        
+        function bukaTutupInventory() { document.getElementById("inventory-popup").classList.toggle("hidden"); }
+        
+        function kemaskiniInventoryUI() {
+            document.getElementById("inv-count").innerText = inventory.length;
+            const container = document.getElementById("inventory-slots");
+            if (inventory.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 italic text-center py-4">Beg anda kosong.</p>';
+            } else {
+                container.innerHTML = "";
+                inventory.forEach(item => {
+                    container.innerHTML += `<div class="bg-gray-800 border border-purple-900/40 p-2 rounded text-purple-200 font-medium flex justify-between items-center"><span>⚔️ ${item}</span></div>`;
+                });
+            }
+        }
+    </script>
+
+</body>
+</html>
+"""
+
+IPython.display.display(IPython.display.HTML(html_lengkap_v7))
