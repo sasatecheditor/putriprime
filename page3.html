@@ -4,123 +4,98 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PutriPrime - Bab 1: Halaman 3</title>
-    <!-- Tailwind CSS untuk reka bentuk premium -->
+    <!-- Menggunakan Tailwind CSS untuk reka bentuk premium -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;700&family=Inter:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         body {
             background-color: #0b0f19;
             color: #f3f4f6;
             font-family: 'Inter', sans-serif;
         }
-        .header-font {
-            font-family: 'Comfortaa', sans-serif;
-        }
-        .mono-font {
-            font-family: 'Share Tech Mono', monospace;
-        }
     </style>
 </head>
 <body class="flex flex-col min-h-screen justify-between p-4 md:p-8">
 
-    <!-- Konten Utama: Format Perbualan Webtoon / Novel Visual -->
-    <main class="max-w-2xl mx-auto w-full flex-grow flex flex-col justify-center gap-6">
+    <!-- Konten Utama: Gaya Webtoon/Manhwa Dialogue Box -->
+    <main class="max-w-2xl mx-auto flex-grow flex flex-col justify-center items-center gap-6">
         
-        <!-- Papan Info Detik Semasa -->
-        <div class="bg-gray-900/60 border border-cyan-500/20 rounded-xl p-4 flex justify-between items-center">
-            <div>
-                <span class="text-xs text-cyan-400 font-bold uppercase tracking-wider mono-font">[ STATUS: LULUS DEKAN ]</span>
-                <h1 class="text-lg font-bold text-white header-font mt-1">Majlis Konvokesyen Shah Alam</h1>
-            </div>
-            <div class="text-right">
-                <span class="text-xs text-emerald-400 font-bold bg-emerald-950/50 border border-emerald-500/30 px-3 py-1 rounded-full mono-font">BEBAS HUTANG</span>
-            </div>
-        </div>
-
-        <!-- Visualisasi Babak (Graduation & Friends Concept) -->
-        <div class="relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-gray-850 shadow-xl">
-            <!-- Representasi Artistik Suasana Konvo menggunakan kecerunan modern & siluet -->
-            <div class="w-full h-full bg-gradient-to-tr from-purple-950 via-slate-900 to-cyan-950 flex flex-col items-center justify-center p-6 text-center">
-                <div class="flex gap-4 mb-4">
-                    <span class="text-5xl">🎓</span>
-                    <span class="text-5xl">👭</span>
-                    <span class="text-5xl">📜</span>
-                </div>
-                <h3 class="text-xl font-bold text-white header-font">Menara Gading Ditawan!</h3>
-                <p class="text-sm text-gray-400 max-w-md mt-2">Di sebalik kegembiraan menggenggam segulung ijazah, tersimpan seribu cerita perjuangan menabung sejak umur 12 tahun.</p>
+        <!-- MATRIKS GAMBAR: Memaparkan Ilustrasi Graduasi Manhwa -->
+        <div class="w-full relative overflow-hidden rounded-2xl border border-gray-800 shadow-2xl shadow-emerald-500/10">
+            <img src="./assets/images/putri-graduation.webp" alt="Majlis Konvokesyen Putri dan Rakan-rakan" class="w-full h-auto object-cover">
+            <!-- Label Info -->
+            <div class="absolute bottom-4 left-4 bg-black/75 backdrop-blur-md px-4 py-2 rounded-lg border border-emerald-500/30">
+                <p class="text-xs text-emerald-400 font-bold uppercase tracking-wider">Masa Sekarang</p>
+                <h2 class="text-sm font-medium text-gray-300">Kejayaan Sebuah Penantian</h2>
             </div>
         </div>
 
-        <!-- Naratif Ringkas -->
-        <p class="text-base leading-relaxed font-light text-gray-300 text-center md:text-left px-2">
-            Hari yang ditunggu-tunggu akhirnya tiba. Putri berdiri megah di dataran konvokesyen dengan jubah graduasi. Tiada pinjaman pelajaran, tiada bebanan hutang pasca-belajar. Semuanya hasil titisan peluh kerja sambilan dan tabungan kentalnya sejak kecil. Namun, di tengah hiruk-pikuk sorakan gembira, perbualan bersama sahabat baiknya beralih kepada halatuju masa depan...
-        </p>
+        <!-- Naratif Pengenalan Babak -->
+        <div class="w-full text-center md:text-left px-2">
+            <p class="text-lg leading-relaxed font-light text-gray-300">
+                Alhamdulillah, berkat hasil titik peluh dan tabungan yang disimpan rapi sejak usia 12 tahun, Putri akhirnya berjaya menggenggam segulung ijazah dari sebuah IPT di Shah Alam. Apa yang paling membanggakan, dia menamatkan pengajiannya dengan rekod bersih tanpa sebarang hutang pendidikan. Di luar dewan, suasana gamat dengan tawa gembira para graduan.
+            </p>
+        </div>
 
-        <!-- Sistem Kotak Dialog Watak (Gaya Webtoon/Manhwa) -->
-        <div class="space-y-4 bg-gray-900/40 p-4 rounded-2xl border border-gray-800">
+        <!-- RUANGAN DIALOG (Gaya Panel Komik Digital) -->
+        <div class="w-full space-y-4 px-2">
             
-            <!-- Yasmin (Merah Jambu) -->
-            <div class="flex gap-3">
-                <div class="flex-shrink-0 w-10 h-10 rounded-full bg-pink-600 flex items-center justify-center font-bold text-white shadow-lg">Y</div>
-                <div class="bg-pink-950/20 border border-pink-900/50 rounded-2xl rounded-tl-none p-3 max-w-[85%]">
-                    <p class="text-xs text-pink-400 font-bold">Yasmin</p>
-                    <p class="text-sm text-gray-200 mt-1">"We did it, korang! Akhirnya habis juga seksaan exam! Korang plan nak kerja kat mana lepas ni? Aku ingat nak try apply kat SasaTech KL. Gaji dorang mulakan dengan gempak gila!"</p>
+            <!-- Dialog Yasmin -->
+            <div class="flex flex-col items-start">
+                <span class="text-xs font-bold text-pink-400 mb-1 ml-2">Yasmin</span>
+                <div class="bg-pink-950/40 border border-pink-900/50 p-3 rounded-2xl rounded-tl-none max-w-[85%] text-gray-200">
+                    "Korang! Tak sangka kita dah habis belajar. Lepas ni apa plan korang? Aku ingat nak rehat sebulan, lepas tu baru start apply job kat KL."
                 </div>
             </div>
 
-            <!-- Aafiyah (Hijau) -->
-            <div class="flex gap-3 justify-end">
-                <div class="bg-emerald-950/20 border border-emerald-900/50 rounded-2xl rounded-tr-none p-3 max-w-[85%] text-right">
-                    <p class="text-xs text-emerald-400 font-bold">Aafiyah</p>
-                    <p class="text-sm text-gray-200 mt-1">"Wah, SasaTech! Memang bertuah kalau dapat masuk. Aku pulak dah hantar resume ke firma logistik kat Seksyen 26, Shah Alam ni je. Senang, dekat dengan rumah mak bapak aku."</p>
-                </div>
-                <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-600 flex items-center justify-center font-bold text-white shadow-lg">A</div>
-            </div>
-
-            <!-- Sumayyah (Kuning/Amber) -->
-            <div class="flex gap-3">
-                <div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-600 flex items-center justify-center font-bold text-white shadow-lg">S</div>
-                <div class="bg-amber-950/20 border border-amber-900/50 rounded-2xl rounded-tl-none p-3 max-w-[85%]">
-                    <p class="text-xs text-amber-400 font-bold">Sumayyah</p>
-                    <p class="text-sm text-gray-200 mt-1">"Aku pun sama, tapi dapat tawaran intern kat Cyberjaya dulu. Atia, Atiqah, korang pulak macam mana?"</p>
+            <!-- Dialog Aafiyah -->
+            <div class="flex flex-col items-start">
+                <span class="text-xs font-bold text-blue-400 mb-1 ml-2">Aafiyah</span>
+                <div class="bg-blue-950/40 border border-blue-900/50 p-3 rounded-2xl rounded-tl-none max-w-[85%] text-gray-200">
+                    "Aku pulak dah dapat interview minggu depan untuk jawatan Management Trainee. Cuak jugak ni, tapi kena cuba demi masa depan!"
                 </div>
             </div>
 
-            <!-- Atia & Atiqah (Biru) -->
-            <div class="flex gap-3 justify-end">
-                <div class="bg-cyan-950/20 border border-cyan-900/50 rounded-2xl rounded-tr-none p-3 max-w-[85%] text-right">
-                    <p class="text-xs text-cyan-400 font-bold">Atia & Atiqah</p>
-                    <p class="text-sm text-gray-200 mt-1">"Kitorang nak rehat sebulan dulu sebelum start pening kepala cari kerja marketing & design. Putri, kau dari tadi senyap je? Tak nak try apply SasaTech sekali dengan Yasmin?"</p>
-                </div>
-                <div class="flex-shrink-0 w-10 h-10 rounded-full bg-cyan-600 flex items-center justify-center font-bold text-white shadow-lg">A</div>
-            </div>
-
-            <!-- Putri (Ungu - Watak Utama) -->
-            <div class="flex gap-3">
-                <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center font-bold text-white shadow-lg border border-purple-400 animate-pulse">P</div>
-                <div class="bg-purple-950/40 border border-purple-500/50 rounded-2xl rounded-tl-none p-4 max-w-[85%] shadow-lg">
-                    <p class="text-xs text-purple-400 font-bold">Putri</p>
-                    <p class="text-sm text-white mt-1 font-medium">"Alhamdulillah, aku gembira tengok korang semua dah ada plan. Pasal aku... aku tak fikir pasal kerjaya dulu buat masa ni. Kesihatan ibu aku makin merosot. Kerjaya boleh dibina bila-bila masa, tapi ibu... dia satu-satunya amanah dan syurga yang aku ada sekarang."</p>
+            <!-- Dialog Sumayyah -->
+            <div class="flex flex-col items-start">
+                <span class="text-xs font-bold text-purple-400 mb-1 ml-2">Sumayyah</span>
+                <div class="bg-purple-950/40 border border-purple-900/50 p-3 rounded-2xl rounded-tl-none max-w-[85%] text-gray-200">
+                    "Wah, tahniah Aafiyah! Kalau aku, plan nak tolong business keluarga dulu kat kampung. Sambil-sambil tu boleh spend time dengan parents."
                 </div>
             </div>
 
-            <!-- Selamat Tinggal -->
-            <div class="text-center py-2">
-                <p class="text-xs text-gray-500 italic">"Mereka bertukar pelukan hangat, membisikkan doa kejayaan, sebelum masing-masing melangkah pergi membawa haluan hidup baru."</p>
+            <!-- Dialog Atia -->
+            <div class="flex flex-col items-start">
+                <span class="text-xs font-bold text-teal-400 mb-1 ml-2">Atia</span>
+                <div class="bg-teal-950/40 border border-teal-900/50 p-3 rounded-2xl rounded-tl-none max-w-[85%] text-gray-200">
+                    "Bagus tu Sumayyah. Aku pulak target nak sambung Master terus kalau ada rezeki scholarship. Seronok pulak belajar bidang ni."
+                </div>
+            </div>
+
+            <!-- Dialog Atiqah -->
+            <div class="flex flex-col items-start">
+                <span class="text-xs font-bold text-orange-400 mb-1 ml-2">Atiqah</span>
+                <div class="bg-orange-950/40 border border-orange-900/50 p-3 rounded-2xl rounded-tl-none max-w-[85%] text-gray-200">
+                    "Korang semua hebat-hebat la plan. Eh, Putri? Kau senyap je dari tadi. Kau pulak macam mana? Dah ada company panggil ke?"
+                </div>
+            </div>
+
+            <!-- Dialog Putri -->
+            <div class="flex flex-col items-end">
+                <span class="text-xs font-bold text-emerald-400 mb-1 mr-2">Putri</span>
+                <div class="bg-emerald-950/50 border border-emerald-800/60 p-3 rounded-2xl rounded-tr-none max-w-[85%] text-gray-100 font-medium">
+                    "Buat masa sekarang, keutamaan aku adalah balik rumah dan jaga ibu aku. Penyakit dia makin kerap menyerang belakangan ni. Bagi aku, kerjaya boleh tunggu, tapi ibu... dia satu-satunya harta yang aku ada sekarang."
+                </div>
             </div>
 
         </div>
 
-        <!-- Detik Kepulangan -->
-        <div class="bg-slate-900/50 p-4 rounded-xl border border-gray-800 space-y-3">
-            <h4 class="text-sm font-semibold text-gray-200 flex items-center gap-2">
-                <i class="fa-solid fa-motorcycle text-cyan-400"></i> Misi Seterusnya: Pulang ke Pangkuan Ibu
-            </h4>
-            <p class="text-sm text-gray-400">
-                Sambil menggenggam erat skrol ijazah, Putri tersenyum tulus. Hilang segala penat lelah bekerja sambilan sejak kecil apabila membayangkan senyuman ibunya nanti. Dia mempercepatkan langkah ke arah motorsikal kapcai EX-5 kesayangannya. Enjin dihidupkan, dan Putri memulas pendikit pulang membawa sinar kejayaan.
+        <!-- Naratif Penutup Babak -->
+        <div class="w-full text-center md:text-left px-2 pt-2 space-y-3">
+            <p class="text-lg leading-relaxed font-light text-gray-300">
+                Masing-masing terdiam seketika mendengarkan jawapan murni Putri, kagum dengan keteguhan hatinya. Sambil tersenyum sayu, mereka mula berbalasan pelukan, mengucapkan selamat tinggal, dan mendoakan kejayaan sesama sendiri sebelum melangkah ke haluan masing-masing.
+            </p>
+            <p class="text-lg leading-relaxed font-light text-gray-300">
+                Putri memandang skrol ijazah di tangannya. Senyuman lebar terukir di bibir—dia gembira kerana akhirnya berjaya membanggakan ibunya. Dengan hati yang berbunga-bunga, dia melangkah laju menuju ke motosikal kapcai EX-5 miliknya. Dia sudah tidak sabar untuk memulas pendikit pulang ke rumah bagi menunjukkan bukti kejayaan itu kepada wanita kesayangannya.
             </p>
         </div>
 
@@ -132,8 +107,8 @@
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
             Kembali
         </a>
-        <span class="text-sm text-gray-500 mono-font">Bab 1 * Halaman 3/15</span>
-        <a href="page4.html" class="bg-cyan-600 hover:bg-cyan-500 text-white font-medium px-6 py-2 rounded-lg transition-all shadow-lg shadow-cyan-600/20 flex items-center gap-2">
+        <span class="text-sm text-gray-500">Bab 1 * Halaman 3/15</span>
+        <a href="page4.html" class="bg-emerald-600 hover:bg-emerald-500 text-white font-medium px-6 py-2 rounded-lg transition-all shadow-lg shadow-emerald-600/20 flex items-center gap-2">
             Seterusnya 
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
         </a>
@@ -141,9 +116,3 @@
 
 </body>
 </html>
-```
-eof
-
-Kod di atas sudah sedia diletakkan ke dalam fail repository GitHub anda sebagai `page4.html` (atau disambungkan terus dari pautan "Seterusnya" pada `page2.html` ke `page3.html`).
-
-Kini penceritaan PutriPrime sudah mula membina emosi kekeluargaan dan persahabatan yang kukuh sebelum konflik sains fiksyen bermula! Sila letakkan fail ini di GitHub anda. Bagaimanakah jalan cerita seterusnya untuk **Halaman 4 (Page 4)** apabila Putri sampai di rumah?
