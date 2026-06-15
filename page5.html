@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PutriPrime - Bab 1: Halaman 5</title>
+    <!-- Menggunakan Tailwind CSS untuk reka bentuk premium -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        body {
+            background-color: #0b0f19;
+            color: #f3f4f6;
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen justify-between p-4 md:p-8">
+
+    <!-- Konten Utama -->
+    <main class="max-w-2xl mx-auto flex-grow flex flex-col justify-center items-center gap-6 w-full">
+        
+        <!-- PAPARAN GAMBAR: Putri di dalam bilik -->
+        <div class="w-full relative overflow-hidden rounded-2xl border border-gray-800 shadow-2xl shadow-indigo-500/10">
+            <img src="./assets/images/putri-night.webp" alt="Putri mencari kerja di telefon pada waktu malam" class="w-full h-auto object-cover">
+            <div class="absolute bottom-4 left-4 bg-black/75 backdrop-blur-md px-4 py-2 rounded-lg border border-indigo-500/30">
+                <p class="text-xs text-indigo-400 font-bold uppercase tracking-wider">Malam Yang Tenang</p>
+                <h2 class="text-sm font-medium text-gray-300">Peluang Di Sebalik Skrin</h2>
+            </div>
+        </div>
+
+        <!-- Naratif Pengenalan -->
+        <div class="w-full text-center md:text-left px-2">
+            <p class="text-lg leading-relaxed font-light text-gray-300">
+                Selepas selesai makan dan memastikan ibunya telah tidur dengan selesa, Putri melangkah masuk ke bilik kecilnya. Di atas katil, bertemankan cahaya lampu jalan yang samar dari luar tingkap, dia mula membelek telefon pintarnya. Jari-jemarinya laju menatal skrin, mencari satu perkara: peluang kerja sambilan yang fleksibel.
+            </p>
+        </div>
+
+        <!-- CODESMITH: MOCKUP SKRIN TELEFON PUTRI (Iklan Kerja) -->
+        <div class="w-full max-w-sm mx-auto bg-gray-900 border-4 border-gray-700 rounded-[2.5rem] p-4 shadow-2xl shadow-cyan-500/20 relative overflow-hidden my-4">
+            <!-- Speaker/Notch Telefon -->
+            <div class="w-24 h-4 bg-gray-700 absolute top-0 left-1/2 transform -translate-x-1/2 rounded-b-xl z-10"></div>
+            
+            <!-- Kandungan Skrin Iklan -->
+            <div class="bg-slate-950 rounded-[1.8rem] p-4 pt-6 text-left border border-gray-800 text-sm">
+                <div class="flex justify-between items-center border-b border-gray-800 pb-2 mb-3">
+                    <span class="text-xs text-cyan-400 font-bold font-mono">GoRide Malaysia</span>
+                    <span class="text-[10px] bg-cyan-500/10 text-cyan-400 px-2 py-0.5 rounded-full border border-cyan-500/20">Kemasukan Segera</span>
+                </div>
+                
+                <h3 class="text-md font-bold text-white mb-1">Daftar Sebagai Delivery Rider (Sambilan)</h3>
+                <p class="text-xs text-gray-400 mb-4">Kawasan: Shah Alam, Selangor & Lembah Klang</p>
+                
+                <!-- Kelebihan/Benefits -->
+                <div class="space-y-2 mb-4">
+                    <div class="flex items-center gap-2 bg-slate-900 p-2 rounded-lg border border-gray-800/60">
+                        <span class="text-emerald-400">⚡</span>
+                        <p class="text-xs text-gray-300"><strong class="text-white">Masa Bebas:</strong> Buka/tutup aplikasi bila-bila masa.</p>
+                    </div>
+                    <div class="flex items-center gap-2 bg-slate-900 p-2 rounded-lg border border-gray-800/60">
+                        <span class="text-emerald-400">💰</span>
+                        <p class="text-xs text-gray-300"><strong class="text-white">Komisyen Tinggi:</strong> Insentif tambahan waktu puncak.</p>
+                    </div>
+                    <div class="flex items-center gap-2 bg-slate-900 p-2 rounded-lg border border-gray-800/60">
+                        <span class="text-emerald-400">🛡️</span>
+                        <p class="text-xs text-gray-300"><strong class="text-white">Perlindungan:</strong> Insurans peribadi percuma disediakan.</p>
+                    </div>
+                </div>
+
+                <!-- Status Borang -->
+                <div class="bg-emerald-950/40 border border-emerald-500/30 p-3 rounded-xl text-center">
+                    <p class="text-xs text-emerald-400 font-bold flex items-center justify-center gap-1">
+                        ✅ VERIFIKASI ONLINE LULUS
+                    </p>
+                    <p class="text-[11px] text-gray-400 mt-1">Akaun anda aktif. Sedia untuk kayuhan pertama.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- RUANGAN DIALOG & MONOLOG DALAMAN PUTRI -->
+        <div class="w-full space-y-4 px-2">
+            <!-- Monolog Dalaman Putri -->
+            <div class="flex flex-col items-end">
+                <span class="text-xs font-bold text-cyan-400 mb-1 mr-2">Putri (Bisikan Hati)</span>
+                <div class="bg-slate-900 border border-cyan-900/40 p-4 rounded-2xl rounded-tr-none max-w-[90%] text-gray-300 italic">
+                    "Kerja rider ni macam ngam sangat dengan aku. Aku boleh keluar buat penghantaran bila ibu tengah tidur atau waktu Pak Cik Salimi datang menjenguk. Kalau ibu tiba-tiba tak sihat, aku boleh terus 'off-line' aplikasi dan balik rumah cepat-cepat sebab kawasan operasi pun dekat Shah Alam je."
+                </div>
+            </div>
+
+            <!-- Kata-kata Semangat Putri -->
+            <div class="flex flex-col items-end">
+                <span class="text-xs font-bold text-emerald-400 mb-1 mr-2">Putri</span>
+                <div class="bg-emerald-950/50 border border-emerald-800/60 p-3 rounded-2xl rounded-tr-none max-w-[85%] text-gray-100 font-medium">
+                    "Lauk dah beli, motor kapcai ada, insurans pun dia orang bagi perlindungan... Okey, bismillah. Aku cuba yang ini dulu!"
+                </div>
+            </div>
+        </div>
+
+        <!-- Naratif Penutup -->
+        <div class="w-full text-center md:text-left px-2 pt-2">
+            <p class="text-lg leading-relaxed font-light text-gray-300">
+                Selepas memuat naik dokumen pengenalan diri dan lesen memandu, skrin telefonnya berkelip hijau menandakan proses verifikasi telah berjaya sepenuhnya. Satu keluhan lega dilepaskan. Dengan hati yang lebih tenang dan penuh harapan baru untuk hari esok, Putri meletakkan telefonnya ke tepi, melabuhkan kepalanya ke atas bantal usang, lalu perlahan-lahan dijemput mimpi dalam keheningan malam Shah Alam.
+            </p>
+        </div>
+
+    </main>
+
+    <!-- Navigasi Bawah -->
+    <footer class="max-w-2xl mx-auto w-full pt-8 pb-4 flex justify-between items-center border-t border-gray-800 mt-8">
+        <a href="page4.html" class="border border-gray-700 hover:bg-gray-800 text-gray-300 font-medium px-4 py-2 rounded-lg transition-all flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+            Kembali
+        </a>
+        <span class="text-sm text-gray-500">Bab 1 * Halaman 5/15</span>
+        <a href="page6.html" class="bg-indigo-600 hover:bg-indigo-500 text-white font-medium px-6 py-2 rounded-lg transition-all shadow-lg shadow-indigo-600/20 flex items-center gap-2">
+            Seterusnya 
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+        </a>
+    </footer>
+
+</body>
+</html>
