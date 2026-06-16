@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SASATECH - Global Portal Interface</title>
+    <!-- Tailwind CSS & Google Fonts -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,6 +24,7 @@
 </head>
 <body class="text-gray-300 min-h-screen flex flex-col justify-between">
 
+    <!-- HEADER / NAVIGATION -->
     <header class="border-b border-gray-900 bg-black/40 backdrop-blur-md sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
             <div class="flex items-center gap-2">
@@ -35,20 +37,25 @@
         </div>
     </header>
 
+    <!-- MAIN INTERFACE -->
     <main class="max-w-4xl mx-auto px-4 py-12 md:py-16 w-full flex-grow flex flex-col justify-center items-center text-center">
         
+        <!-- SYSTEM METRICS LIVE DISPLAY (Edisi Kebal Fix) -->
         <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 text-left font-mono text-xs text-cyan-400 max-w-2xl mx-auto">
+            <!-- Kaunter Pelawat -->
             <div class="bg-cyan-950/20 border border-cyan-900/40 p-3 rounded-xl flex flex-col justify-center">
                 <span class="text-gray-500 text-[10px] uppercase tracking-wider">Total System Accesses</span>
-                <span id="visitor-count" class="text-lg font-bold text-white mt-1">00,104,283</span>
+                <span id="visitor-count" class="text-lg font-bold text-white mt-1">412,508</span>
             </div>
+            <!-- Paparan Tarikh -->
             <div class="bg-cyan-950/20 border border-cyan-900/40 p-3 rounded-xl flex flex-col justify-center">
                 <span class="text-gray-500 text-[10px] uppercase tracking-wider">Current Date</span>
                 <span id="live-date" class="text-sm font-bold text-cyan-300 mt-1">16 Jun 2026</span>
             </div>
+            <!-- Paparan Masa -->
             <div class="bg-cyan-950/20 border border-cyan-900/40 p-3 rounded-xl flex flex-col justify-center">
                 <span class="text-gray-500 text-[10px] uppercase tracking-wider">System Synchronicity (MYT)</span>
-                <span id="live-time" class="text-sm font-bold text-emerald-400 mt-1">15:14:08</span>
+                <span id="live-time" class="text-sm font-bold text-emerald-400 mt-1">15:19:50</span>
             </div>
         </div>
 
@@ -65,6 +72,7 @@
             Sistem pemantauan anomali dimensi dan pengurusan wira elemental Lembah Klang. Log masuk untuk mengakses rekod data perlawanan subjek.
         </p>
 
+        <!-- MAIN CTA BUTTON -->
         <div class="w-full flex flex-col sm:flex-row justify-center items-center gap-4 mb-16">
             <a href="/bab1/page1.html" class="w-full sm:w-auto bg-gradient-to-r from-cyan-600 to-cyan-500 hover:from-cyan-500 hover:to-cyan-400 text-white font-semibold px-8 py-4 rounded-xl transition-all shadow-lg shadow-cyan-500/10 text-center tracking-wide heading-font">
                 MULA MEMBACA (BAB 1)
@@ -74,6 +82,7 @@
             </a>
         </div>
 
+        <!-- TRACKING GRID / STATUS ARCHIVE -->
         <section id="status" class="w-full border border-gray-900 bg-black/20 rounded-2xl p-6 md:p-8 text-left hologram-glow space-y-6">
             
             <div class="flex items-center justify-between border-b border-gray-900 pb-4">
@@ -84,7 +93,9 @@
                 <span class="bg-emerald-950 text-emerald-400 border border-emerald-900 text-[10px] font-mono px-2 py-0.5 rounded font-bold uppercase tracking-wider">ONGOING</span>
             </div>
 
+            <!-- List Chapters -->
             <div class="space-y-4">
+                <!-- Bab 1 -->
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl bg-gray-950/50 border border-gray-900 gap-4">
                     <div class="flex items-start gap-4">
                         <div class="w-10 h-10 rounded-lg bg-cyan-950/60 border border-cyan-800/40 flex items-center justify-center font-mono text-cyan-400 font-bold shrink-0">
@@ -100,6 +111,7 @@
                     </a>
                 </div>
 
+                <!-- Bab 2 -->
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl bg-gray-950/20 border border-gray-950 gap-4 opacity-60">
                     <div class="flex items-start gap-4">
                         <div class="w-10 h-10 rounded-lg bg-gray-900 border border-gray-800 flex items-center justify-center font-mono text-gray-500 font-bold shrink-0">
@@ -118,43 +130,54 @@
 
     </main>
 
+    <!-- FOOTER -->
     <footer class="border-t border-gray-900 bg-black/20 py-6 text-center text-xs text-gray-600">
         <p>&copy; 2026 SasaTech Corporation. Hak Cipta Terpelihara.</p>
         <p class="font-mono text-[10px] text-gray-700 mt-1">SasaFood Delivery Logistics Network // Covert Operation Sector</p>
     </footer>
 
+    <!-- JAVASCRIPT ENGINE -->
     <script>
         function updateSystemMetrics() {
-            const now = new Date();
-            
-            // 1. Kemas Kini Masa Terkini (Jam Digital format HH:MM:SS)
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            document.getElementById('live-time').textContent = `${hours}:${minutes}:${seconds}`;
-            
-            // 2. Kemas Kini Tarikh Terkini (Format Tempatan Malaysia)
-            const options = { day: 'numeric', month: 'short', year: 'numeric' };
-            document.getElementById('live-date').textContent = now.toLocaleDateString('ms-MY', options);
+            try {
+                const now = new Date();
+                
+                // Kemas kini Jam
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const seconds = String(now.getSeconds()).padStart(2, '0');
+                const timeElem = document.getElementById('live-time');
+                if(timeElem) timeElem.textContent = hours + ":" + minutes + ":" + seconds;
+                
+                // Kemas kini Tarikh
+                const dateElem = document.getElementById('live-date');
+                if(dateElem) {
+                    const options = { day: 'numeric', month: 'short', year: 'numeric' };
+                    dateElem.textContent = now.toLocaleDateString('ms-MY', options);
+                }
+            } catch (e) {
+                console.log("Masa dikekalkan pada mod lalai statik.");
+            }
         }
 
-        // Jalankan fungsi setiap 1 saat
+        // Jalankan fungsi
         setInterval(updateSystemMetrics, 1000);
-        updateSystemMetrics(); // Panggilan pertama sertamerta
+        updateSystemMetrics();
 
-        // 3. Sistem Kaunter Simulasi Dinamik (Meningkat Setiap Kali Halaman Dibuka/Disegarkan)
-        // Menyimpan nilai pelawat asas dalam simpanan pelayar (LocalStorage)
-        let baseCount = localStorage.getItem('sasatech_visitors');
-        if (!baseCount) {
-            // Jika pertama kali dibuka, berikan nombor pangkalan rawak yang besar gaya sistem korporat
-            baseCount = Math.floor(Math.random() * (450000 - 400000) + 400000);
-        } else {
-            baseCount = parseInt(baseCount) + Math.floor(Math.random() * 3) + 1; // Naikkan nombor secara rawak
+        // Sistem Kaunter Simpanan Selamat
+        try {
+            let count = localStorage.getItem('sasatech_clicks');
+            if (!count) {
+                count = Math.floor(Math.random() * (500000 - 450000) + 450000);
+            } else {
+                count = parseInt(count) + 1;
+            }
+            localStorage.setItem('sasatech_visitors', count);
+            const countElem = document.getElementById('visitor-count');
+            if(countElem) countElem.textContent = count.toLocaleString('en-US');
+        } catch(e) {
+            // Kekalkan paparan asal jika peranti menyekat storage
         }
-        localStorage.setItem('sasatech_visitors', baseCount);
-        
-        // Format nombor letak koma (e.g. 400,123)
-        document.getElementById('visitor-count').textContent = baseCount.toLocaleString('en-US');
     </script>
 
 </body>
