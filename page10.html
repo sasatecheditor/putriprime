@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PutriPrime - Bab 1: Halaman 10</title>
+    <!-- Menggunakan Tailwind CSS untuk reka bentuk premium -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        body {
+            background-color: #030712;
+            color: #f3f4f6;
+            font-family: 'Inter', sans-serif;
+        }
+        .hologram-glow {
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.25);
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen justify-between p-4 md:p-8">
+
+    <!-- Konten Utama -->
+    <main class="max-w-2xl mx-auto flex-grow flex flex-col justify-center items-center gap-6 w-full">
+        
+        <!-- ================= SEGMEN 1: GANJARAN & PILIHAN SISTEM ================= -->
+        
+        <!-- GAMBAR 1: Menu Pilihan Ganjaran -->
+        <div class="w-full relative overflow-hidden rounded-2xl border border-gray-800 shadow-2xl">
+            <img src="./assets/images/putri-rewards.webp" alt="Putri memilih ganjaran sistem SasaTech" class="w-full h-auto object-cover">
+            <div class="absolute bottom-4 left-4 bg-black/85 backdrop-blur-md px-4 py-2 rounded-lg border border-cyan-500/30">
+                <p class="text-xs text-cyan-400 font-bold uppercase tracking-wider">Fasa Ganjaran</p>
+                <h2 class="text-sm font-medium text-gray-300">Pilihan Strategik</h2>
+            </div>
+        </div>
+
+        <!-- Naratif 1 -->
+        <div class="w-full text-center md:text-left px-2 space-y-4">
+            <p class="text-lg leading-relaxed font-light text-gray-300">
+                Sebaik sahaja raksasa tanah itu hancur menjadi debu, portal dimensi di udara mula tertutup rapat. Angin malam bertiup kencang, membersihkan sisa kabus tebal dan habuk yang terampai. Putri membongkok melepaskan lelah yang amat sangat. Rasa sakit di kakinya mula beransur pulih secara perlahan berkat pemulihan stamina sistem. Atas bantuan aplikasi kereta sewa, Putri akhirnya berjaya pulang ke rumah dengan selamat.
+            </p>
+        </div>
+
+        <!-- INTERFASI POP-UP GANJARAN SASATECH -->
+        <div class="w-full bg-slate-950 border-2 border-cyan-500/40 rounded-2xl p-4 md:p-6 font-mono text-xs md:text-sm text-cyan-300 hologram-glow space-y-4 my-2">
+            <div class="border-b border-cyan-800 pb-2">
+                <h3 class="text-sm font-bold text-white uppercase tracking-wider">🎁 KOTAK PILIHAN GANJARAN TAMBAHAN</h3>
+                <p class="text-[10px] text-gray-400">Sila pilih satu (1) item ganjaran di bawah untuk meneruskan:</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <!-- Pilihan 1 -->
+                <div class="border border-cyan-500/20 bg-cyan-950/10 p-3 rounded-xl hover:border-cyan-500 transition-all cursor-pointer">
+                    <p class="font-bold text-white text-xs">☕ OPTION A: TEH HERBA MURNI</p>
+                    <p class="text-[11px] text-gray-400 mt-1">Kesan: Memulihkan 100% kecederaan fizikal dalaman dan luaran serta-merta (Menyembuhkan kaki parah).</p>
+                </div>
+                <!-- Pilihan 2 -->
+                <div class="border border-cyan-500/20 bg-cyan-950/10 p-3 rounded-xl hover:border-cyan-500 transition-all cursor-pointer">
+                    <p class="font-bold text-yellow-400 text-xs">⚔️ OPTION B: SENJATA ELEMENTAL ASAP</p>
+                    <p class="text-[11px] text-gray-400 mt-1">Kesan: Membuka kunci senjata pemula yang boleh disatukan dengan manipulasi kabus asap.</p>
+                </div>
+            </div>
+            <p class="text-emerald-400 text-[11px] italic text-center font-bold">>> [Status: Pilihan disimpan dalam storan mental subjek]</p>
+        </div>
+
+
+        <!-- ================= SEGMEN 2: KEPULANGAN & TUGASAN HARIAN ================= -->
+
+        <div class="w-full border-t border-dashed border-gray-800 my-4"></div>
+
+        <!-- GAMBAR 2: Makan Malam Bersama Ibu -->
+        <div class="w-full relative overflow-hidden rounded-2xl border border-gray-800 shadow-2xl">
+            <img src="./assets/images/putri-home.webp" alt="Putri bergelak tawa bersama ibunya di rumah" class="w-full h-auto object-cover">
+            <div class="absolute bottom-4 left-4 bg-black/85 backdrop-blur-md px-4 py-2 rounded-lg border border-amber-500/30">
+                <p class="text-xs text-amber-400 font-bold uppercase tracking-wider">Rumah Flat</p>
+                <h2 class="text-sm font-medium text-gray-300">Selamat Di Sisi Ibu</h2>
+            </div>
+        </div>
+
+        <!-- Dialog Imbasan Rumah -->
+        <div class="w-full space-y-4 px-2">
+            <!-- Dialog Ibu -->
+            <div class="flex flex-col items-start">
+                <span class="text-xs font-bold text-amber-400 mb-1">Ibu</span>
+                <div class="bg-amber-950/20 border border-amber-900/40 p-3 rounded-xl max-w-[85%] text-gray-200 text-sm">
+                    "Alhamdulillah Putri dah balik... Kenapa dengan baju ni? Comot sangat ni, apa dah jadi? Motor mana?"
+                </div>
+            </div>
+
+            <!-- Dialog Putri -->
+            <div class="flex flex-col items-end">
+                <span class="text-xs font-bold text-emerald-400 mb-1 mr-2">Putri</span>
+                <div class="bg-emerald-950/45 border border-emerald-900/50 p-3 rounded-xl max-w-[85%] text-gray-100 text-sm">
+                    "Tak ada apalah ibu, Putri jatuh sikit je tadi sebab terlanggar anjing tanah melintas. Motor tu esok Putri hantar bengkel untuk repair. Tak ada apa yang seriuslah, jangan risau key..."
+                </div>
+            </div>
+
+            <!-- Dialog Ibu -->
+            <div class="flex flex-col items-start">
+                <span class="text-xs font-bold text-amber-400 mb-1">Ibu</span>
+                <div class="bg-amber-950/20 border border-amber-900/40 p-3 rounded-xl max-w-[85%] text-gray-200 text-sm italic">
+                    "Anjing tanah? Ada-ada je lah kamu ni Putri... Anjing tu anjing je lah, mana ada anjing tanah."
+                </div>
+            </div>
+        </div>
+
+        <!-- Naratif Transisi ke Bilik -->
+        <div class="w-full text-center md:text-left px-2 space-y-4 pt-2">
+            <p class="text-lg leading-relaxed font-light text-gray-300">
+                Mereka berdua ketawa bersama sambil menikmati hidangan makan malam yang ringkas. Selesai semuanya reda, Putri masuk ke dalam bilik tidurnya. Suasana kembali sunyi. Dia duduk di birai katil lalu memanggil semula skrin hologram SasaTech untuk meneroka sistem itu dengan lebih mendalam.
+            </p>
+        </div>
+
+        <!-- POP-UP TUGASAN HARIAN -->
+        <div class="w-full bg-slate-950 border border-red-500/30 rounded-xl p-4 font-mono text-xs text-red-400 space-y-2">
+            <p class="font-bold text-white">⚠️ NOTIFIKASI: TUGASAN HARIAN MANDATORI (DAILY QUEST)</p>
+            <div class="bg-black/50 p-2 rounded border border-red-950 space-y-1 text-gray-300">
+                <p>1. Jogging Laluan Shah Alam: <span class="text-red-400">0 / 5 Kilometer</span></p>
+                <p>2. Latih Tubi Fizikal (Tekan Tubi): <span class="text-red-400">0 / 50 Kali</span></p>
+                <p>3. Latihan Meditasi Elemen Asap: <span class="text-red-400">0 / 20 Minit</span></p>
+            </div>
+            <p class="text-red-500 font-bold italic text-[11px]">[AMARAN: Kegagalan melengkapkan tugasan sebelum jam 06:00 pagi akan dikenakan penalti/denda misteri.]</p>
+        </div>
+
+        <!-- Dialog Monolog Akhir Putri -->
+        <div class="w-full space-y-2 px-2">
+            <div class="flex flex-col items-end">
+                <span class="text-xs font-bold text-emerald-400 mb-1 mr-2">Putri (Bisikan Hati)</span>
+                <div class="bg-emerald-950/30 border border-emerald-900/40 p-3 rounded-xl max-w-[85%] text-gray-300 text-sm">
+                    "Emm... ada pulak arahan suruh aku completekan tugasan harian ni. Kalau tak siap kena denda? Apa punya sistemlah macam ni... Dah la kena jogging, latih tubi bagai. Ahh, penatlah! Nanti-nanti je lah aku buat."
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Navigasi Bawah -->
+    <footer class="max-w-2xl mx-auto w-full pt-8 pb-4 flex justify-between items-center border-t border-gray-900 mt-8">
+        <a href="page9.html" class="border border-gray-700 hover:bg-gray-800 text-gray-300 font-medium px-4 py-2 rounded-lg transition-all flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+            Kembali
+        </a>
+        <span class="text-sm text-gray-600">Bab 1 * Halaman 10/15</span>
+        <a href="page11.html" class="bg-emerald-600 hover:bg-emerald-500 text-white font-medium px-6 py-2 rounded-lg transition-all shadow-lg shadow-emerald-600/20 flex items-center gap-2">
+            Seterusnya 
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+        </a>
+    </footer>
+
+</body>
+</html>
