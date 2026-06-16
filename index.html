@@ -35,8 +35,23 @@
         </div>
     </header>
 
-    <main class="max-w-4xl mx-auto px-4 py-12 md:py-20 w-full flex-grow flex flex-col justify-center items-center text-center">
+    <main class="max-w-4xl mx-auto px-4 py-12 md:py-16 w-full flex-grow flex flex-col justify-center items-center text-center">
         
+        <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 text-left font-mono text-xs text-cyan-400 max-w-2xl mx-auto">
+            <div class="bg-cyan-950/20 border border-cyan-900/40 p-3 rounded-xl flex flex-col justify-center">
+                <span class="text-gray-500 text-[10px] uppercase tracking-wider">Total System Accesses</span>
+                <span id="visitor-count" class="text-lg font-bold text-white mt-1">00,104,283</span>
+            </div>
+            <div class="bg-cyan-950/20 border border-cyan-900/40 p-3 rounded-xl flex flex-col justify-center">
+                <span class="text-gray-500 text-[10px] uppercase tracking-wider">Current Date</span>
+                <span id="live-date" class="text-sm font-bold text-cyan-300 mt-1">16 Jun 2026</span>
+            </div>
+            <div class="bg-cyan-950/20 border border-cyan-900/40 p-3 rounded-xl flex flex-col justify-center">
+                <span class="text-gray-500 text-[10px] uppercase tracking-wider">System Synchronicity (MYT)</span>
+                <span id="live-time" class="text-sm font-bold text-emerald-400 mt-1">15:14:08</span>
+            </div>
+        </div>
+
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/40 border border-cyan-800/40 text-xs font-mono text-cyan-400 mb-6 tracking-wide">
             <span>PROJECT_ID: PUTRIPRIME_RESONANCE</span>
         </div>
@@ -64,7 +79,7 @@
             <div class="flex items-center justify-between border-b border-gray-900 pb-4">
                 <div>
                     <h2 class="heading-font font-bold text-white text-lg">LOG REKOD MISI</h2>
-                    <p class="text-xs text-gray-500 font-mono mt-0.5">TERKINI KEMAS KINI: JUN 2026</p>
+                    <p class="text-xs text-gray-500 font-mono mt-0.5">STATUS SERVER: MAMPAN</p>
                 </div>
                 <span class="bg-emerald-950 text-emerald-400 border border-emerald-900 text-[10px] font-mono px-2 py-0.5 rounded font-bold uppercase tracking-wider">ONGOING</span>
             </div>
@@ -107,6 +122,40 @@
         <p>&copy; 2026 SasaTech Corporation. Hak Cipta Terpelihara.</p>
         <p class="font-mono text-[10px] text-gray-700 mt-1">SasaFood Delivery Logistics Network // Covert Operation Sector</p>
     </footer>
+
+    <script>
+        function updateSystemMetrics() {
+            const now = new Date();
+            
+            // 1. Kemas Kini Masa Terkini (Jam Digital format HH:MM:SS)
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('live-time').textContent = `${hours}:${minutes}:${seconds}`;
+            
+            // 2. Kemas Kini Tarikh Terkini (Format Tempatan Malaysia)
+            const options = { day: 'numeric', month: 'short', year: 'numeric' };
+            document.getElementById('live-date').textContent = now.toLocaleDateString('ms-MY', options);
+        }
+
+        // Jalankan fungsi setiap 1 saat
+        setInterval(updateSystemMetrics, 1000);
+        updateSystemMetrics(); // Panggilan pertama sertamerta
+
+        // 3. Sistem Kaunter Simulasi Dinamik (Meningkat Setiap Kali Halaman Dibuka/Disegarkan)
+        // Menyimpan nilai pelawat asas dalam simpanan pelayar (LocalStorage)
+        let baseCount = localStorage.getItem('sasatech_visitors');
+        if (!baseCount) {
+            // Jika pertama kali dibuka, berikan nombor pangkalan rawak yang besar gaya sistem korporat
+            baseCount = Math.floor(Math.random() * (450000 - 400000) + 400000);
+        } else {
+            baseCount = parseInt(baseCount) + Math.floor(Math.random() * 3) + 1; // Naikkan nombor secara rawak
+        }
+        localStorage.setItem('sasatech_visitors', baseCount);
+        
+        // Format nombor letak koma (e.g. 400,123)
+        document.getElementById('visitor-count').textContent = baseCount.toLocaleString('en-US');
+    </script>
 
 </body>
 </html>
