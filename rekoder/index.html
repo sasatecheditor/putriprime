@@ -41,11 +41,13 @@
         
         <aside class="lg:col-span-1 bg-black/40 border border-gray-900 p-6 rounded-2xl h-fit sticky top-24 font-mono text-xs">
             <h3 class="font-bold text-sm tracking-wider text-white border-b border-gray-900 pb-3 mb-4">INDEX_DATA</h3>
-            <ul class="space-y-2">
+           <ul class="space-y-2">
                 <li><a href="#pengenalan" class="block p-2 rounded text-cyan-400 bg-cyan-950/20 border border-cyan-900/30 font-medium">00 // Pengenalan</a></li>
                 <li><a href="#bab1" class="block p-2 rounded text-gray-400 hover:text-white hover:bg-gray-900 transition-all">01 // Mengenali Rekoder</a></li>
                 <li><a href="#bab2" class="block p-2 rounded text-gray-400 hover:text-white hover:bg-gray-900 transition-all">02 // Postur & Tiupan</a></li>
-                <li><a href="#bab3" class="block p-2 rounded text-gray-400 hover:text-white hover:bg-gray-900 transition-all">03 // Nota B, A, G (AUDIO)</a></li>
+                <li><a href="#bab3" class="block p-2 rounded text-gray-400 hover:text-white hover:bg-gray-900 transition-all">03 // Tahap 1: Nota B, A, G</a></li>
+                <li><a href="#bab4" class="block p-2 rounded text-gray-400 hover:text-white hover:bg-gray-900 transition-all">04 // Tahap 2: Tambah C' & D'</a></li>
+                <li><a href="#bab5" class="block p-2 rounded text-gray-400 hover:text-white hover:bg-gray-900 transition-all">05 // Tahap 3: Skala 1 Oktav Penuh</a></li>
             </ul>
         </aside>
 
@@ -122,114 +124,131 @@
 
             <hr class="border-gray-900">
 
-            <section id="bab3" class="scroll-mt-24">
-                <span class="text-[10px] font-mono tracking-widest text-fuchsia-500 block mb-1">[RESONANCE_PAD: 03]</span>
-                <h2 class="heading-font text-2xl font-bold text-white mb-4">Bab 3: Nota Pertama Anda & Frekuensi Audio</h2>
+           <section id="bab3" class="scroll-mt-24 border-b border-gray-900 pb-12">
+                <span class="text-[10px] font-mono tracking-widest text-fuchsia-500 block mb-1">[LEVEL_01: BEGINNER]</span>
+                <h2 class="heading-font text-2xl font-bold text-white mb-4">Bab 3: Asas Segitiga (Nota B, A, G)</h2>
                 <p class="text-gray-400 text-sm leading-relaxed mb-6">
-                    Tiga nota terawal yang paling mudah dipelajari ialah nota **B, A, dan G**. Klik pada panel kawalan audio di bawah untuk memancarkan simulasi gelombang bunyi bagi setiap nota tersebut.
+                    Langkah pertama penguasaan rekoder. Tiga nota ini hanya menggunakan tangan kiri anda pada lubang bahagian atas rekoder.
                 </p>
 
-                <div class="bg-gray-950 p-6 rounded-2xl border border-purple-900/40 shadow-inner max-w-2xl mx-auto my-6">
-                    <div class="text-[10px] font-mono text-fuchsia-400 mb-4 tracking-widest uppercase">
-                        [SONIC_SYNTH_&_VISUAL_INTERFACE v2.0]
+                <div class="bg-gray-950 p-6 rounded-2xl border border-purple-900/40 max-w-xl mx-auto my-4 font-mono text-xs">
+                    <div class="text-[10px] text-fuchsia-400 mb-4 tracking-widest uppercase">[SONIC_INTERFACE // TAHAP_1]</div>
+                    <div class="flex gap-3 justify-center">
+                        <button onclick="playRecorderNote('G')" class="bg-purple-950/20 border border-purple-500/30 hover:border-fuchsia-500 text-white font-bold w-16 h-16 rounded-xl flex flex-col items-center justify-center transition-all active:scale-95">
+                            <span class="text-lg text-fuchsia-400">G</span>
+                            <span class="text-[9px] text-gray-500 font-normal">783Hz</span>
+                        </button>
+                        <button onclick="playRecorderNote('A')" class="bg-purple-950/20 border border-purple-500/30 hover:border-fuchsia-500 text-white font-bold w-16 h-16 rounded-xl flex flex-col items-center justify-center transition-all active:scale-95">
+                            <span class="text-lg text-fuchsia-400">A</span>
+                            <span class="text-[9px] text-gray-500 font-normal">880Hz</span>
+                        </button>
+                        <button onclick="playRecorderNote('B')" class="bg-purple-950/20 border border-purple-500/30 hover:border-fuchsia-500 text-white font-bold w-16 h-16 rounded-xl flex flex-col items-center justify-center transition-all active:scale-95">
+                            <span class="text-lg text-fuchsia-400">B</span>
+                            <span class="text-[9px] text-gray-500 font-normal">987Hz</span>
+                        </button>
                     </div>
+                </div>
+
+                <div class="bg-gray-950 p-6 rounded-2xl border border-emerald-900/30 max-w-xl mx-auto my-6 font-mono text-xs">
+                    <div class="text-[10px] text-emerald-400 mb-2 tracking-widest uppercase">[MELODY_TRACKER // PROJECT: LYRA]</div>
+                    <div class="grid grid-cols-7 gap-1.5 mb-4">
+                        <div id="step-0" class="bg-purple-950/10 border border-purple-900/30 text-gray-400 py-1 rounded text-center">B</div>
+                        <div id="step-1" class="bg-purple-950/10 border border-purple-900/30 text-gray-400 py-1 rounded text-center">A</div>
+                        <div id="step-2" class="bg-purple-950/10 border border-purple-900/30 text-gray-400 py-1 rounded text-center">G</div>
+                        <div id="step-3" class="bg-purple-950/10 border border-purple-900/30 text-gray-400 py-1 rounded text-center">A</div>
+                        <div id="step-4" class="bg-purple-950/10 border border-purple-900/30 text-gray-400 py-1 rounded text-center">B</div>
+                        <div id="step-5" class="bg-purple-950/10 border border-purple-900/30 text-gray-400 py-1 rounded text-center">B</div>
+                        <div id="step-6" class="bg-purple-950/10 border border-purple-900/30 text-gray-400 py-1 rounded text-center">B</div>
+                    </div>
+                    <div class="flex justify-center gap-3">
+                        <button onclick="playSongNote('G')" class="bg-emerald-950/20 border border-emerald-800/40 hover:border-emerald-400 text-emerald-400 font-bold px-4 py-2 rounded-lg text-xs">NODE_G</button>
+                        <button onclick="playSongNote('A')" class="bg-emerald-950/20 border border-emerald-800/40 hover:border-emerald-400 text-emerald-400 font-bold px-4 py-2 rounded-lg text-xs">NODE_A</button>
+                        <button onclick="playSongNote('B')" class="bg-emerald-950/20 border border-emerald-800/40 hover:border-emerald-400 text-emerald-400 font-bold px-4 py-2 rounded-lg text-xs">NODE_B</button>
+                    </div>
+                    <div id="song-terminal" class="bg-black/60 p-2 rounded border border-gray-900 text-fuchsia-400 mt-4 text-[10px] min-h-[30px] flex items-center">
+                        [MELODY_TRACKER] Awaiting beginner resonance sequence...
+                    </div>
+                </div>
+            </section>
+
+            <section id="bab4" class="scroll-mt-24 border-b border-gray-900 pb-12">
+                <span class="text-[10px] font-mono tracking-widest text-cyan-500 block mb-1">[LEVEL_02: INTERMEDIATE]</span>
+                <h2 class="heading-font text-2xl font-bold text-white mb-4">Bab 4: Penjarian Silang (Tambah C' & D')</h2>
+                <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                    Pada tahap pertengahan, anda akan mempelajari nota tinggi **C'** dan **D'**. Perhatikan logik hibrid di mana lubang belakang (Lubang 0) perlu dilepaskan sepenuhnya untuk membunyikan nota D'.
+                </p>
+
+                <div class="bg-gray-950 p-6 rounded-2xl border border-cyan-900/40 max-w-xl mx-auto my-4 font-mono text-xs">
+                    <div class="text-[10px] text-cyan-400 mb-4 tracking-widest uppercase">[SONIC_INTERFACE // TAHAP_2]</div>
+                    <div class="flex flex-wrap gap-3 justify-center">
+                        <button onclick="playRecorderNote('G')" class="bg-slate-900 border border-slate-800 text-gray-400 w-14 h-14 rounded-xl flex flex-col items-center justify-center text-xs"><span>G</span></button>
+                        <button onclick="playRecorderNote('A')" class="bg-slate-900 border border-slate-800 text-gray-400 w-14 h-14 rounded-xl flex flex-col items-center justify-center text-xs"><span>A</span></button>
+                        <button onclick="playRecorderNote('B')" class="bg-slate-900 border border-slate-800 text-gray-400 w-14 h-14 rounded-xl flex flex-col items-center justify-center text-xs"><span>B</span></button>
+                        <button onclick="playRecorderNote('C_HIGH')" class="bg-cyan-950/40 border border-cyan-500/60 text-white font-bold w-14 h-14 rounded-xl flex flex-col items-center justify-center transition-all active:scale-95 shadow-[0_0_10px_rgba(6,182,212,0.15)]">
+                            <span class="text-md text-cyan-400">C'</span>
+                            <span class="text-[8px] text-gray-500 font-normal">1046Hz</span>
+                        </button>
+                        <button onclick="playRecorderNote('D_HIGH')" class="bg-cyan-950/40 border border-cyan-500/60 text-white font-bold w-14 h-14 rounded-xl flex flex-col items-center justify-center transition-all active:scale-95 shadow-[0_0_10px_rgba(6,182,212,0.15)]">
+                            <span class="text-md text-cyan-400">D'</span>
+                            <span class="text-[8px] text-gray-500 font-normal">1174Hz</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="bab5" class="scroll-mt-24 pb-6">
+                <span class="text-[10px] font-mono tracking-widest text-emerald-500 block mb-1">[LEVEL_03: EXPERT_MATRIX]</span>
+                <h2 class="heading-font text-2xl font-bold text-white mb-4">Bab 5: Skala Kompak 1 Oktav Penuh</h2>
+                <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                    Tahap akhir. Kita aktifkan zon **Tangan Kanan (Lubang 4 hingga 7)** untuk melengkapkan frekuensi akustik asas rekoder soprano dari Do rendah ke Re tinggi.
+                </p>
+
+                <div class="bg-gray-950 p-6 rounded-2xl border border-emerald-900/30 max-w-xl mx-auto my-4 font-mono text-xs">
+                    <div class="text-[10px] text-emerald-400 mb-4 tracking-widest uppercase">[FULL_SYNTH_MATRIX // ACTIVE]</div>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-                        
-                        <div class="flex flex-col justify-between h-full space-y-4">
-                            <p class="text-xs text-gray-400 font-sans leading-relaxed">
-                                Klik butang nota di bawah untuk melihat simulasi lubang yang perlu ditutup (<span class="text-fuchsia-400 font-bold">fuchsia</span>) dan mendengar bunyinya.
-                            </p>
-                            
-                            <div class="flex flex-wrap gap-2 my-2 justify-center md:justify-start">
-                                <button onclick="playRecorderNote('G')" class="bg-purple-950/20 border border-purple-500/30 hover:border-fuchsia-500 text-white font-mono font-bold w-14 h-14 rounded-xl flex flex-col items-center justify-center transition-all active:scale-95">
-                                    <span class="text-md text-fuchsia-400">G</span>
-                                    <span class="text-[8px] text-gray-500 font-normal">783Hz</span>
-                                </button>
-                                <button onclick="playRecorderNote('A')" class="bg-purple-950/20 border border-purple-500/30 hover:border-fuchsia-500 text-white font-mono font-bold w-14 h-14 rounded-xl flex flex-col items-center justify-center transition-all active:scale-95">
-                                    <span class="text-md text-fuchsia-400">A</span>
-                                    <span class="text-[8px] text-gray-500 font-normal">880Hz</span>
-                                </button>
-                                <button onclick="playRecorderNote('B')" class="bg-purple-950/20 border border-purple-500/30 hover:border-fuchsia-500 text-white font-mono font-bold w-14 h-14 rounded-xl flex flex-col items-center justify-center transition-all active:scale-95">
-                                    <span class="text-md text-fuchsia-400">B</span>
-                                    <span class="text-[8px] text-gray-500 font-normal">987Hz</span>
-                                </button>
-                                <button onclick="playRecorderNote('C_HIGH')" class="bg-purple-950/40 border border-fuchsia-500/40 hover:border-fuchsia-400 text-white font-mono font-bold w-14 h-14 rounded-xl flex flex-col items-center justify-center transition-all active:scale-95 shadow-[0_0_10px_rgba(217,70,239,0.1)]">
-                                    <span class="text-md text-fuchsia-300">C'</span>
-                                    <span class="text-[8px] text-gray-500 font-normal">1046Hz</span>
-                                </button>
-                                <button onclick="playRecorderNote('D_HIGH')" class="bg-purple-950/40 border border-fuchsia-500/40 hover:border-fuchsia-400 text-white font-mono font-bold w-14 h-14 rounded-xl flex flex-col items-center justify-center transition-all active:scale-95 shadow-[0_0_10px_rgba(217,70,239,0.1)]">
-                                    <span class="text-md text-fuchsia-300">D'</span>
-                                    <span class="text-[8px] text-gray-500 font-normal">1174Hz</span>
-                                </button>
-                            </div>
-
-                            <div id="recorder-terminal" class="bg-black/60 p-2.5 rounded border border-gray-900 font-mono text-[11px] text-emerald-400 min-h-[50px] flex items-center">
-                                [SYS_LOG] System ready. Click a node to decrypt vector matrix.
-                            </div>
+                    <div class="space-y-3">
+                        <div class="flex gap-2 justify-center">
+                            <button onclick="playRecorderNote('C_LOW')" class="bg-emerald-950/10 border border-emerald-900/40 hover:border-emerald-400 text-white w-12 h-12 rounded-lg flex flex-col items-center justify-center transition-all active:scale-95">
+                                <span class="text-xs text-emerald-400">C</span>
+                                <span class="text-[8px] text-gray-600">523Hz</span>
+                            </button>
+                            <button onclick="playRecorderNote('D_LOW')" class="bg-emerald-950/10 border border-emerald-900/40 hover:border-emerald-400 text-white w-12 h-12 rounded-lg flex flex-col items-center justify-center transition-all active:scale-95">
+                                <span class="text-xs text-emerald-400">D</span>
+                                <span class="text-[8px] text-gray-600">587Hz</span>
+                            </button>
+                            <button onclick="playRecorderNote('E_LOW')" class="bg-emerald-950/10 border border-emerald-900/40 hover:border-emerald-400 text-white w-12 h-12 rounded-lg flex flex-col items-center justify-center transition-all active:scale-95">
+                                <span class="text-xs text-emerald-400">E</span>
+                                <span class="text-[8px] text-gray-600">659Hz</span>
+                            </button>
+                            <button onclick="playRecorderNote('F_BAROK')" class="bg-emerald-950/10 border border-emerald-900/40 hover:border-emerald-400 text-white w-12 h-12 rounded-lg flex flex-col items-center justify-center transition-all active:scale-95">
+                                <span class="text-xs text-emerald-400">F</span>
+                                <span class="text-[8px] text-gray-600">698Hz</span>
+                            </button>
                         </div>
-
-                        <div class="flex justify-center bg-black/40 p-4 rounded-xl border border-gray-900">
-                            <svg width="120" height="280" viewBox="0 0 100 240" xmlns="http://www.w3.org/2000/svg" class="drop-shadow-[0_0_15px_rgba(217,70,239,0.05)]">
-                                <rect x="40" y="10" width="20" height="220" rx="4" fill="#0f172a" stroke="#334155" stroke-width="2"/>
-                                <path d="M35,10 L65,10 L60,0 L40,0 Z" fill="#1e293b" stroke="#334155" stroke-width="2" />
-                                <ellipse cx="50" cy="230" rx="14" ry="6" fill="#1e293b" stroke="#334155" stroke-width="2" />
-
-                                <text x="10" y="45" fill="#64748b" font-family="monospace" font-size="8">LUBANG_0 (BWH)</text>
-                                <circle id="hole0" cx="20" cy="55" r="5" fill="#1e293b" stroke="#64748b" stroke-width="1.5"/>
-                                <line x1="26" y1="55" x2="40" y2="55" stroke="#334155" stroke-dasharray="2" />
-
-                                <circle id="hole1" cx="50" cy="55" r="4.5" fill="#1e293b" stroke="#64748b" stroke-width="1.5"/>
-                                <circle id="hole2" cx="50" cy="75" r="4.5" fill="#1e293b" stroke="#64748b" stroke-width="1.5"/>
-                                <circle id="hole3" cx="50" cy="95" r="4.5" fill="#1e293b" stroke="#64748b" stroke-width="1.5"/>
-
-                                <circle id="hole4" cx="50" cy="120" r="4.5" fill="#1e293b" stroke="#64748b" stroke-width="1.5"/>
-                                <circle id="hole5" cx="50" cy="140" r="4.5" fill="#1e293b" stroke="#64748b" stroke-width="1.5"/>
-                                <circle id="hole6" cx="50" cy="160" r="4.5" fill="#1e293b" stroke="#64748b" stroke-width="1.5"/>
-                                <circle id="hole7" cx="50" cy="180" r="4" fill="#1e293b" stroke="#64748b" stroke-width="1.5"/>
-                                
-                                <text x="68" y="78" fill="#475569" font-family="monospace" font-size="8">TGN_KIRI</text>
-                                <text x="68" y="153" fill="#475569" font-family="monospace" font-size="8">TGN_KANAN</text>
-                            </svg>
+                        <div class="flex gap-2 justify-center">
+                            <button onclick="playRecorderNote('G')" class="bg-emerald-950/10 border border-emerald-900/40 hover:border-emerald-400 text-white w-12 h-12 rounded-lg flex flex-col items-center justify-center transition-all active:scale-95">
+                                <span class="text-xs text-emerald-400">G</span>
+                                <span class="text-[8px] text-gray-600">783Hz</span>
+                            </button>
+                            <button onclick="playRecorderNote('A')" class="bg-emerald-950/10 border border-emerald-900/40 hover:border-emerald-400 text-white w-12 h-12 rounded-lg flex flex-col items-center justify-center transition-all active:scale-95">
+                                <span class="text-xs text-emerald-400">A</span>
+                                <span class="text-[8px] text-gray-600">880Hz</span>
+                            </button>
+                            <button onclick="playRecorderNote('B')" class="bg-emerald-950/10 border border-emerald-900/40 hover:border-emerald-400 text-white w-12 h-12 rounded-lg flex flex-col items-center justify-center transition-all active:scale-95">
+                                <span class="text-xs text-emerald-400">B</span>
+                                <span class="text-[8px] text-gray-600">987Hz</span>
+                            </button>
+                            <button onclick="playRecorderNote('C_HIGH')" class="bg-emerald-950/10 border border-emerald-900/40 hover:border-emerald-400 text-white w-12 h-12 rounded-lg flex flex-col items-center justify-center transition-all active:scale-95">
+                                <span class="text-xs text-emerald-300">C'</span>
+                                <span class="text-[8px] text-gray-600">1046Hz</span>
+                            </button>
+                            <button onclick="playRecorderNote('D_HIGH')" class="bg-emerald-950/10 border border-emerald-900/40 hover:border-emerald-400 text-white w-12 h-12 rounded-lg flex flex-col items-center justify-center transition-all active:scale-95">
+                                <span class="text-xs text-emerald-300">D'</span>
+                                <span class="text-[8px] text-gray-600">1174Hz</span>
+                            </button>
                         </div>
-
                     </div>
                 </div>
-<div class="bg-gray-950 p-6 rounded-2xl border border-emerald-900/30 max-w-2xl mx-auto my-6 font-mono text-xs">
-                    <div class="text-[10px] text-emerald-400 mb-2 tracking-widest uppercase">
-                        [MELODY_DECRYPTION_MODULE // PROJECT: LYRA]
-                    </div>
-                    <p class="text-gray-400 font-sans text-xs mb-4 leading-relaxed">
-                        Uji kelancaran penjarian anda. Klik pad kekunci nota muzik di bawah mengikut turutan kod rahsia untuk memecahkan enkripsi lagu <strong>"Mary Had a Little Lamb"</strong>.
-                    </p>
-
-                    <div class="grid grid-cols-7 gap-2 mb-6">
-                        <div id="step-0" class="bg-purple-950/10 border border-purple-900/30 text-gray-400 px-3 py-1.5 rounded-lg text-center">B</div>
-                        <div id="step-1" class="bg-purple-950/10 border border-purple-900/30 text-gray-400 px-3 py-1.5 rounded-lg text-center">A</div>
-                        <div id="step-2" class="bg-purple-950/10 border border-purple-900/30 text-gray-400 px-3 py-1.5 rounded-lg text-center">G</div>
-                        <div id="step-3" class="bg-purple-950/10 border border-purple-900/30 text-gray-400 px-3 py-1.5 rounded-lg text-center">A</div>
-                        <div id="step-4" class="bg-purple-950/10 border border-purple-900/30 text-gray-400 px-3 py-1.5 rounded-lg text-center">B</div>
-                        <div id="step-5" class="bg-purple-950/10 border border-purple-900/30 text-gray-400 px-3 py-1.5 rounded-lg text-center">B</div>
-                        <div id="step-6" class="bg-purple-950/10 border border-purple-900/30 text-gray-400 px-3 py-1.5 rounded-lg text-center">B</div>
-                    </div>
-
-                    <div class="flex justify-center gap-4 mb-4">
-                        <button onclick="playSongNote('G')" class="bg-emerald-950/20 border border-emerald-800/40 hover:border-emerald-400 text-emerald-400 font-bold px-5 py-3 rounded-xl active:scale-95 transition-all text-sm">
-                            NODE_G
-                        </button>
-                        <button onclick="playSongNote('A')" class="bg-emerald-950/20 border border-emerald-800/40 hover:border-emerald-400 text-emerald-400 font-bold px-5 py-3 rounded-xl active:scale-95 transition-all text-sm">
-                            NODE_A
-                        </button>
-                        <button onclick="playSongNote('B')" class="bg-emerald-950/20 border border-emerald-800/40 hover:border-emerald-400 text-emerald-400 font-bold px-5 py-3 rounded-xl active:scale-95 transition-all text-sm">
-                            NODE_B
-                        </button>
-                    </div>
-
-                    <div id="song-terminal" class="bg-black/60 p-2.5 rounded border border-gray-900 font-mono text-[11px] text-fuchsia-400 min-h-[36px] flex items-center">
-                        [MELODY_TRACKER] Awaiting sonic resonance input sequence...
-                    </div>
-                </div>
-            
             </section>
             
         </article>
