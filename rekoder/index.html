@@ -165,9 +165,9 @@
                                 <div id="step-6" class="bg-purple-950/10 border border-purple-900/30 text-gray-400 py-1 rounded text-center text-[11px]">B</div>
                             </div>
                             <div class="flex justify-center gap-3">
-                                <button onclick="playSongNote('G')" class="bg-emerald-950/20 border border-emerald-800/40 hover:border-emerald-400 text-emerald-400 font-bold px-3 py-1.5 rounded-lg text-xs">NODE_G</button>
-                                <button onclick="playSongNote('A')" class="bg-emerald-950/20 border border-emerald-800/40 hover:border-emerald-400 text-emerald-400 font-bold px-3 py-1.5 rounded-lg text-xs">NODE_A</button>
-                                <button onclick="playSongNote('B')" class="bg-emerald-950/20 border border-emerald-800/40 hover:border-emerald-400 text-emerald-400 font-bold px-3 py-1.5 rounded-lg text-xs">NODE_B</button>
+                                <button onmousedown="playSongNote('G')" onmouseup="stopSongNote('G')" onmouseleave="stopSongNote('G')" class="bg-emerald-950/20 border border-emerald-800/40 hover:border-emerald-400 text-emerald-400 font-bold px-3 py-1.5 rounded-lg text-xs select-none">NODE_G</button>
+                                <button onmousedown="playSongNote('A')" onmouseup="stopSongNote('A')" onmouseleave="stopSongNote('A')" class="bg-emerald-950/20 border border-emerald-800/40 hover:border-emerald-400 text-emerald-400 font-bold px-3 py-1.5 rounded-lg text-xs select-none">NODE_A</button>
+                                <button onmousedown="playSongNote('B')" onmouseup="stopSongNote('B')" onmouseleave="stopSongNote('B')" class="bg-emerald-950/20 border border-emerald-800/40 hover:border-emerald-400 text-emerald-400 font-bold px-3 py-1.5 rounded-lg text-xs select-none">NODE_B</button>
                             </div>
                             <div id="song-terminal" class="bg-black/60 p-2 rounded border border-gray-900 text-fuchsia-400 mt-4 text-[10px] min-h-[30px] flex items-center">
                                 [MELODY_TRACKER] Awaiting beginner resonance sequence...
