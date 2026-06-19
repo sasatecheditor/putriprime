@@ -1,6 +1,6 @@
 // ==========================================
 // SASATECH SONIC RESONANCE ENGINE (REKODER)
-// V3.5 - FULL MECHANICAL AUDIO MATRIX
+// V3.6 - FULL MECHANICAL AUDIO MATRIX (COMPLETE)
 // ==========================================
 
 // Cipta satu global AudioContext sahaja untuk mengelakkan memori bertindih
@@ -93,34 +93,86 @@ function stopRecorderNote(note) {
     }
 }
 
-// Fallback untuk butang lama yang masih menggunakan 'playRecorderNote'
+// Fallback untuk butang papan kekunci biasa
 function playRecorderNote(note) {
     startRecorderNote(note);
     setTimeout(() => { stopRecorderNote(note); }, 400);
 }
 
-// ------------------------------------------
+
+// ==========================================
+// [BARU & DIKEMAS KINI] LOGIK LAGU: LYRA / MARY (BAB 3)
+// ==========================================
+const SONG_SEQUENCE_3 = ['B', 'A', 'G', 'A', 'B', 'B', 'B'];
+let currentSongIndex3 = 0;
+
+function playSongNote(note) {
+    startRecorderNote(note);
+    
+    const expectedNote = SONG_SEQUENCE_3[currentSongIndex3];
+    const songTerminal3 = document.getElementById('song-terminal');
+    
+    if (note === expectedNote) {
+        const stepElem = document.getElementById(`step-${currentSongIndex3}`);
+        if (stepElem) {
+            stepElem.className = "bg-fuchsia-500 text-black font-bold px-2 py-1 rounded border border-fuchsia-400 font-mono text-center text-[11px] shadow-[0_0_10px_rgba(217,70,239,0.3)]";
+        }
+        
+        currentSongIndex3++;
+        if (songTerminal3) songTerminal3.textContent = `[LYRA_TRACKER] Match found: Node ${note}. Holding blow...`;
+        
+        if (currentSongIndex3 === SONG_SEQUENCE_3.length) {
+            if (songTerminal3) {
+                songTerminal3.className = "bg-purple-950/40 p-2.5 rounded border border-fuchsia-500 font-mono text-[11px] text-fuchsia-400 text-center font-bold animate-bounce";
+                songTerminal3.textContent = "🎉 SUCCESS: LYRA_RESONANCE_COMPLETE! Beginner Matrix Unlocked.";
+            }
+            setTimeout(resetSongTracker3, 4000);
+        }
+    } else {
+        if (songTerminal3) songTerminal3.textContent = `[RALAT] Rentak terputus! Sepatutnya nota ${expectedNote} tetapi anda menekan ${note}. Mengulang semula...`;
+        resetSongTracker3();
+    }
+}
+
+function stopSongNote(note) {
+    stopRecorderNote(note);
+}
+
+function resetSongTracker3() {
+    currentSongIndex3 = 0;
+    const songTerminal3 = document.getElementById('song-terminal');
+    if (songTerminal3) {
+        songTerminal3.className = "bg-black/60 p-2 rounded border border-gray-900 text-fuchsia-400 mt-4 text-[10px] min-h-[30px] flex items-center";
+        songTerminal3.textContent = "[MELODY_TRACKER] Awaiting beginner resonance sequence...";
+    }
+    
+    SONG_SEQUENCE_3.forEach((_, index) => {
+        const stepElem = document.getElementById(`step-${index}`);
+        if (stepElem) {
+            stepElem.className = "bg-purple-950/10 border border-purple-900/30 text-gray-400 py-1 rounded text-center text-[11px]";
+        }
+    });
+}
+
+
+// ==========================================
 // LOGIK LATIHAN LAGU: ULIK MAYANG (BAB 5)
-// ------------------------------------------
+// ==========================================
 const SONG_SEQUENCE_5 = ['E', 'E', 'E', 'E', 'E', 'F', 'G', 'F', 'A', 'G', 'F', 'E', 'D', 'D', 'E', 'F', 'D', 'E'];
 let currentSongIndex5 = 0;
 
 function playSongNote5(note) {
-    // Tukar kod huruf ringkas kepada kod nota sistem audio
     let targetNote = note;
     if (note === 'F') targetNote = 'F_BAROK';
     if (note === 'D') targetNote = 'D_LOW';
     if (note === 'E') targetNote = 'E_LOW';
 
-    // Mula bunyikan nota
     startRecorderNote(targetNote);
     
-    // Semak turutan melodi lagu
     const expectedNote = SONG_SEQUENCE_5[currentSongIndex5];
     const songTerminal = document.getElementById('song-terminal-5');
     
     if (note === expectedNote) {
-        // Tukar warna kotak aliran nota menjadi hijau (emerald)
         const stepElem = document.getElementById(`step5-${currentSongIndex5}`);
         if (stepElem) {
             stepElem.className = "bg-emerald-500 text-black font-bold px-2 py-1 rounded border border-emerald-400 font-mono text-center text-[10px] shadow-[0_0_10px_rgba(16,185,129,0.3)]";
@@ -129,7 +181,6 @@ function playSongNote5(note) {
         currentSongIndex5++;
         if (songTerminal) songTerminal.textContent = `[ULIK_TRACKER] Match found: Node ${note}. Holding blow...`;
         
-        // Jika tamat lagu sepenuhnya
         if (currentSongIndex5 === SONG_SEQUENCE_5.length) {
             if (songTerminal) {
                 songTerminal.className = "bg-emerald-950/40 p-2.5 rounded border border-emerald-500 font-mono text-[11px] text-emerald-400 text-center font-bold animate-bounce";
@@ -168,7 +219,10 @@ function resetSongTracker5() {
     });
 }
 
-// Simulasi grafik rekoder SVG (Kekalkan fungsi ini mengikut versi asal anda)
+
+// ------------------------------------------
+// GRAFIK SIMULASI REKODER SVG
+// ------------------------------------------
 function updateFingeringChart(note) {
     const activeFingers = FINGER_POSITIONS[note] || [];
     const logTerminal = document.getElementById('recorder-terminal');
@@ -177,7 +231,6 @@ function updateFingeringChart(note) {
         logTerminal.textContent = `[SYS_LOG] Active Node: ${note} (${NOTE_FREQUENCIES[note]} Hz)`;
     }
 
-    // Set semula semua warna lubang kepada kosong (slate)
     for (let i = 0; i <= 7; i++) {
         const hole = document.getElementById(`hole${i}`);
         if (hole) {
@@ -186,7 +239,6 @@ function updateFingeringChart(note) {
         }
     }
 
-    // Warnakan lubang yang ditutup dengan warna neon (fuchsia/purple)
     activeFingers.forEach(holeId => {
         const hole = document.getElementById(`hole${holeId}`);
         if (hole) {
