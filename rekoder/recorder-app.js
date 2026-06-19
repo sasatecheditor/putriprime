@@ -19,18 +19,17 @@ const NOTE_FREQUENCIES = {
     'D_HIGH': 1174.66
 };
 
-// Konfigurasi Penjarian SVG yang BETUL (0 = Belakang, 1-7 = Depan)
-// Nombor di dalam [ ] bermaksud lubang tersebut ditutup (berwarna fuchsia)
+// Konfigurasi Penjarian SVG (0 = Belakang, 1-3 = Tangan Kiri, 4-7 = Tangan Kanan)
 const FINGER_POSITIONS = {
-    'C_LOW':   [0, 1, 2, 3, 4, 5, 6, 7], // Tutup semua lubang
-    'D_LOW':   [0, 1, 2, 3, 4, 5, 6],    // Buka lubang 7
-    'E_LOW':   [0, 1, 2, 3, 4, 5],       // Buka lubang 6, 7
-    'F_BAROK': [0, 1, 2, 3, 4, 6, 7],    // Nota F (Baroque fingering)
-    'G':       [0, 1, 2, 3, 4],          // TUTUP LUBANG 4 (3 lubang bawah [5,6,7] terbuka)
-    'A':       [0, 1, 2, 3],             // TUTUP LUBANG 3 (4 lubang bawah [4,5,6,7] terbuka)
-    'B':       [0, 1, 2],                // TUTUP LUBANG 2 (5 lubang bawah [3,4,5,6,7] terbuka)
-    'C_HIGH':  [0, 1, 3],                // Tutup lubang belakang, lubang 1 dan lubang 3
-    'D_HIGH':  [1, 3]                    // Lubang belakang dibuka, tutup lubang 1 dan 3
+    'C_LOW':   [0, 1, 2, 3, 4, 5, 6, 7], // Do Rendah: Tutup semua
+    'D_LOW':   [0, 1, 2, 3, 4, 5, 6],    // Re Rendah: Buka lubang paling bawah
+    'E_LOW':   [0, 1, 2, 3, 4, 5],       // Mi Rendah: Buka 2 lubang bawah
+    'F_BAROK': [0, 1, 2, 3, 4, 6, 7],    // Fa (Baroque): Lubang 5 dibuka
+    'G':       [0, 1, 2, 3],             // Sol: Jari tangan kanan (4,5,6,7) SEMUA DIBUKA
+    'A':       [0, 1, 2],                // La: Lubang bawah dan lubang 3 dibuka
+    'B':       [0, 1],                   // Si: Hanya lubang belakang & lubang 1 ditutup
+    'C_HIGH':  [0, 2],                   // Do Tinggi: Lubang belakang & lubang 2 ditutup
+    'D_HIGH':  [2]                       // Re Tinggi: Hanya lubang 2 ditutup (belakang buka)
 };
 
 // Menyimpan senarai suara oscillator yang sedang aktif
