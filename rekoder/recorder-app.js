@@ -78,3 +78,74 @@ function updateTerminalLog(message) {
         logElem.textContent = `[SYS_LOG] ${message}`;
     }
 }
+
+// ==========================================
+// SASATECH AIRFLOW SIMULATOR (BAB 2)
+// ==========================================
+
+function simulateAirflow(level) {
+    const stream = document.getElementById('air-stream');
+    const statusText = document.getElementById('airflow-status');
+    const alertBox = document.getElementById('airflow-alert');
+    
+    if (!stream || !statusText || !alertBox) return;
+    
+    // Reset kelas asal
+    stream.className = "h-2 rounded-full transition-all duration-500 w-0";
+    alertBox.className = "p-3 rounded-xl border text-xs font-mono transition-all duration-300 ";
+    
+    // Suara simulasi menggunakan Web Audio API
+    try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        osc.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        
+        const now = audioCtx.currentTime;
+        
+        if (level === 'weak') {
+            // Tiupan Lemah
+            stream.classList.add('w-1/3', 'bg-blue-500', 'animate-pulse');
+            statusText.textContent = "AIRFLOW: UNDER_POWERED // PITCH: FLAT";
+            alertBox.classList.add('bg-blue-950/30', 'border-blue-900/50', 'text-blue-400');
+            alertBox.innerHTML = "⚠️ <strong>SasaTech Analyzer:</strong> Tiupan terlalu lemah. Bunyi tidak akan keluar atau menjadi mendatar (flat). Sokong aliran udara menggunakan diafragma.";
+            
+            // Bunyi rendah/flat
+            osc.frequency.setValueAtTime(250, now);
+            gainNode.gain.setValueAtTime(0.02, now);
+            gainNode.gain.exponentialRampToValueAtTime(0.00001, now + 0.4);
+            osc.start(now); osc.stop(now + 0.4);
+            
+        } else if (level === 'stable') {
+            // Tiupan Stabil (Betul!)
+            stream.classList.add('w-full', 'bg-emerald-500');
+            statusText.textContent = "AIRFLOW: OPTIMAL // PITCH: STABLE";
+            alertBox.classList.add('bg-emerald-950/30', 'border-emerald-900/50', 'text-emerald-400');
+            alertBox.innerHTML = "✅ <strong>SasaTech Analyzer:</strong> Sempurna! Sebutan 'Tu' menghasilkan tekanan udara mampan. Frekuensi akustik berada pada tahap kualiti tertinggi.";
+            
+            // Bunyi tiupan angin bersih (Whistle sound)
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(440, now);
+            gainNode.gain.setValueAtTime(0.05, now);
+            gainNode.gain.exponentialRampToValueAtTime(0.00001, now + 0.5);
+            osc.start(now); osc.stop(now + 0.5);
+            
+        } else if (level === 'strong') {
+            // Tiupan Terlalu Kuat (Overblowing)
+            stream.classList.add('w-full', 'bg-red-500', 'scale-y-150', 'animate-bounce');
+            statusText.textContent = "CRITICAL: OVERBLOWING // PITCH: DISTORTED";
+            alertBox.classList.add('bg-red-950/30', 'border-red-900/50', 'text-red-400', 'animate-pulse');
+            alertBox.innerHTML = "❌ <strong>ANOMALI DIKESAN:</strong> Anda meniup seperti meniup lilin! Udara melampau memecahkan gelombang akustik (*overblowing*) menyebabkan bunyi melengking kasar.";
+            
+            // Bunyi nyaring pecah
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(1200, now);
+            gainNode.gain.setValueAtTime(0.08, now);
+            gainNode.gain.exponentialRampToValueAtTime(0.00001, now + 0.6);
+            osc.start(now); osc.stop(now + 0.6);
+        }
+    } catch(e) {
+        console.log(e);
+    }
+}
