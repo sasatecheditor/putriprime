@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SASATECH - Global Portal Interface</title>
-    <!-- Tailwind CSS & Google Fonts -->
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght=400;600;700&family=Inter:wght=300;400;600&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -20,39 +19,41 @@
         .hologram-glow {
             box-shadow: 0 0 30px rgba(6, 182, 212, 0.15), inset 0 0 15px rgba(6, 182, 212, 0.05);
         }
+        .hologram-glow-purple {
+            box-shadow: 0 0 30px rgba(217, 70, 239, 0.1), inset 0 0 15px rgba(217, 70, 239, 0.02);
+        }
     </style>
 </head>
 <body class="text-gray-300 min-h-screen flex flex-col justify-between">
 
-    <!-- HEADER / NAVIGATION -->
     <header class="border-b border-gray-900 bg-black/40 backdrop-blur-md sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="playBeep(440, 0.1)">
                 <div class="w-3 h-3 rounded-full bg-cyan-500 animate-pulse"></div>
                 <span class="heading-font font-bold tracking-widest text-white text-sm">SASATECH CORP</span>
             </div>
-            <div class="text-[11px] font-mono text-cyan-500 bg-cyan-950/30 px-3 py-1 rounded border border-cyan-900/50">
-                SECURE_SERVER // PORTAL_ACTIVE
+            <div class="flex items-center gap-4">
+                <a href="/rekoder/index.html" onclick="playBeep(880, 0.15)" class="hidden sm:block text-[10px] font-mono text-fuchsia-400 bg-fuchsia-950/30 px-2 py-1 rounded border border-fuchsia-900/50 hover:bg-fuchsia-500 hover:text-black transition-all">
+                    🎵 ACCESS: REKODER_DATA
+                </a>
+                <div class="text-[11px] font-mono text-cyan-500 bg-cyan-950/30 px-3 py-1 rounded border border-cyan-900/50">
+                    SECURE_SERVER // PORTAL_ACTIVE
+                </div>
             </div>
         </div>
     </header>
 
-    <!-- MAIN INTERFACE -->
     <main class="max-w-4xl mx-auto px-4 py-12 md:py-16 w-full flex-grow flex flex-col justify-center items-center text-center">
         
-        <!-- SYSTEM METRICS LIVE DISPLAY (Edisi Kebal Fix) -->
         <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 text-left font-mono text-xs text-cyan-400 max-w-2xl mx-auto">
-            <!-- Kaunter Pelawat -->
             <div class="bg-cyan-950/20 border border-cyan-900/40 p-3 rounded-xl flex flex-col justify-center">
                 <span class="text-gray-500 text-[10px] uppercase tracking-wider">Total System Accesses</span>
                 <span id="visitor-count" class="text-lg font-bold text-white mt-1">412,508</span>
             </div>
-            <!-- Paparan Tarikh -->
             <div class="bg-cyan-950/20 border border-cyan-900/40 p-3 rounded-xl flex flex-col justify-center">
                 <span class="text-gray-500 text-[10px] uppercase tracking-wider">Current Date</span>
                 <span id="live-date" class="text-sm font-bold text-cyan-300 mt-1">16 Jun 2026</span>
             </div>
-            <!-- Paparan Masa -->
             <div class="bg-cyan-950/20 border border-cyan-900/40 p-3 rounded-xl flex flex-col justify-center">
                 <span class="text-gray-500 text-[10px] uppercase tracking-wider">System Synchronicity (MYT)</span>
                 <span id="live-time" class="text-sm font-bold text-emerald-400 mt-1">15:19:50</span>
@@ -69,36 +70,32 @@
         </h1>
 
         <p class="text-base md:text-lg text-gray-400 max-w-xl font-light mb-10 leading-relaxed">
-            Sistem pemantauan anomali dimensi dan pengurusan wira elemental Lembah Klang. Log masuk untuk mengakses rekod data perlawanan subjek.
+            Sistem pemantauan anomali dimensi, pengurusan wira elemental Lembah Klang, dan modul latihan frekuensi bunyi tinggi. Log masuk untuk mengakses sistem.
         </p>
 
-        <!-- MAIN CTA BUTTON -->
-        <div class="w-full flex flex-col sm:flex-row justify-center items-center gap-4 mb-16">
-            <a href="/bab1/page1.html" class="w-full sm:w-auto bg-gradient-to-r from-cyan-600 to-cyan-500 hover:from-cyan-500 hover:to-cyan-400 text-white font-semibold px-8 py-4 rounded-xl transition-all shadow-lg shadow-cyan-500/10 text-center tracking-wide heading-font">
+        <div class="w-full flex flex-col sm:flex-row justify-center items-center gap-4 mb-16 max-w-xl">
+            <a href="/bab1/page1.html" onclick="playBeep(523.25, 0.15)" class="w-full sm:w-1/2 bg-gradient-to-r from-cyan-600 to-cyan-500 hover:from-cyan-500 hover:to-cyan-400 text-white font-semibold px-6 py-4 rounded-xl transition-all shadow-lg shadow-cyan-500/10 text-center tracking-wide heading-font transform hover:-translate-y-0.5">
                 MULA MEMBACA (BAB 1)
             </a>
-            <a href="#status" class="w-full sm:w-auto border border-gray-800 hover:border-gray-700 bg-gray-950/40 px-8 py-4 rounded-xl transition-all text-center font-medium">
-                Lihat Status Projek
+            <a href="/rekoder/index.html" onclick="playBeep(659.25, 0.2)" class="w-full sm:w-1/2 bg-gradient-to-r from-fuchsia-600 to-purple-600 hover:from-fuchsia-500 hover:to-purple-500 text-white font-semibold px-6 py-4 rounded-xl transition-all shadow-lg shadow-fuchsia-500/20 text-center tracking-wide heading-font transform hover:-translate-y-0.5 border border-fuchsia-400/30">
+                🎵 MODUL REKODER INTERAKTIF
             </a>
         </div>
 
-        <!-- TRACKING GRID / STATUS ARCHIVE -->
         <section id="status" class="w-full border border-gray-900 bg-black/20 rounded-2xl p-6 md:p-8 text-left hologram-glow space-y-6">
             
             <div class="flex items-center justify-between border-b border-gray-900 pb-4">
                 <div>
-                    <h2 class="heading-font font-bold text-white text-lg">LOG REKOD MISI</h2>
+                    <h2 class="heading-font font-bold text-white text-lg">LOG REKOD MISI & PROJEK</h2>
                     <p class="text-xs text-gray-500 font-mono mt-0.5">STATUS SERVER: MAMPAN</p>
                 </div>
                 <span class="bg-emerald-950 text-emerald-400 border border-emerald-900 text-[10px] font-mono px-2 py-0.5 rounded font-bold uppercase tracking-wider">ONGOING</span>
             </div>
 
-            <!-- List Chapters -->
             <div class="space-y-4">
-                <!-- Bab 1 -->
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl bg-gray-950/50 border border-gray-900 gap-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl bg-gray-950/50 border border-gray-900 gap-4 hover:border-cyan-800/60 transition-all group">
                     <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 rounded-lg bg-cyan-950/60 border border-cyan-800/40 flex items-center justify-center font-mono text-cyan-400 font-bold shrink-0">
+                        <div class="w-10 h-10 rounded-lg bg-cyan-950/60 border border-cyan-800/40 flex items-center justify-center font-mono text-cyan-400 font-bold shrink-0 group-hover:bg-cyan-500 group-hover:text-black transition-all">
                             01
                         </div>
                         <div>
@@ -106,15 +103,14 @@
                             <p class="text-xs text-gray-500 mt-1">Mengandungi Halaman 1 sehingga Halaman 10 (Selesai sepenuhnya).</p>
                         </div>
                     </div>
-                    <a href="/bab1/page1.html" class="text-xs text-cyan-400 font-mono hover:underline sm:text-right shrink-0">
+                    <a href="/bab1/page1.html" onclick="playBeep(523.25, 0.1)" class="text-xs text-cyan-400 font-mono hover:underline sm:text-right shrink-0">
                         Buka Fail Data &rarr;
                     </a>
                 </div>
 
-<!-- Bab 2 (Edisi Aktif & Kemas Kini) -->
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl bg-gray-950/50 border border-gray-900 gap-4 hover:border-red-900/50 transition-all">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl bg-gray-950/50 border border-gray-900 gap-4 hover:border-red-900/50 transition-all group">
                     <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 rounded-lg bg-red-950/60 border border-red-800/40 flex items-center justify-center font-mono text-red-400 font-bold shrink-0">
+                        <div class="w-10 h-10 rounded-lg bg-red-950/60 border border-red-800/40 flex items-center justify-center font-mono text-red-400 font-bold shrink-0 group-hover:bg-red-500 group-hover:text-black transition-all">
                             02
                         </div>
                         <div>
@@ -122,8 +118,26 @@
                             <p class="text-xs text-gray-500 mt-1">Mengandungi Halaman 1 sehingga Halaman 3 (Status: Kemas kini mingguan aktif).</p>
                         </div>
                     </div>
-                    <a href="/bab2/page1.html" class="text-xs text-red-400 font-mono hover:underline sm:text-right shrink-0 font-bold animate-pulse">
+                    <a href="/bab2/page1.html" onclick="playBeep(587.33, 0.1)" class="text-xs text-red-400 font-mono hover:underline sm:text-right shrink-0 font-bold animate-pulse">
                         Buka Fail Data &rarr;
+                    </a>
+                </div>
+
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl bg-purple-950/10 border border-purple-900/30 gap-4 hover:border-fuchsia-800/60 hologram-glow-purple transition-all group">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-lg bg-fuchsia-950/60 border border-fuchsia-800/40 flex items-center justify-center font-mono text-fuchsia-400 font-bold shrink-0 group-hover:bg-fuchsia-500 group-hover:text-black transition-all">
+                            🎵
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h3 class="text-sm font-semibold text-white">E-Book: Belajar Rekoder Interaktif</h3>
+                                <span class="bg-fuchsia-950 text-fuchsia-400 border border-fuchsia-900 text-[9px] font-mono px-1.5 py-0.2 rounded font-bold tracking-wider">NEW_MODULE</span>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">Panduan praktikal asas tiupan, penjarian nota muzik, dan modul praktis resonansi audio digital SasaTech.</p>
+                        </div>
+                    </div>
+                    <a href="/rekoder/index.html" onclick="playBeep(783.99, 0.12)" class="text-xs text-fuchsia-400 font-mono hover:underline sm:text-right shrink-0 font-bold">
+                        Decrypt Audio File &rarr;
                     </a>
                 </div>
             </div>
@@ -132,14 +146,35 @@
 
     </main>
 
-    <!-- FOOTER -->
     <footer class="border-t border-gray-900 bg-black/20 py-6 text-center text-xs text-gray-600">
         <p>&copy; 2026 SasaTech Corporation. Hak Cipta Terpelihara.</p>
         <p class="font-mono text-[10px] text-gray-700 mt-1">SasaFood Delivery Logistics Network // Covert Operation Sector</p>
     </footer>
 
-    <!-- JAVASCRIPT ENGINE -->
     <script>
+        // Fungsi Penjana Audio Bip Digital (Interaktiviti Tambahan)
+        function playBeep(frequency, duration) {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                
+                oscillator.type = 'sine'; // Jenis gelombang bunyi futuristik yang bersih
+                oscillator.frequency.value = frequency; // Frekuensi hertz
+                
+                gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime); // Volume perlahan supaya tidak mengejutkan user
+                gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + duration);
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                
+                oscillator.start();
+                oscillator.stop(audioCtx.currentTime + duration);
+            } catch (e) {
+                console.log("Audio konteks tidak disokong pelayar.");
+            }
+        }
+
         function updateSystemMetrics() {
             try {
                 const now = new Date();
@@ -168,7 +203,7 @@
 
         // Sistem Kaunter Simpanan Selamat
         try {
-            let count = localStorage.getItem('sasatech_clicks');
+            let count = localStorage.getItem('sasatech_visitors');
             if (!count) {
                 count = Math.floor(Math.random() * (500000 - 450000) + 450000);
             } else {
