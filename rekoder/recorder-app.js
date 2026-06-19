@@ -149,3 +149,79 @@ function simulateAirflow(level) {
         console.log(e);
     }
 }
+
+// ==========================================
+// SASATECH INTERACTIVE MELODY PLAYER (FASA 2)
+// ==========================================
+
+// Turutan nota untuk lagu "Mary Had a Little Lamb"
+const SONG_SEQUENCE = ['B', 'A', 'G', 'A', 'B', 'B', 'B'];
+let currentSongIndex = 0;
+
+function playSongNote(note) {
+    // 1. Mainkan bunyi nota menggunakan fungsi sedia ada kita
+    playRecorderNote(note);
+    
+    // 2. Semak jika nota yang ditekan betul mengikut turutan lagu
+    const expectedNote = SONG_SEQUENCE[currentSongIndex];
+    const songTerminal = document.getElementById('song-terminal');
+    
+    if (note === expectedNote) {
+        // Kemas kini visual nota yang berjaya ditekan
+        const stepElem = document.getElementById(`step-${currentSongIndex}`);
+        if (stepElem) {
+            stepElem.className = "bg-emerald-500 text-black font-bold px-3 py-1.5 rounded-lg border border-emerald-400 font-mono shadow-[0_0_10px_rgba(16,185,129,0.3)]";
+        }
+        
+        currentSongIndex++;
+        if (songTerminal) songTerminal.textContent = `[MELODY_TRACKER] Match found: Node ${note}. Proceed to next sequence.`;
+        
+        // Jika lagu selesai sepenuhnya
+        if (currentSongIndex === SONG_SEQUENCE.length) {
+            if (songTerminal) songTerminal.className = "bg-emerald-950/40 p-2.5 rounded border border-emerald-500 font-mono text-[11px] text-emerald-400 animate-bounce";
+            if (songTerminal) songTerminal.textContent = "🎉 SUCCESS: MELODY_DECRYPTED! SasaTech Resonance Matrix Synchronized.";
+            
+            // Bunyi kejayaan (Victory Chime)
+            playVictoryChime();
+            
+            // Reset selepas 3 saat
+            setTimeout(resetSongTracker, 3000);
+        }
+    } else {
+        // Jika salah tekan, reset semula progres lagu
+        if (songTerminal) songTerminal.textContent = `[CRITICAL_ERR] Sequence broken! Expected ${expectedNote} but received ${note}. Resetting tracker...`;
+        resetSongTracker();
+    }
+}
+
+function resetSongTracker() {
+    currentSongIndex = 0;
+    const songTerminal = document.getElementById('song-terminal');
+    if (songTerminal) songTerminal.className = "bg-black/60 p-2.5 rounded border border-gray-900 font-mono text-[11px] text-fuchsia-400";
+    
+    // Kemas kini semua kotak langkah lagu balik ke asal
+    SONG_SEQUENCE.forEach((_, index) => {
+        const stepElem = document.getElementById(`step-${index}`);
+        if (stepElem) {
+            stepElem.className = "bg-purple-950/10 border border-purple-900/30 text-gray-400 px-3 py-1.5 rounded-lg font-mono text-center";
+        }
+    });
+}
+
+function playVictoryChime() {
+    try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const now = audioCtx.currentTime;
+        const notes = [523.25, 659.25, 783.99, 1046.50]; // C - E - G - C (High)
+        notes.forEach((freq, index) => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, now + (index * 0.15));
+            gain.gain.setValueAtTime(0.05, now + (index * 0.15));
+            gain.gain.exponentialRampToValueAtTime(0.00001, now + (index * 0.15) + 0.3);
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.start(now + (index * 0.15)); osc.stop(now + (index * 0.15) + 0.3);
+        });
+    } catch(e) {}
+}
