@@ -1,1 +1,81 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belajar Rekoder - SasaTech E-Book</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased flex flex-col min-h-screen">
 
+    <header class="bg-blue-600 text-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <span class="text-2xl">🎵</span>
+                <h1 class="text-xl font-bold tracking-wide">SasaTech: Belajar Rekoder</h1>
+            </div>
+            <nav>
+                <a href="#kandungan" class="hover:underline bg-blue-700 px-3 py-2 rounded text-sm font-medium transition">Mula Membaca</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-16 px-4 text-center">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-4xl font-extrabold mb-4">Kuasai Asas Rekoder dengan Mudah</h2>
+            <p class="text-lg text-blue-100 mb-8">Panduan langkah demi langkah interaktif daripada SasaTech untuk memulakan perjalanan muzik anda.</p>
+            <a href="#bab1" class="bg-yellow-400 hover:bg-yellow-300 text-gray-950 font-bold px-6 py-3 rounded-lg shadow-lg transition transform hover:-translate-y-0.5 inline-block">
+                Buka Bab 1
+            </a>
+        </div>
+    </section>
+
+    <main id="kandungan" class="container mx-auto px-4 py-12 flex-grow grid grid-cols-1 lg:grid-cols-4 gap-8">
+        
+        <aside class="lg:col-span-1 bg-white p-6 rounded-xl shadow-sm h-fit sticky top-20">
+            <h3 class="font-bold text-lg border-b pb-2 mb-4 text-gray-700">Isi Kandungan</h3>
+            <ul class="space-y-2 text-sm">
+                <li><a href="#pengenalan" class="block p-2 rounded hover:bg-blue-50 text-blue-600 font-medium">Pengenalan</a></li>
+                <li><a href="#bab1" class="block p-2 rounded hover:bg-blue-50 text-gray-600">Bab 1: Mengenali Rekoder</a></li>
+                <li><a href="#bab2" class="block p-2 rounded hover:bg-blue-50 text-gray-600">Bab 2: Teknik Pernafasan & Postur</a></li>
+                <li><a href="#bab3" class="block p-2 rounded hover:bg-blue-50 text-gray-600">Bab 3: Nota Pertama Anda (B, A, G)</a></li>
+            </ul>
+        </aside>
+
+        <article class="lg:col-span-3 bg-white p-8 rounded-xl shadow-sm prose max-w-none">
+            
+            <section id="pengenalan" class="mb-12 scroll-mt-24">
+                <span class="text-xs font-bold uppercase tracking-widest text-blue-600">Selamat Datang</span>
+                <h2 class="text-3xl font-bold mt-1 mb-4 text-gray-900">Pengenalan</h2>
+                <p class="text-gray-600 leading-relaxed mb-4">
+                    Rekoder adalah salah satu instrumen tiupan yang paling popular untuk dipelajari. E-book ini direka khas oleh <strong>SasaTech</strong> untuk membantu anda memahami asas penjarian, bacaan nota, dan teknik tiupan yang betul.
+                </p>
+            </section>
+
+            <hr class="my-8 border-gray-200">
+
+            <section id="bab1" class="mb-12 scroll-mt-24">
+                <span class="text-xs font-bold uppercase tracking-widest text-indigo-600">Bab 1</span>
+                <h2 class="text-3xl font-bold mt-1 mb-4 text-gray-900">Mengenali Bahagian Rekoder</h2>
+                <p class="text-gray-600 leading-relaxed mb-4">
+                    Sebelum mula meniup, kita perlu mengenali anatomi instrumen ini. Secara amnya, rekoder soprano (jenis yang biasa digunakan di sekolah) terbahagi kepada tiga bahagian utama:
+                </p>
+                <ul class="list-disc pl-5 space-y-2 text-gray-600 mb-4">
+                    <li><strong>Bahagian Kepala (Headjoint):</strong> Tempat di mana pemipit (mouthpiece) berada.</li>
+                    <li><strong>Bahagian Badan (Body):</strong> Menempatkan kebanyakan lubang penjarian utama.</li>
+                    <li><strong>Bahagian Kaki (Footjoint):</strong> Bahagian bawah untuk lubang nota paling rendah.</li>
+                </ul>
+                <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded text-sm text-yellow-900">
+                    <strong>Nota SasaTech:</strong> Pastikan bahagian rekoder dipasang dengan lurus supaya lubang jari mudah ditutup sepenuhnya!
+                </div>
+            </section>
+            
+        </article>
+    </main>
+
+    <footer class="bg-gray-950 text-gray-400 py-6 text-center text-sm border-t border-gray-800">
+        <p>&copy; 2026 SasaTech. Hak Cipta Terpelihara.</p>
+    </footer>
+
+</body>
+</html>
