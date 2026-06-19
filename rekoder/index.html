@@ -98,28 +98,62 @@
                     Tiga nota terawal yang paling mudah dipelajari ialah nota **B, A, dan G**. Klik pada panel kawalan audio di bawah untuk memancarkan simulasi gelombang bunyi bagi setiap nota tersebut.
                 </p>
 
-                <div class="bg-gray-950 p-6 rounded-2xl border border-purple-900/40 shadow-inner max-w-xl mx-auto my-6">
+                <div class="bg-gray-950 p-6 rounded-2xl border border-purple-900/40 shadow-inner max-w-2xl mx-auto my-6">
                     <div class="text-[10px] font-mono text-fuchsia-400 mb-4 tracking-widest uppercase">
-                        [SONIC_SYNTH_INTERFACE v1.0]
+                        [SONIC_SYNTH_&_VISUAL_INTERFACE v2.0]
                     </div>
                     
-                    <div class="flex justify-center gap-3 mb-6">
-                        <button onclick="playRecorderNote('G')" class="bg-purple-950/20 border border-purple-500/30 hover:border-fuchsia-500 text-white font-mono font-bold w-16 h-16 rounded-xl flex flex-col items-center justify-center transition-all active:scale-95 group">
-                            <span class="text-lg text-fuchsia-400">G</span>
-                            <span class="text-[9px] text-gray-500 font-normal">783Hz</span>
-                        </button>
-                        <button onclick="playRecorderNote('A')" class="bg-purple-950/20 border border-purple-500/30 hover:border-fuchsia-500 text-white font-mono font-bold w-16 h-16 rounded-xl flex flex-col items-center justify-center transition-all active:scale-95">
-                            <span class="text-lg text-fuchsia-400">A</span>
-                            <span class="text-[9px] text-gray-500 font-normal">880Hz</span>
-                        </button>
-                        <button onclick="playRecorderNote('B')" class="bg-purple-950/20 border border-purple-500/30 hover:border-fuchsia-500 text-white font-mono font-bold w-16 h-16 rounded-xl flex flex-col items-center justify-center transition-all active:scale-95">
-                            <span class="text-lg text-fuchsia-400">B</span>
-                            <span class="text-[9px] text-gray-500 font-normal">987Hz</span>
-                        </button>
-                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                        
+                        <div class="flex flex-col justify-between h-full space-y-4">
+                            <p class="text-xs text-gray-400 font-sans leading-relaxed">
+                                Klik butang nota di bawah untuk melihat simulasi lubang yang perlu ditutup (<span class="text-fuchsia-400 font-bold">fuchsia</span>) dan mendengar bunyinya.
+                            </p>
+                            
+                            <div class="flex gap-3 my-2 justify-center md:justify-start">
+                                <button onclick="playRecorderNote('G')" class="bg-purple-950/20 border border-purple-500/30 hover:border-fuchsia-500 text-white font-mono font-bold w-14 h-14 rounded-xl flex flex-col items-center justify-center transition-all active:scale-95">
+                                    <span class="text-lg text-fuchsia-400">G</span>
+                                    <span class="text-[9px] text-gray-500 font-normal">783Hz</span>
+                                </button>
+                                <button onclick="playRecorderNote('A')" class="bg-purple-950/20 border border-purple-500/30 hover:border-fuchsia-500 text-white font-mono font-bold w-14 h-14 rounded-xl flex flex-col items-center justify-center transition-all active:scale-95">
+                                    <span class="text-lg text-fuchsia-400">A</span>
+                                    <span class="text-[9px] text-gray-500 font-normal">880Hz</span>
+                                </button>
+                                <button onclick="playRecorderNote('B')" class="bg-purple-950/20 border border-purple-500/30 hover:border-fuchsia-500 text-white font-mono font-bold w-14 h-14 rounded-xl flex flex-col items-center justify-center transition-all active:scale-95">
+                                    <span class="text-lg text-fuchsia-400">B</span>
+                                    <span class="text-[9px] text-gray-500 font-normal">987Hz</span>
+                                </button>
+                            </div>
 
-                    <div id="recorder-terminal" class="bg-black/60 p-2.5 rounded border border-gray-900 font-mono text-[11px] text-emerald-400 min-h-[32px]">
-                        [SYS_LOG] System ready. Click a sonic node to initiate resonance.
+                            <div id="recorder-terminal" class="bg-black/60 p-2.5 rounded border border-gray-900 font-mono text-[11px] text-emerald-400 min-h-[50px] flex items-center">
+                                [SYS_LOG] System ready. Click a node to decrypt vector matrix.
+                            </div>
+                        </div>
+
+                        <div class="flex justify-center bg-black/40 p-4 rounded-xl border border-gray-900">
+                            <svg width="120" height="280" viewBox="0 0 100 240" xmlns="http://www.w3.org/2000/svg" class="drop-shadow-[0_0_15px_rgba(217,70,239,0.05)]">
+                                <rect x="40" y="10" width="20" height="220" rx="4" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+                                <path d="M35,10 L65,10 L60,0 L40,0 Z" fill="#1e293b" stroke="#334155" stroke-width="2" />
+                                <ellipse cx="50" cy="230" rx="14" ry="6" fill="#1e293b" stroke="#334155" stroke-width="2" />
+
+                                <text x="10" y="45" fill="#64748b" font-family="monospace" font-size="8">LUBANG_0 (BWH)</text>
+                                <circle id="hole0" cx="20" cy="55" r="5" fill="#1e293b" stroke="#64748b" stroke-width="1.5"/>
+                                <line x1="26" y1="55" x2="40" y2="55" stroke="#334155" stroke-dasharray="2" />
+
+                                <circle id="hole1" cx="50" cy="55" r="4.5" fill="#1e293b" stroke="#64748b" stroke-width="1.5"/>
+                                <circle id="hole2" cx="50" cy="75" r="4.5" fill="#1e293b" stroke="#64748b" stroke-width="1.5"/>
+                                <circle id="hole3" cx="50" cy="95" r="4.5" fill="#1e293b" stroke="#64748b" stroke-width="1.5"/>
+
+                                <circle id="hole4" cx="50" cy="120" r="4.5" fill="#1e293b" stroke="#64748b" stroke-width="1.5"/>
+                                <circle id="hole5" cx="50" cy="140" r="4.5" fill="#1e293b" stroke="#64748b" stroke-width="1.5"/>
+                                <circle id="hole6" cx="50" cy="160" r="4.5" fill="#1e293b" stroke="#64748b" stroke-width="1.5"/>
+                                <circle id="hole7" cx="50" cy="180" r="4" fill="#1e293b" stroke="#64748b" stroke-width="1.5"/>
+                                
+                                <text x="68" y="78" fill="#475569" font-family="monospace" font-size="8">TGN_KIRI</text>
+                                <text x="68" y="153" fill="#475569" font-family="monospace" font-size="8">TGN_KANAN</text>
+                            </svg>
+                        </div>
+
                     </div>
                 </div>
             </section>
