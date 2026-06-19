@@ -4,16 +4,19 @@
 
 // Frekuensi (Hz) untuk Nota Asas Rekoder Soprano
 const NOTE_FREQUENCIES = {
-    'C': 523.25,
-    'D': 587.33,
-    'E': 659.25,
-    'F': 698.46,
     'G': 783.99,
     'A': 880.00,
     'B': 987.77
 };
 
-// Fungsi Utama Penjana Bunyi Tiupan Rekoder
+// Konfigurasi Penjarian (Lubang mana yang perlu ditutup / warna hitam)
+// Lubang 0 adalah lubang belakang. Lubang 1-3 adalah tangan kiri (atas).
+const FINGER_POSITIONS = {
+    'G': [0, 1, 2, 3],       // Lubang belakang + 3 lubang atas ditutup
+    'A': [0, 1, 2],          // Lubang belakang + 2 lubang atas ditutup
+    'B': [0, 1]              // Lubang belakang + 1 lubang atas ditutup
+};
+
 function playRecorderNote(note) {
     const frequency = NOTE_FREQUENCIES[note];
     if (!frequency) return;
@@ -23,16 +26,14 @@ function playRecorderNote(note) {
         const oser = audioCtx.createOscillator();
         const gainNode = audioCtx.createGain();
         
-        // Menggunakan gelombang 'triangle' untuk bunyi yang lebih lembut seakan tiupan angin
         oser.type = 'triangle'; 
         oser.frequency.value = frequency;
 
-        // Simulasi "ADSR Envelope" (Tiupan bermula lembut, stabil, dan pudar)
         const now = audioCtx.currentTime;
         gainNode.gain.setValueAtTime(0, now);
-        gainNode.gain.linearRampToValueAtTime(0.15, now + 0.08); // Tiupan masuk (Attack)
-        gainNode.gain.setValueAtTime(0.15, now + 0.4);           // Kekalan bunyi (Sustain)
-        gainNode.gain.exponentialRampToValueAtTime(0.00001, now + 0.6); // Pudar (Release)
+        gainNode.gain.linearRampToValueAtTime(0.15, now + 0.08); 
+        gainNode.gain.setValueAtTime(0.15, now + 0.4);           
+        gainNode.gain.exponentialRampToValueAtTime(0.00001, now + 0.6); 
 
         oser.connect(gainNode);
         gainNode.connect(audioCtx.destination);
@@ -40,14 +41,37 @@ function playRecorderNote(note) {
         oser.start(now);
         oser.stop(now + 0.6);
         
-        // Kesan Visual: Kemas kini paparan terminal interaktif (jika ada)
+        // Kemas kini Paparan Grafik SVG & Terminal
+        updateFingeringChart(note);
         updateTerminalLog(`RESONANCE_ACTIVE: Note ${note} (${frequency} Hz) radiated.`);
     } catch (e) {
         console.error("Audio Context Error:", e);
     }
 }
 
-// Fungsi log kosmetik bertema Cyberpunk
+// Fungsi Mengubah Warna Lubang SVG Dinamik
+function updateFingeringChart(note) {
+    const activeHoles = FINGER_POSITIONS[note] || [];
+
+    // Reset semua lubang kepada keadaan asal (tidak ditutup / kosong)
+    for (let i = 0; i <= 7; i++) {
+        const hole = document.getElementById(`hole${i}`);
+        if (hole) {
+            hole.setAttribute('fill', '#1e293b'); // Warna kelabu gelap (kosong)
+            hole.setAttribute('stroke', '#64748b');
+        }
+    }
+
+    // Set lubang yang terlibat kepada warna aktif (menyala/fuchsia untuk tema cyberpunk SasaTech)
+    activeHoles.forEach(holeId => {
+        const hole = document.getElementById(`hole${holeId}`);
+        if (hole) {
+            hole.setAttribute('fill', '#d946ef'); // Fuchsia menyala (ditutup)
+            hole.setAttribute('stroke', '#f472b6');
+        }
+    });
+}
+
 function updateTerminalLog(message) {
     const logElem = document.getElementById('recorder-terminal');
     if (logElem) {
