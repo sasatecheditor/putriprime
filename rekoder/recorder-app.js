@@ -1,29 +1,38 @@
 // ==========================================
 // SASATECH SONIC RESONANCE ENGINE (REKODER)
-// V2.1 - MEMORY & AUDIO BUFFER OPTIMIZED
+// V3.0 - FULL OCTAVE EXTENSION (NEXT LEVEL)
 // ==========================================
 
 // Cipta satu global AudioContext sahaja untuk mengelakkan memori bertindih (noise/drop)
 let globalAudioCtx = null;
 
-// Frekuensi (Hz) untuk Nota Asas & Nota Tinggi Rekoder Soprano
+// Frekuensi (Hz) untuk Skala 1 Oktav Lengkap (Soprano)
 const NOTE_FREQUENCIES = {
-    'G': 783.99,
-    'A': 880.00,
-    'B': 987.77,
-    'C_HIGH': 1046.50, // Nota C Tinggi (C')
-    'D_HIGH': 1174.66  // Nota D Tinggi (D')
+    'C_LOW':  523.25, // Do Rendah
+    'D_LOW':  587.33, // Re
+    'E_LOW':  659.25, // Mi
+    'F_BAROK': 698.46, // Fa (Sistem Barok)
+    'G':      783.99, // So
+    'A':      880.00, // La
+    'B':      987.77, // Ti
+    'C_HIGH': 1046.50, // Do Tinggi
+    'D_HIGH': 1174.66  // Re Tinggi
 };
 
-// Konfigurasi Penjarian 
+// Konfigurasi Penjarian Lengkap (0 = Belakang, 1-7 = Lubang Depan dari Atas ke Bawah)
 const FINGER_POSITIONS = {
-    'G': [0, 1, 2, 3],       
-    'A': [0, 1, 2],          
-    'B': [0, 1],
-    'C_HIGH': [0, 2],     // Lubang belakang (0) + Lubang depan tengah (2)
-    'D_HIGH': [2]         // Lubang belakang DIBUKA (tiada 0), hanya Lubang depan tengah (2)
+    'C_LOW':   [0, 1, 2, 3, 4, 5, 6, 7], // Semua lubang ditutup
+    'D_LOW':   [0, 1, 2, 3, 4, 5, 6],    // Lubang 7 dibuka
+    'E_LOW':   [0, 1, 2, 3, 4, 5],       // Lubang 6 & 7 dibuka
+    'F_BAROK': [0, 1, 2, 3, 4, 6, 7],    // Lubang 5 dibuka (Sistem Barok standard)
+    'G':       [0, 1, 2, 3],
+    'A':       [0, 1, 2],
+    'B':       [0, 1],
+    'C_HIGH':  [0, 2],
+    'D_HIGH':  [2]
 };
 
+// ... (Bahagian kod fungsi playRecorderNote, updateFingeringChart, dll. di bawah kekal sama)
 // Fungsi untuk memastikan AudioContext sedia digunakan
 function getAudioContext() {
     if (!globalAudioCtx) {
