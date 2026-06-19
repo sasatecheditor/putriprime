@@ -6,18 +6,22 @@
 // Cipta satu global AudioContext sahaja untuk mengelakkan memori bertindih (noise/drop)
 let globalAudioCtx = null;
 
-// Frekuensi (Hz) untuk Nota Asas Rekoder Soprano
+// Frekuensi (Hz) untuk Nota Asas & Nota Tinggi Rekoder Soprano
 const NOTE_FREQUENCIES = {
     'G': 783.99,
     'A': 880.00,
-    'B': 987.77
+    'B': 987.77,
+    'C_HIGH': 1046.50, // Nota C Tinggi (C')
+    'D_HIGH': 1174.66  // Nota D Tinggi (D')
 };
 
 // Konfigurasi Penjarian 
 const FINGER_POSITIONS = {
     'G': [0, 1, 2, 3],       
     'A': [0, 1, 2],          
-    'B': [0, 1]              
+    'B': [0, 1],
+    'C_HIGH': [0, 2],     // Lubang belakang (0) + Lubang depan tengah (2)
+    'D_HIGH': [2]         // Lubang belakang DIBUKA (tiada 0), hanya Lubang depan tengah (2)
 };
 
 // Fungsi untuk memastikan AudioContext sedia digunakan
