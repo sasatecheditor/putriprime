@@ -45,9 +45,92 @@ function getAudioContext() {
     return globalAudioCtx;
 }
 
+// =========================================================================
+// SENARAI OSCILLATOR AKTIF (Tambah ini di luar fungsi, bahagian atas)
+// =========================================================================
+let activeOscillators = {};
+
+// =========================================================================
+// 1. FUNGSI MULA TIUP (Dipanggil apabila butang DITEKAN / mousedown)
+// =========================================================================
+function startRecorderNote(note) {
+    if (!NOTE_FREQUENCIES[note]) return;
+
+    // Aktifkan AudioContext jika belum berjalan (mengikut polisi browser)
+    if (!globalAudioCtx) {
+        globalAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (globalAudioCtx.state === 'suspended') {
+        globalAudioCtx.resume();
+    }
+
+    // Jika nota yang sama sedang berbunyi, hentikan dulu untuk elak pertindihan
+    stopRecorderNote(note);
+
+    const freq = NOTE_FREQUENCIES[note];
+    
+    // Cipta komponen audio sintesis
+    const osc = globalAudioCtx.createOscillator();
+    const gainNode = globalAudioCtx.createGain();
+    
+    // Jenis gelombang 'triangle' memberikan bunyi lembut seperti rekoder sebenar
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(freq, globalAudioCtx.currentTime);
+    
+    // ATTACK: Bunyi masuk dengan sangat lancar (0.03 saat) supaya tidak tersangkut
+    gainNode.gain.setValueAtTime(0, globalAudioCtx.currentTime);
+    gainNode.gain.linearRampToValueAtTime(0.4, globalAudioCtx.currentTime + 0.03);
+    
+    // Sambungkan litar audio ke pembesar suara
+    osc.connect(gainNode);
+    gainNode.connect(globalAudioCtx.destination);
+    
+    // Mulakan penghasilan bunyi
+    osc.start();
+    
+    // Simpan rujukan objek oscillator supaya kita boleh matikan bila lepas butang
+    activeOscillators[note] = {
+        oscillator: osc,
+        gain: gainNode
+    };
+    
+    // Kemas kini grafik rekoder SVG di sebelah kanan
+    if (typeof updateFingeringChart === 'function') {
+        updateFingeringChart(note);
+    }
+}
+
+// =========================================================================
+// 2. FUNGSI BERHENTI TIUP (Dipanggil apabila butang DILEPAS / mouseup)
+// =========================================================================
+function stopRecorderNote(note) {
+    if (activeOscillators[note]) {
+        const oscData = activeOscillators[note];
+        const currentTime = globalAudioCtx.currentTime;
+        
+        // RELEASE: Bunyi pudar keluar dengan cepat (0.05s) seperti berhenti tiup
+        oscData.gain.gain.setValueAtTime(oscData.gain.gain.value, currentTime);
+        oscData.gain.gain.linearRampToValueAtTime(0, currentTime + 0.05);
+        
+        // Hentikan oscillator selepas bunyi selesai pudar
+        oscData.oscillator.stop(currentTime + 0.05);
+        
+        // Buang nota daripada senarai aktif
+        delete activeOscillators[note];
+    }
+}
+
+// =========================================================================
+// 3. KEKALKAN FUNGSI ASAL (Untuk keserasian butang lama jika ada)
+// =========================================================================
 function playRecorderNote(note) {
-    const frequency = NOTE_FREQUENCIES[note];
-    if (!frequency) return;
+    // Fungsi fallback: Jika ada butang lama yang masih panggil fungsi ini,
+    // ia akan mainkan bunyi selama 0.5 saat seperti biasa.
+    startRecorderNote(note);
+    setTimeout(() => {
+        stopRecorderNote(note);
+    }, 500);
+}
 
     try {
         // Guna global context yang disemak
