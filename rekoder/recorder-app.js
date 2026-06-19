@@ -181,11 +181,13 @@ function playSongNote(note) {
             if (songTerminal) songTerminal.className = "bg-emerald-950/40 p-2.5 rounded border border-emerald-500 font-mono text-[11px] text-emerald-400 animate-bounce";
             if (songTerminal) songTerminal.textContent = "🎉 SUCCESS: MELODY_DECRYPTED! SasaTech Resonance Matrix Synchronized.";
             
-            // Bunyi kejayaan (Victory Chime)
-            playVictoryChime();
+            // KEMAS KINI: Letakkan delay selama 600ms (0.6 saat) supaya nota 'B' selesai dimainkan dahulu
+            setTimeout(() => {
+                playVictoryChime();
+            }, 600);
             
-            // Reset selepas 3 saat
-            setTimeout(resetSongTracker, 3000);
+            // Reset selepas 4 saat (ditambah masa sikit untuk muatkan delay di atas)
+            setTimeout(resetSongTracker, 4000);
         }
     } else {
         // Jika salah tekan, reset semula progres lagu
