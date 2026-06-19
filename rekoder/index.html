@@ -187,6 +187,41 @@
 
                     </div>
                 </div>
+<div class="bg-gray-950 p-6 rounded-2xl border border-emerald-900/30 max-w-2xl mx-auto my-6 font-mono text-xs">
+                    <div class="text-[10px] text-emerald-400 mb-2 tracking-widest uppercase">
+                        [MELODY_DECRYPTION_MODULE // PROJECT: LYRA]
+                    </div>
+                    <p class="text-gray-400 font-sans text-xs mb-4 leading-relaxed">
+                        Uji kelancaran penjarian anda. Klik pad kekunci nota muzik di bawah mengikut turutan kod rahsia untuk memecahkan enkripsi lagu <strong>"Mary Had a Little Lamb"</strong>.
+                    </p>
+
+                    <div class="grid grid-cols-7 gap-2 mb-6">
+                        <div id="step-0" class="bg-purple-950/10 border border-purple-900/30 text-gray-400 px-3 py-1.5 rounded-lg text-center">B</div>
+                        <div id="step-1" class="bg-purple-950/10 border border-purple-900/30 text-gray-400 px-3 py-1.5 rounded-lg text-center">A</div>
+                        <div id="step-2" class="bg-purple-950/10 border border-purple-900/30 text-gray-400 px-3 py-1.5 rounded-lg text-center">G</div>
+                        <div id="step-3" class="bg-purple-950/10 border border-purple-900/30 text-gray-400 px-3 py-1.5 rounded-lg text-center">A</div>
+                        <div id="step-4" class="bg-purple-950/10 border border-purple-900/30 text-gray-400 px-3 py-1.5 rounded-lg text-center">B</div>
+                        <div id="step-5" class="bg-purple-950/10 border border-purple-900/30 text-gray-400 px-3 py-1.5 rounded-lg text-center">B</div>
+                        <div id="step-6" class="bg-purple-950/10 border border-purple-900/30 text-gray-400 px-3 py-1.5 rounded-lg text-center">B</div>
+                    </div>
+
+                    <div class="flex justify-center gap-4 mb-4">
+                        <button onclick="playSongNote('G')" class="bg-emerald-950/20 border border-emerald-800/40 hover:border-emerald-400 text-emerald-400 font-bold px-5 py-3 rounded-xl active:scale-95 transition-all text-sm">
+                            NODE_G
+                        </button>
+                        <button onclick="playSongNote('A')" class="bg-emerald-950/20 border border-emerald-800/40 hover:border-emerald-400 text-emerald-400 font-bold px-5 py-3 rounded-xl active:scale-95 transition-all text-sm">
+                            NODE_A
+                        </button>
+                        <button onclick="playSongNote('B')" class="bg-emerald-950/20 border border-emerald-800/40 hover:border-emerald-400 text-emerald-400 font-bold px-5 py-3 rounded-xl active:scale-95 transition-all text-sm">
+                            NODE_B
+                        </button>
+                    </div>
+
+                    <div id="song-terminal" class="bg-black/60 p-2.5 rounded border border-gray-900 font-mono text-[11px] text-fuchsia-400 min-h-[36px] flex items-center">
+                        [MELODY_TRACKER] Awaiting sonic resonance input sequence...
+                    </div>
+                </div>
+            
             </section>
             
         </article>
