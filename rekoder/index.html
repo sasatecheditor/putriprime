@@ -5,77 +5,133 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Belajar Rekoder - SasaTech E-Book</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .heading-font { font-family: 'Space Grotesk', sans-serif; }
+    </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans antialiased flex flex-col min-h-screen">
+<body class="bg-gray-950 text-gray-300 font-sans antialiased flex flex-col min-h-screen">
 
-    <header class="bg-blue-600 text-white shadow-md sticky top-0 z-50">
-        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+    <header class="border-b border-gray-900 bg-black/40 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-3">
-                <span class="text-2xl">🎵</span>
-                <h1 class="text-xl font-bold tracking-wide">SasaTech: Belajar Rekoder</h1>
+                <span class="text-xl">🎵</span>
+                <h1 class="heading-font text-md font-bold tracking-widest text-white">SASATECH: SONIC RESONANCE</h1>
             </div>
             <nav>
-                <a href="#kandungan" class="hover:underline bg-blue-700 px-3 py-2 rounded text-sm font-medium transition">Mula Membaca</a>
+                <a href="/" class="text-xs font-mono text-cyan-400 bg-cyan-950/30 px-3 py-1.5 rounded border border-cyan-900/50 hover:bg-cyan-500 hover:text-black transition-all">
+                    &larr; PORTAL_UTAMA
+                </a>
             </nav>
         </div>
     </header>
 
-    <section class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-16 px-4 text-center">
+    <section class="border-b border-gray-950 bg-gradient-to-b from-purple-950/20 to-transparent py-12 px-4 text-center">
         <div class="max-w-3xl mx-auto">
-            <h2 class="text-4xl font-extrabold mb-4">Kuasai Asas Rekoder dengan Mudah</h2>
-            <p class="text-lg text-blue-100 mb-8">Panduan langkah demi langkah interaktif daripada SasaTech untuk memulakan perjalanan muzik anda.</p>
-            <a href="#bab1" class="bg-yellow-400 hover:bg-yellow-300 text-gray-950 font-bold px-6 py-3 rounded-lg shadow-lg transition transform hover:-translate-y-0.5 inline-block">
-                Buka Bab 1
-            </a>
+            <span class="text-xs font-mono text-fuchsia-400 bg-fuchsia-950/40 px-3 py-1 rounded-full border border-fuchsia-900/30 uppercase tracking-widest">E-Book Module // Ver 1.0</span>
+            <h2 class="heading-font text-3xl md:text-5xl font-extrabold text-white mt-4 mb-3">Modul Latihan Rekoder</h2>
+            <p class="text-sm md:text-base text-gray-400 max-w-xl mx-auto font-light">Panduan interaktif SasaTech untuk menguasai asas instrumen tiupan dan frekuensi akustik.</p>
         </div>
     </section>
 
-    <main id="kandungan" class="container mx-auto px-4 py-12 flex-grow grid grid-cols-1 lg:grid-cols-4 gap-8">
+    <main class="max-w-6xl mx-auto px-4 py-12 w-full flex-grow grid grid-cols-1 lg:grid-cols-4 gap-8">
         
-        <aside class="lg:col-span-1 bg-white p-6 rounded-xl shadow-sm h-fit sticky top-20">
-            <h3 class="font-bold text-lg border-b pb-2 mb-4 text-gray-700">Isi Kandungan</h3>
-            <ul class="space-y-2 text-sm">
-                <li><a href="#pengenalan" class="block p-2 rounded hover:bg-blue-50 text-blue-600 font-medium">Pengenalan</a></li>
-                <li><a href="#bab1" class="block p-2 rounded hover:bg-blue-50 text-gray-600">Bab 1: Mengenali Rekoder</a></li>
-                <li><a href="#bab2" class="block p-2 rounded hover:bg-blue-50 text-gray-600">Bab 2: Teknik Pernafasan & Postur</a></li>
-                <li><a href="#bab3" class="block p-2 rounded hover:bg-blue-50 text-gray-600">Bab 3: Nota Pertama Anda (B, A, G)</a></li>
+        <aside class="lg:col-span-1 bg-black/40 border border-gray-900 p-6 rounded-2xl h-fit sticky top-24 font-mono text-xs">
+            <h3 class="font-bold text-sm tracking-wider text-white border-b border-gray-900 pb-3 mb-4">INDEX_DATA</h3>
+            <ul class="space-y-2">
+                <li><a href="#pengenalan" class="block p-2 rounded text-cyan-400 bg-cyan-950/20 border border-cyan-900/30 font-medium">00 // Pengenalan</a></li>
+                <li><a href="#bab1" class="block p-2 rounded text-gray-400 hover:text-white hover:bg-gray-900 transition-all">01 // Mengenali Rekoder</a></li>
+                <li><a href="#bab2" class="block p-2 rounded text-gray-400 hover:text-white hover:bg-gray-900 transition-all">02 // Postur & Tiupan</a></li>
+                <li><a href="#bab3" class="block p-2 rounded text-gray-400 hover:text-white hover:bg-gray-900 transition-all">03 // Nota B, A, G (AUDIO)</a></li>
             </ul>
         </aside>
 
-        <article class="lg:col-span-3 bg-white p-8 rounded-xl shadow-sm prose max-w-none">
+        <article class="lg:col-span-3 bg-black/20 border border-gray-900 p-6 md:p-8 rounded-2xl space-y-12">
             
-            <section id="pengenalan" class="mb-12 scroll-mt-24">
-                <span class="text-xs font-bold uppercase tracking-widest text-blue-600">Selamat Datang</span>
-                <h2 class="text-3xl font-bold mt-1 mb-4 text-gray-900">Pengenalan</h2>
-                <p class="text-gray-600 leading-relaxed mb-4">
-                    Rekoder adalah salah satu instrumen tiupan yang paling popular untuk dipelajari. E-book ini direka khas oleh <strong>SasaTech</strong> untuk membantu anda memahami asas penjarian, bacaan nota, dan teknik tiupan yang betul.
+            <section id="pengenalan" class="scroll-mt-24">
+                <span class="text-[10px] font-mono tracking-widest text-cyan-500 block mb-1">[ACCESS_POINT: 00]</span>
+                <h2 class="heading-font text-2xl font-bold text-white mb-4">Pengenalan</h2>
+                <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                    Rekoder adalah salah satu instrumen tiupan yang paling ideal untuk memahami teori muzik praktikal. E-book ini direka khas oleh <strong>SasaTech</strong> bagi mendedahkan anda kepada kawalan udara, koordinasi jari, dan manipulasi frekuensi audio secara sistematik.
                 </p>
             </section>
 
-            <hr class="my-8 border-gray-200">
+            <hr class="border-gray-900">
 
-            <section id="bab1" class="mb-12 scroll-mt-24">
-                <span class="text-xs font-bold uppercase tracking-widest text-indigo-600">Bab 1</span>
-                <h2 class="text-3xl font-bold mt-1 mb-4 text-gray-900">Mengenali Bahagian Rekoder</h2>
-                <p class="text-gray-600 leading-relaxed mb-4">
-                    Sebelum mula meniup, kita perlu mengenali anatomi instrumen ini. Secara amnya, rekoder soprano (jenis yang biasa digunakan di sekolah) terbahagi kepada tiga bahagian utama:
+            <section id="bab1" class="scroll-mt-24">
+                <span class="text-[10px] font-mono tracking-widest text-cyan-500 block mb-1">[MODULE_FILE: 01]</span>
+                <h2 class="heading-font text-2xl font-bold text-white mb-4">Bab 1: Mengenali Bahagian Rekoder</h2>
+                <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                    Sebelum mula menghasilkan frekuensi bunyi, kita perlu mengenali anatomi fizikal instrumen ini. Rekoder soprano (jenis biasa) terbahagi kepada tiga bahagian utama:
                 </p>
-                <ul class="list-disc pl-5 space-y-2 text-gray-600 mb-4">
-                    <li><strong>Bahagian Kepala (Headjoint):</strong> Tempat di mana pemipit (mouthpiece) berada.</li>
-                    <li><strong>Bahagian Badan (Body):</strong> Menempatkan kebanyakan lubang penjarian utama.</li>
-                    <li><strong>Bahagian Kaki (Footjoint):</strong> Bahagian bawah untuk lubang nota paling rendah.</li>
+                <ul class="list-disc pl-5 space-y-2 text-sm text-gray-400 mb-4">
+                    <li><strong class="text-gray-200">Bahagian Kepala (Headjoint):</strong> Menempatkan pemipit (*mouthpiece*) dan kawasan lubang tiupan angin (*fipple*).</li>
+                    <li><strong class="text-gray-200">Bahagian Badan (Body):</strong> Menempatkan aci utama dengan lubang penjarian digital (lubang 0 hingga 6).</li>
+                    <li><strong class="text-gray-200">Bahagian Kaki (Footjoint):</strong> Bahagian bawah boleh laras yang menempatkan lubang nota terendah.</li>
                 </ul>
-                <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded text-sm text-yellow-900">
-                    <strong>Nota SasaTech:</strong> Pastikan bahagian rekoder dipasang dengan lurus supaya lubang jari mudah ditutup sepenuhnya!
+            </section>
+
+            <hr class="border-gray-900">
+
+            <section id="bab2" class="scroll-mt-24">
+                <span class="text-[10px] font-mono tracking-widest text-cyan-500 block mb-1">[MODULE_FILE: 02]</span>
+                <h2 class="heading-font text-2xl font-bold text-white mb-4">Bab 2: Teknik Pernafasan & Postur</h2>
+                <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                    Semburan angin yang terlalu kuat akan memecahkan frekuensi bunyi (*overblowing*). Ikuti standard konfigurasi berikut untuk tiupan yang mampan:
+                </p>
+                <div class="bg-gray-950 p-4 rounded-xl border border-gray-900 text-xs space-y-2 font-mono text-emerald-400 mb-4">
+                    <p>1. [POSTUR] Duduk tegak, siku jarak 45-darjah dari badan.</p>
+                    <p>2. [TIUPAN] Gunakan sebutan "Tu" atau "Du" (bukan meniup lilin).</p>
+                    <p>3. [UDARA] Lepaskan aliran udara yang lembut dan konsisten.</p>
+                </div>
+            </section>
+
+            <hr class="border-gray-900">
+
+            <section id="bab3" class="scroll-mt-24">
+                <span class="text-[10px] font-mono tracking-widest text-fuchsia-500 block mb-1">[RESONANCE_PAD: 03]</span>
+                <h2 class="heading-font text-2xl font-bold text-white mb-4">Bab 3: Nota Pertama Anda & Frekuensi Audio</h2>
+                <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                    Tiga nota terawal yang paling mudah dipelajari ialah nota **B, A, dan G**. Klik pada panel kawalan audio di bawah untuk memancarkan simulasi gelombang bunyi bagi setiap nota tersebut.
+                </p>
+
+                <div class="bg-gray-950 p-6 rounded-2xl border border-purple-900/40 shadow-inner max-w-xl mx-auto my-6">
+                    <div class="text-[10px] font-mono text-fuchsia-400 mb-4 tracking-widest uppercase">
+                        [SONIC_SYNTH_INTERFACE v1.0]
+                    </div>
+                    
+                    <div class="flex justify-center gap-3 mb-6">
+                        <button onclick="playRecorderNote('G')" class="bg-purple-950/20 border border-purple-500/30 hover:border-fuchsia-500 text-white font-mono font-bold w-16 h-16 rounded-xl flex flex-col items-center justify-center transition-all active:scale-95 group">
+                            <span class="text-lg text-fuchsia-400">G</span>
+                            <span class="text-[9px] text-gray-500 font-normal">783Hz</span>
+                        </button>
+                        <button onclick="playRecorderNote('A')" class="bg-purple-950/20 border border-purple-500/30 hover:border-fuchsia-500 text-white font-mono font-bold w-16 h-16 rounded-xl flex flex-col items-center justify-center transition-all active:scale-95">
+                            <span class="text-lg text-fuchsia-400">A</span>
+                            <span class="text-[9px] text-gray-500 font-normal">880Hz</span>
+                        </button>
+                        <button onclick="playRecorderNote('B')" class="bg-purple-950/20 border border-purple-500/30 hover:border-fuchsia-500 text-white font-mono font-bold w-16 h-16 rounded-xl flex flex-col items-center justify-center transition-all active:scale-95">
+                            <span class="text-lg text-fuchsia-400">B</span>
+                            <span class="text-[9px] text-gray-500 font-normal">987Hz</span>
+                        </button>
+                    </div>
+
+                    <div id="recorder-terminal" class="bg-black/60 p-2.5 rounded border border-gray-900 font-mono text-[11px] text-emerald-400 min-h-[32px]">
+                        [SYS_LOG] System ready. Click a sonic node to initiate resonance.
+                    </div>
                 </div>
             </section>
             
         </article>
     </main>
 
-    <footer class="bg-gray-950 text-gray-400 py-6 text-center text-sm border-t border-gray-800">
-        <p>&copy; 2026 SasaTech. Hak Cipta Terpelihara.</p>
+    <footer class="border-t border-gray-900 bg-black/20 py-6 text-center text-xs text-gray-600">
+        <p>&copy; 2026 SasaTech Corporation. Hak Cipta Terpelihara.</p>
     </footer>
+
+    <script src="recorder-app.js"></script>
 
 </body>
 </html>
