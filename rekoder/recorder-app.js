@@ -242,3 +242,70 @@ function simulateAirflow(level) {
         console.log(e);
     }
 }
+
+// ==========================================
+// SASATECH INTERMEDIATE MELODY PLAYER (BAB 4)
+// PROJECT: ULIK_MAYANG
+// ==========================================
+
+// Turutan nota lagu Ulik Mayang yang diberikan
+const SONG_SEQUENCE_4 = ['E', 'E', 'E', 'E', 'E', 'F', 'G', 'F', 'A', 'G', 'F', 'E', 'D', 'D', 'E', 'F', 'D', 'E'];
+let currentSongIndex4 = 0;
+
+function playSongNote4(note) {
+    // 1. Tukar input nota 'F' atau 'D' kepada kod frekuensi yang sepadan dengan enjin kita
+    let targetNote = note;
+    if (note === 'F') targetNote = 'F_BAROK';
+    if (note === 'D') targetNote = 'D_LOW';
+    if (note === 'E') targetNote = 'E_LOW';
+
+    // Mainkan bunyi menggunakan enjin utama
+    playRecorderNote(targetNote);
+    
+    // 2. Semak jika nota betul mengikut turutan lagu Ulik Mayang
+    const expectedNote = SONG_SEQUENCE_4[currentSongIndex4];
+    const songTerminal4 = document.getElementById('song-terminal-4');
+    
+    if (note === expectedNote) {
+        // Kemas kini visual kotak nota yang berjaya ditekan
+        const stepElem = document.getElementById(`step4-${currentSongIndex4}`);
+        if (stepElem) {
+            stepElem.className = "bg-cyan-500 text-black font-bold px-2 py-1 rounded border border-cyan-400 font-mono shadow-[0_0_10px_rgba(6,182,212,0.3)] text-center text-[10px]";
+        }
+        
+        currentSongIndex4++;
+        if (songTerminal4) songTerminal4.textContent = `[ULIK_TRACKER] Match found: Node ${note}. Processing wave...`;
+        
+        // Jika lagu selesai sepenuhnya
+        if (currentSongIndex4 === SONG_SEQUENCE_4.length) {
+            if (songTerminal4) songTerminal4.className = "bg-cyan-950/40 p-2.5 rounded border border-cyan-500 font-mono text-[11px] text-cyan-400 animate-bounce";
+            if (songTerminal4) songTerminal4.textContent = "🎉 SUCCESS: ULIK_MAYANG_DECRYPTED! Cultural Resonance Matrix Synchronized.";
+            
+            // Bunyi kejayaan (Delay 550ms)
+            setTimeout(() => {
+                playVictoryChime();
+            }, 550);
+            
+            // Reset selepas 4 saat
+            setTimeout(resetSongTracker4, 4000);
+        }
+    } else {
+        // Jika salah tekan, reset semula progres lagu
+        if (songTerminal4) songTerminal4.textContent = `[CRITICAL_ERR] Sequence broken! Expected ${expectedNote} but received ${note}. Resetting tracker...`;
+        resetSongTracker4();
+    }
+}
+
+function resetSongTracker4() {
+    currentSongIndex4 = 0;
+    const songTerminal4 = document.getElementById('song-terminal-4');
+    if (songTerminal4) songTerminal4.className = "bg-black/60 p-2.5 rounded border border-gray-900 font-mono text-[11px] text-cyan-400";
+    
+    // Kemas kini semua kotak langkah lagu balik ke asal
+    SONG_SEQUENCE_4.forEach((_, index) => {
+        const stepElem = document.getElementById(`step4-${index}`);
+        if (stepElem) {
+            stepElem.className = "bg-cyan-950/10 border border-cyan-900/30 text-gray-500 py-1 rounded font-mono text-center text-[10px]";
+        }
+    });
+}
