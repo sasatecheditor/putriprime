@@ -22,6 +22,9 @@
         .hologram-glow-purple {
             box-shadow: 0 0 30px rgba(217, 70, 239, 0.1), inset 0 0 15px rgba(217, 70, 239, 0.02);
         }
+        .hologram-glow-emerald {
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.1), inset 0 0 15px rgba(16, 185, 129, 0.02);
+        }
     </style>
 </head>
 <body class="text-gray-300 min-h-screen flex flex-col justify-between">
@@ -33,6 +36,10 @@
                 <span class="heading-font font-bold tracking-widest text-white text-sm">SASATECH CORP</span>
             </div>
             <div class="flex items-center gap-4">
+                <!-- Pintasan Pintar MathGenius Baru -->
+                <a href="/MathGenius/index.html" onclick="playBeep(659.25, 0.15)" class="hidden sm:block text-[10px] font-mono text-emerald-400 bg-emerald-950/30 px-2 py-1 rounded border border-emerald-900/50 hover:bg-emerald-500 hover:text-black transition-all">
+                    🧮 ACCESS: MATHGENIUS_SYS
+                </a>
                 <a href="/rekoder/index.html" onclick="playBeep(880, 0.15)" class="hidden sm:block text-[10px] font-mono text-fuchsia-400 bg-fuchsia-950/30 px-2 py-1 rounded border border-fuchsia-900/50 hover:bg-fuchsia-500 hover:text-black transition-all">
                     🎵 ACCESS: REKODER_DATA
                 </a>
@@ -43,7 +50,7 @@
         </div>
     </header>
 
-    <main class="max-w-4xl mx-auto px-4 py-12 md:py-16 w-full flex-grow flex flex-col justify-center items-center text-center">
+    <main class="max-w-6xl mx-auto px-4 py-12 md:py-16 w-full flex-grow flex flex-col justify-center items-center text-center">
         
         <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 text-left font-mono text-xs text-cyan-400 max-w-2xl mx-auto">
             <div class="bg-cyan-950/20 border border-cyan-900/40 p-3 rounded-xl flex flex-col justify-center">
@@ -52,7 +59,7 @@
             </div>
             <div class="bg-cyan-950/20 border border-cyan-900/40 p-3 rounded-xl flex flex-col justify-center">
                 <span class="text-gray-500 text-[10px] uppercase tracking-wider">Current Date</span>
-                <span id="live-date" class="text-sm font-bold text-cyan-300 mt-1">16 Jun 2026</span>
+                <span id="live-date" class="text-sm font-bold text-cyan-300 mt-1">21 Jun 2026</span>
             </div>
             <div class="bg-cyan-950/20 border border-cyan-900/40 p-3 rounded-xl flex flex-col justify-center">
                 <span class="text-gray-500 text-[10px] uppercase tracking-wider">System Synchronicity (MYT)</span>
@@ -73,11 +80,15 @@
             Sistem pemantauan anomali dimensi, pengurusan wira elemental Lembah Klang, dan modul latihan frekuensi bunyi tinggi. Log masuk untuk mengakses sistem.
         </p>
 
-        <div class="w-full flex flex-col sm:flex-row justify-center items-center gap-4 mb-16 max-w-xl">
-            <a href="/bab1/page1.html" onclick="playBeep(523.25, 0.15)" class="w-full sm:w-1/2 bg-gradient-to-r from-cyan-600 to-cyan-500 hover:from-cyan-500 hover:to-cyan-400 text-white font-semibold px-6 py-4 rounded-xl transition-all shadow-lg shadow-cyan-500/10 text-center tracking-wide heading-font transform hover:-translate-y-0.5">
+        <!-- Bahagian Navigasi Utama (Diubahsuai kepada 3 Kolom untuk MathGenius) -->
+        <div class="w-full grid grid-cols-1 sm:grid-cols-3 gap-4 mb-16 max-w-4xl">
+            <a href="/bab1/page1.html" onclick="playBeep(523.25, 0.15)" class="bg-gradient-to-r from-cyan-600 to-cyan-500 hover:from-cyan-500 hover:to-cyan-400 text-white font-semibold px-4 py-4 rounded-xl transition-all shadow-lg shadow-cyan-500/10 text-center tracking-wide heading-font transform hover:-translate-y-0.5 text-sm flex items-center justify-center">
                 MULA MEMBACA (BAB 1)
             </a>
-            <a href="/rekoder/index.html" onclick="playBeep(659.25, 0.2)" class="w-full sm:w-1/2 bg-gradient-to-r from-fuchsia-600 to-purple-600 hover:from-fuchsia-500 hover:to-purple-500 text-white font-semibold px-6 py-4 rounded-xl transition-all shadow-lg shadow-fuchsia-500/20 text-center tracking-wide heading-font transform hover:-translate-y-0.5 border border-fuchsia-400/30">
+            <a href="/MathGenius/index.html" onclick="playBeep(587.33, 0.15)" class="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-semibold px-4 py-4 rounded-xl transition-all shadow-lg shadow-emerald-500/20 text-center tracking-wide heading-font transform hover:-translate-y-0.5 border border-emerald-400/30 text-sm flex items-center justify-center gap-2">
+                🧮 MODUL MATHGENIUS 2.0
+            </a>
+            <a href="/rekoder/index.html" onclick="playBeep(659.25, 0.2)" class="bg-gradient-to-r from-fuchsia-600 to-purple-600 hover:from-fuchsia-500 hover:to-purple-500 text-white font-semibold px-4 py-4 rounded-xl transition-all shadow-lg shadow-fuchsia-500/20 text-center tracking-wide heading-font transform hover:-translate-y-0.5 border border-fuchsia-400/30 text-sm flex items-center justify-center">
                 🎵 MODUL REKODER INTERAKTIF
             </a>
         </div>
@@ -93,6 +104,7 @@
             </div>
 
             <div class="space-y-4">
+                <!-- Item 01 -->
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl bg-gray-950/50 border border-gray-900 gap-4 hover:border-cyan-800/60 transition-all group">
                     <div class="flex items-start gap-4">
                         <div class="w-10 h-10 rounded-lg bg-cyan-950/60 border border-cyan-800/40 flex items-center justify-center font-mono text-cyan-400 font-bold shrink-0 group-hover:bg-cyan-500 group-hover:text-black transition-all">
@@ -108,6 +120,7 @@
                     </a>
                 </div>
 
+                <!-- Item 02 -->
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl bg-gray-950/50 border border-gray-900 gap-4 hover:border-red-900/50 transition-all group">
                     <div class="flex items-start gap-4">
                         <div class="w-10 h-10 rounded-lg bg-red-950/60 border border-red-800/40 flex items-center justify-center font-mono text-red-400 font-bold shrink-0 group-hover:bg-red-500 group-hover:text-black transition-all">
@@ -123,6 +136,26 @@
                     </a>
                 </div>
 
+                <!-- Item 03: MathGenius 2.0 (Baru Ditambah) -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl bg-emerald-950/10 border border-emerald-900/30 gap-4 hover:border-emerald-800/60 hologram-glow-emerald transition-all group">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-lg bg-emerald-950/60 border border-emerald-800/40 flex items-center justify-center font-mono text-emerald-400 font-bold shrink-0 group-hover:bg-emerald-500 group-hover:text-black transition-all">
+                            🧮
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h3 class="text-sm font-semibold text-white">MathGenius 2.0: Edisi Visual Rumah Nombor</h3>
+                                <span class="bg-emerald-950 text-emerald-400 border border-emerald-900 text-[9px] font-mono px-1.5 py-0.2 rounded font-bold tracking-wider">NEW_MODULE</span>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">Pembelajaran matematik bentuk lazim sekolah rendah (R, P, S) dengan sistem baki simpan/pinjam visual dan interaksi suara Bahasa Melayu.</p>
+                        </div>
+                    </div>
+                    <a href="/MathGenius/index.html" onclick="playBeep(659.25, 0.12)" class="text-xs text-emerald-400 font-mono hover:underline sm:text-right shrink-0 font-bold">
+                        Decrypt Calculation Engine &rarr;
+                    </a>
+                </div>
+
+                <!-- Item 04 -->
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl bg-purple-950/10 border border-purple-900/30 gap-4 hover:border-fuchsia-800/60 hologram-glow-purple transition-all group">
                     <div class="flex items-start gap-4">
                         <div class="w-10 h-10 rounded-lg bg-fuchsia-950/60 border border-fuchsia-800/40 flex items-center justify-center font-mono text-fuchsia-400 font-bold shrink-0 group-hover:bg-fuchsia-500 group-hover:text-black transition-all">
