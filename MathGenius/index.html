@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathGenius 2.0 - Rumah Nombor Visual (Eye-Care Edition)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0b0f19; /* Gelap lembut untuk mata */
+            color: #cbd5e1;
+        }
+
+        .title-font { font-family: 'Fredoka', sans-serif; }
+
+        /* Rumah Nombor Styling - Versi Gelap Lembut */
+        .house-column {
+            @apply flex flex-col items-center justify-center p-2 border-x border-slate-800 transition-all duration-300;
+            width: 100%;
+            min-width: 70px; /* Diperkecilkan untuk skrin telefon pintar */
+        }
+        
+        @media (min-width: 640px) {
+            .house-column {
+                min-width: 90px; /* Saiz asal untuk tablet dan laptop */
+            }
+        }
+        
+        .house-header { @apply text-[10px] sm:text-[11px] font-black uppercase tracking-widest mb-1; }
+        
+        .digit-box {
+            @apply w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center text-xl sm:text-2xl font-black rounded-xl transition-all duration-300 shadow-md;
+        }
+
+        /* Warna Pastel Redup (Muted/Desaturated) mesra mata */
+        .ratus { @apply bg-blue-950/80 text-blue-300 border border-blue-800/50; }
+        .puluh { @apply bg-emerald-950/80 text-emerald-300 border border-emerald-800/50; }
+        .sa { @apply bg-amber-950/80 text-amber-300 border border-amber-800/50; }
+
+        .step-enter {
+            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .highlight-carry {
+            animation: pulse-yellow 2s infinite;
+        }
+
+        @keyframes pulse-yellow {
+            0%, 100% { background-color: rgba(120, 110, 40, 0.4); transform: translateY(0); }
+            50% { background-color: rgba(150, 130, 30, 0.5); transform: translateY(-3px); }
+        }
+
+        /* Gaya khas untuk sorotan rumah aktif semasa melangkah */
+        .box-focus-highlight {
+            box-shadow: 0 0 15px currentColor !important; /* Diperhaluskan agar tidak mencecah ke kanan */
+            transform: scale(1.08) !important; /* Dikecilkan sedikit daripada 1.15 */
+            border-width: 2px !important;
+            border-color: currentColor !important;
+            z-index: 30;
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-12">
+
+    <!-- Header Section (Gelap Redup) -->
+    <header class="bg-slate-900 shadow-md border-b-4 border-slate-800 py-6">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+                <div class="w-14 h-14 bg-indigo-950 border border-indigo-800 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-950/50 rotate-3">
+                    <i class="fa-solid fa-house-chimney-window text-indigo-400 text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-3xl font-bold text-slate-100 title-font">MathGenius 2.0</h1>
+                    <p class="text-indigo-400 font-bold text-xs uppercase tracking-tighter">Edisi Kesihatan Mata & Navigasi Langkah</p>
+                </div>
+            </div>
+            <div class="flex gap-4">
+                <div class="flex items-center gap-2 bg-blue-950/60 px-3 py-1.5 rounded-lg border border-blue-900/50">
+                    <div class="w-3 h-3 rounded-full bg-blue-400"></div>
+                    <span class="text-[10px] font-bold text-blue-300">RATUS</span>
+                </div>
+                <div class="flex items-center gap-2 bg-emerald-950/60 px-3 py-1.5 rounded-lg border border-emerald-900/50">
+                    <div class="w-3 h-3 rounded-full bg-emerald-400"></div>
+                    <span class="text-[10px] font-bold text-emerald-300">PULUH</span>
+                </div>
+                <div class="flex items-center gap-2 bg-amber-950/60 px-3 py-1.5 rounded-lg border border-amber-950/50">
+                    <div class="w-3 h-3 rounded-full bg-amber-455"></div>
+                    <span class="text-[10px] font-bold text-amber-300">SA</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto p-4 md:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- KIRI: INPUT & STEPS (8/12) -->
+        <div class="lg:col-span-8 space-y-8">
+            
+            <!-- Panel Input -->
+            <section class="bg-slate-900 p-6 md:p-8 rounded-[2.5rem] shadow-xl border border-slate-800">
+                <h2 class="text-sm font-black text-slate-400 uppercase tracking-widest mb-6 flex items-center gap-2">
+                    <i class="fa-solid fa-pen-to-square text-indigo-400"></i> Sediakan Soalan Baru
+                </h2>
+
+                <!-- Ralat Komponen Amaran (Mesra Murid) -->
+                <div id="errorAlert" class="hidden bg-rose-950/50 border-2 border-rose-900 text-rose-200 p-4 rounded-3xl mb-6 flex items-center gap-3 animate-pulse">
+                    <i class="fa-solid fa-circle-exclamation text-rose-400 text-2xl"></i>
+                    <div>
+                        <p class="font-extrabold text-sm">Alamak! Cuba semak semula nombor</p>
+                        <p id="errorMessage" class="text-xs text-rose-300 font-medium"></p>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col md:flex-row items-end gap-6 justify-center">
+                    <div class="space-y-2 w-full md:w-auto">
+                        <label class="text-xs font-bold text-slate-400 ml-2">Nombor Pertama (Maksimum 999)</label>
+                        <input type="number" id="num1" value="125" min="0" max="999" class="w-full md:w-44 text-3xl font-black text-center p-4 bg-slate-950 border-2 border-slate-800 rounded-3xl text-slate-100 focus:border-indigo-500 focus:bg-slate-900 outline-none transition-all">
+                    </div>
+
+                    <div class="pb-2">
+                        <select id="operator" class="bg-indigo-950 border border-indigo-750 text-indigo-300 text-3xl font-black p-4 rounded-2xl cursor-pointer hover:bg-indigo-900 transition-all shadow-md">
+                            <option value="+">+</option>
+                            <option value="-">-</option>
+                            <option value="*">×</option>
+                            <option value="/">÷</option>
+                        </select>
+                    </div>
+
+                    <div class="space-y-2 w-full md:w-auto">
+                        <label class="text-xs font-bold text-slate-400 ml-2">Nombor Kedua (Maksimum 999)</label>
+                        <input type="number" id="num2" value="5" min="0" max="999" class="w-full md:w-44 text-3xl font-black text-center p-4 bg-slate-950 border-2 border-slate-800 rounded-3xl text-slate-100 focus:border-indigo-500 focus:bg-slate-900 outline-none transition-all">
+                    </div>
+
+                    <button onclick="janaPenyelesaian()" class="w-full md:w-auto bg-emerald-600 hover:bg-emerald-700 text-white p-5 rounded-3xl shadow-lg shadow-emerald-950/50 transition-all active:scale-95 flex items-center justify-center">
+                        <i class="fa-solid fa-play text-xl"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Bahagian Visual Rumah Nombor (Utama) -->
+            <section id="visualHouseSection" class="hidden bg-slate-900 p-8 rounded-[2.5rem] shadow-xl border border-slate-800">
+                <div class="flex justify-between items-center mb-8">
+                    <h3 class="text-lg font-bold text-slate-100">Visual Rumah Nombor</h3>
+                    <div id="badgeOperasi" class="bg-indigo-950 text-indigo-300 px-4 py-1 rounded-full text-xs font-black border border-indigo-900">TAMBAH</div>
+                </div>
+
+                <div class="flex flex-col items-center">
+                    <!-- Grid Standard (Tambah, Tolak, Darab) -->
+                    <div id="gridStandard" class="inline-grid grid-cols-4 gap-0 border-4 border-slate-800 rounded-[2rem] overflow-hidden bg-slate-950">
+                        <!-- Header Baris: Kosong, R, P, S -->
+                        <div class="p-4"></div>
+                        <div class="house-column"><span class="house-header text-blue-400">Ratus</span></div>
+                        <div class="house-column"><span class="house-header text-emerald-400">Puluh</span></div>
+                        <div class="house-column"><span class="house-header text-amber-400">Sa</span></div>
+
+                        <!-- Baris Carry (Simpan/Pinjam) - Responsif w/h -->
+                        <div id="labelCarryRow" class="p-2 flex items-center justify-center text-[10px] font-black text-slate-500 uppercase tracking-wider text-center">Simpan</div>
+                        <div class="house-column">
+                            <div id="carryR_val" class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl border-2 border-dashed border-slate-800 flex flex-col items-center justify-center text-[11px] font-extrabold transition-all duration-300 text-slate-600"></div>
+                        </div>
+                        <div class="house-column">
+                            <div id="carryP_val" class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl border-2 border-dashed border-slate-800 flex flex-col items-center justify-center text-[11px] font-extrabold transition-all duration-300 text-slate-600"></div>
+                        </div>
+                        <div class="house-column">
+                            <div id="carryS_val" class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl border-2 border-dashed border-slate-800 flex flex-col items-center justify-center text-[11px] font-extrabold transition-all duration-300 text-slate-600"></div>
+                        </div>
+
+                        <!-- Baris Nombor 1 -->
+                        <div class="p-4 flex items-center justify-center font-bold text-slate-600">#1</div>
+                        <div class="house-column"><div id="n1_r" class="digit-box ratus">0</div></div>
+                        <div class="house-column"><div id="n1_p" class="digit-box puluh">0</div></div>
+                        <div class="house-column"><div id="n1_s" class="digit-box sa">0</div></div>
+
+                        <!-- Baris Nombor 2 -->
+                        <div class="p-4 flex items-center justify-center font-bold text-indigo-400 text-2xl" id="simbolOpVisual">+</div>
+                        <div class="house-column"><div id="n2_r" class="digit-box ratus">0</div></div>
+                        <div class="house-column"><div id="n2_p" class="digit-box puluh">0</div></div>
+                        <div class="house-column"><div id="n2_s" class="digit-box sa">0</div></div>
+
+                        <!-- Baris Garisan Jawapan -->
+                        <div class="col-span-4 h-2 bg-slate-850"></div>
+
+                        <!-- Baris Jawapan -->
+                        <div class="p-4 flex items-center justify-center font-bold text-slate-500">=</div>
+                        <div class="house-column"><div id="ans_r" class="digit-box bg-slate-800 text-slate-100">0</div></div>
+                        <div class="house-column"><div id="ans_p" class="digit-box bg-slate-800 text-slate-100">0</div></div>
+                        <div class="house-column"><div id="ans_s" class="digit-box bg-slate-800 text-slate-100">0</div></div>
+                    </div>
+
+                    <!-- Grid Bahagi (Bentuk Lazim Standard Sekolah) - Versi Gelap Selesa -->
+                    <div id="gridBahagi" class="hidden bg-slate-950 border-4 border-slate-800 rounded-[2.5rem] p-8 shadow-inner overflow-x-auto w-full max-w-lg">
+                        <!-- Jadual Bentuk Lazim akan dimasukkan ke sini melalui JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bahagian Langkah-Langkah Interaktif -->
+            <section id="stepsSection" class="hidden space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-slate-800 pb-4">
+                    <div class="flex items-center gap-3">
+                        <span class="w-10 h-10 bg-indigo-950 border border-indigo-900 text-indigo-400 rounded-full flex items-center justify-center font-black">Step</span>
+                        <h2 class="text-xl font-bold text-slate-100">Penyelesaian Berperingkat</h2>
+                    </div>
+                    
+                    <!-- Butang Kawalan Langkah -->
+                    <div class="flex items-center gap-3 bg-slate-950 p-1.5 rounded-2xl border border-slate-800">
+                        <button onclick="navigasiLangkah(-1)" id="btnPrev" class="px-3 py-1.5 bg-slate-900 hover:bg-slate-850 text-slate-300 disabled:opacity-40 disabled:hover:bg-slate-900 rounded-xl text-xs font-bold transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-arrow-left"></i> Undur
+                        </button>
+                        <span id="stepProgress" class="text-xs font-black text-indigo-400 uppercase tracking-wider px-2">Langkah 1/3</span>
+                        <button onclick="navigasiLangkah(1)" id="btnNext" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-2 shadow-md">
+                            Maju <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="stepsContainer">
+                    <!-- Satu kad langkah aktif dimasukkan di sini oleh JavaScript -->
+                </div>
+            </section>
+        </div>
+
+        <!-- KANAN: LOG SEJARAH (4/12) -->
+        <div class="lg:col-span-4">
+            <aside class="bg-slate-900 rounded-[2.5rem] p-6 text-slate-100 min-h-[600px] sticky top-8 shadow-2xl overflow-hidden border border-slate-800">
+                <div class="relative z-10">
+                    <div class="flex justify-between items-center mb-8 border-b border-slate-850 pb-4">
+                        <h3 class="font-bold flex items-center gap-2">
+                            <i class="fa-solid fa-clock-rotate-left text-indigo-400"></i> Sejarah Soalan
+                        </h3>
+                        <button onclick="clearHistory()" class="text-[10px] font-black text-slate-500 hover:text-rose-400 transition-colors uppercase">Padam</button>
+                    </div>
+                    <div id="historyLog" class="space-y-3">
+                        <div class="text-center py-20 text-slate-600 italic text-sm">Cikgu belum buat soalan lagi...</div>
+                    </div>
+                </div>
+                <!-- Background Decoration for Sidebar -->
+                <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 blur-3xl rounded-full -mr-16 -mt-16"></div>
+            </aside>
+        </div>
+    </main>
+
+    <script>
+        let history = [];
+        let senaraiLangkah = [];
+        let langkahSemasaIndex = 0;
+        let currentAudio = null;
+
+        // --- SISTEM PEMBANTU INTERAKSI SUARA (AUDIO HELPERS) ---
+        
+        // Membuka data audio PCM dari base64
+        function base64ToArrayBuffer(base64) {
+            const binaryString = window.atob(base64);
+            const len = binaryString.length;
+            const bytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            return bytes.buffer;
+        }
+
+        // Menukar PCM raw 16-bit ke WAV container agar boleh dimainkan pelayar
+        function pcmToWav(pcm16, sampleRate) {
+            const buffer = new ArrayBuffer(44 + pcm16.length * 2);
+            const view = new DataView(buffer);
+
+            function writeString(view, offset, string) {
+                for (let i = 0; i < string.length; i++) {
+                    view.setUint8(offset + i, string.charCodeAt(i));
+                }
+            }
+
+            /* RIFF identifier */
+            writeString(view, 0, 'RIFF');
+            /* file length */
+            view.setUint32(4, 36 + pcm16.length * 2, true);
+            /* RIFF type */
+            writeString(view, 8, 'WAVE');
+            /* format chunk identifier */
+            writeString(view, 12, 'fmt ');
+            /* format chunk length */
+            view.setUint32(16, 16, true);
+            /* sample format (raw) */
+            view.setUint16(20, 1, true);
+            /* channel count */
+            view.setUint16(22, 1, true);
+            /* sample rate */
+            view.setUint32(24, sampleRate, true);
+            /* byte rate (sample rate * block align) */
+            view.setUint32(28, sampleRate * 2, true);
+            /* block align (channel count * bytes per sample) */
+            view.setUint16(32, 2, true);
+            /* bits per sample */
+            view.setUint16(34, 16, true);
+            /* data chunk identifier */
+            writeString(view, 36, 'data');
+            /* data chunk length */
+            view.setUint32(40, pcm16.length * 2, true);
+
+            // Tulis sampel PCM
+            for (let i = 0; i < pcm16.length; i++) {
+                view.setInt16(44 + i * 2, pcm16[i], true);
+            }
+
+            return new Blob([buffer], { type: 'audio/wav' });
+        }
+
+        // Membersihkan kod HTML (b, span, br) daripada teks sebelum disuarakan
+        function bersihkanTeksUntukSuara(htmlText) {
+            let tempDiv = document.createElement("div");
+            tempDiv.innerHTML = htmlText;
+            let text = tempDiv.textContent || tempDiv.innerText || "";
+            
+            // Gantian sebutan matematik standard Bahasa Melayu
+            text = text.replace(/÷/g, " bahagi ");
+            text = text.replace(/×/g, " darab ");
+            text = text.replace(/\+/g, " tambah ");
+            text = text.replace(/-/g, " tolak ");
+            text = text.replace(/=/g, " sama dengan ");
+            return text;
+        }
+
+        // Hentikan sebarang suara yang aktif
+        function hentikanSemuaSuara() {
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio = null;
+            }
+            if (window.speechSynthesis && window.speechSynthesis.speaking) {
+                window.speechSynthesis.cancel();
+            }
+        }
+
+        // Menjalankan interaksi suara dengan Fallback automatik
+        async function speakText(textText, btnElement) {
+            hentikanSemuaSuara();
+
+            const textSpan = btnElement.querySelector('span');
+            const iconEl = btnElement.querySelector('i');
+
+            textSpan.innerText = "Memuat...";
+            iconEl.className = "fa-solid fa-spinner animate-spin";
+
+            try {
+                // Cuba panggil Gemini TTS API
+                const apiKey = ""; // Canvas menyediakan kunci secara automatik
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
+
+                const payload = {
+                    contents: [{
+                        parts: [{ text: `Say cheerfully and slowly in Standard Malay: ${textText}` }]
+                    }],
+                    generationConfig: {
+                        responseModalities: ["AUDIO"],
+                        speechConfig: {
+                            voiceConfig: {
+                                prebuiltVoiceConfig: { voiceName: "Sulafat" } // Warm Voice
+                            }
+                        }
+                    },
+                    model: "gemini-2.5-flash-preview-tts"
+                };
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) throw new Error("Gagal memproses Gemini TTS");
+
+                const result = await response.json();
+                const part = result?.candidates?.[0]?.content?.parts?.[0];
+                const audioData = part?.inlineData?.data;
+                const mimeType = part?.inlineData?.mimeType;
+
+                if (audioData && mimeType && mimeType.startsWith("audio/")) {
+                    const sampleRate = parseInt(mimeType.match(/rate=(\d+)/)?.[1] || "24000", 10);
+                    const pcmBuffer = base64ToArrayBuffer(audioData);
+                    const pcm16 = new Int16Array(pcmBuffer);
+                    const wavBlob = pcmToWav(pcm16, sampleRate);
+                    const audioUrl = URL.createObjectURL(wavBlob);
+
+                    currentAudio = new Audio(audioUrl);
+                    textSpan.innerText = "Membaca...";
+                    iconEl.className = "fa-solid fa-volume-high text-emerald-400 animate-bounce";
+
+                    currentAudio.onended = () => {
+                        textSpan.innerText = "Dengar";
+                        iconEl.className = "fa-solid fa-volume-high";
+                    };
+                    currentAudio.onerror = () => {
+                        speakWebSpeech(textText, btnElement);
+                    };
+                    currentAudio.play();
+                } else {
+                    throw new Error("Format Audio Tidak Sah");
+                }
+            } catch (err) {
+                console.warn("Gemini TTS gagal, menggunakan SpeechSynthesis sebagai ganti:", err);
+                speakWebSpeech(textText, btnElement);
+            }
+        }
+
+        // Web Speech Fallback (SpeechSynthesis)
+        function speakWebSpeech(textText, btnElement) {
+            if (!('speechSynthesis' in window)) {
+                const textSpan = btnElement.querySelector('span');
+                const iconEl = btnElement.querySelector('i');
+                textSpan.innerText = "Dengar";
+                iconEl.className = "fa-solid fa-volume-high";
+                showError("Pelayar web ini tidak menyokong fungsi suara.");
+                return;
+            }
+
+            const textSpan = btnElement.querySelector('span');
+            const iconEl = btnElement.querySelector('i');
+
+            const utterance = new SpeechSynthesisUtterance(textText);
+            const voices = window.speechSynthesis.getVoices();
+            
+            // Cuba cari profil bahasa Melayu (ms-MY) atau bahasa Indonesia (id-ID) sebagai ganti
+            let selectedVoice = voices.find(v => v.lang.includes('ms-MY') || v.lang.startsWith('ms'));
+            if (!selectedVoice) {
+                selectedVoice = voices.find(v => v.lang.includes('id-ID') || v.lang.startsWith('id'));
+            }
+            
+            if (selectedVoice) utterance.voice = selectedVoice;
+            utterance.rate = 0.85; // Kelajuan perlahan mesra murid
+            utterance.pitch = 1.1; // Nada mesra
+
+            utterance.onstart = () => {
+                textSpan.innerText = "Membaca...";
+                iconEl.className = "fa-solid fa-volume-high text-emerald-400 animate-bounce";
+            };
+
+            utterance.onend = () => {
+                textSpan.innerText = "Dengar";
+                iconEl.className = "fa-solid fa-volume-high";
+            };
+
+            utterance.onerror = () => {
+                textSpan.innerText = "Dengar";
+                iconEl.className = "fa-solid fa-volume-high";
+            };
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // Menghantar arahan suara bagi langkah yang sedang dipaparkan
+        function sebutLangkahSemasa(btn) {
+            const s = senaraiLangkah[langkahSemasaIndex];
+            if (!s) return;
+            const teksBersih = bersihkanTeksUntukSuara(s.d);
+            speakText(teksBersih, btn);
+        }
+
+        // --- SISTEM KALKULATOR UTAMA ---
+
+        function showError(msg) {
+            const errorAlert = document.getElementById('errorAlert');
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.innerText = msg;
+            errorAlert.classList.remove('hidden');
+            errorAlert.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function hideError() {
+            document.getElementById('errorAlert').classList.add('hidden');
+        }
+
+        function setCarryBox(house, type, val) {
+            const box = document.getElementById(`carry${house}_val`);
+            if (!box) return;
+
+            // Reset kelas asas - Menggunakan saiz responsif
+            box.className = "w-10 h-10 sm:w-12 sm:h-12 rounded-xl border-2 flex flex-col items-center justify-center text-[11px] font-black transition-all duration-300";
+            box.innerHTML = "";
+
+            if (type === 'none') {
+                box.classList.add('border-dashed', 'border-slate-800', 'text-slate-600');
+            } else if (type === 'carry') {
+                box.classList.add('bg-amber-950/50', 'border-amber-700/60', 'text-amber-300', 'highlight-carry');
+                box.innerText = val;
+            } else if (type === 'borrow') {
+                // Dipinjam/Diderma (-1)
+                box.classList.add('bg-rose-950/50', 'border-rose-800', 'text-rose-400');
+                box.innerText = val;
+            } else if (type === 'received') {
+                // Menerima nilai (+10 / Baki)
+                box.classList.add('bg-emerald-950/50', 'border-emerald-800', 'text-emerald-300');
+                if (typeof val === 'string' && val.includes('Baki')) {
+                    box.classList.add('text-[9px]', 'leading-tight', 'text-center');
+                }
+                box.innerText = val;
+            } else if (type === 'mixed') {
+                // Kes istimewa: Menerima +10 dan menderma -1
+                box.classList.add('bg-indigo-950/50', 'border-indigo-800', 'p-1', 'leading-none');
+                box.innerHTML = `
+                    <span class="text-emerald-400 font-bold text-[10px]">+10</span>
+                    <hr class="border-indigo-850 w-full my-0.5">
+                    <span class="text-rose-400 font-bold text-[10px]">-1</span>
+                `;
+            }
+        }
+
+        function resetVisuals() {
+            setCarryBox('R', 'none', '');
+            setCarryBox('P', 'none', '');
+            setCarryBox('S', 'none', '');
+        }
+
+        function janaBentukLazimTable(n1, n2) {
+            const d = n2;
+            const r = Math.floor(n1 / 100) % 10;
+            const p = Math.floor((n1 / 10) % 10);
+            const s = n1 % 10;
+
+            // Pengiraan Ratus
+            const q_r = Math.floor(r / d);
+            const prod_r = q_r * d;
+            const rem_r = r - prod_r;
+
+            // Pengiraan Puluh
+            const val_p = rem_r * 10 + p;
+            const q_p = Math.floor(val_p / d);
+            const prod_p = q_p * d;
+            const rem_p = val_p - prod_p;
+
+            // Pengiraan Sa
+            const val_s = rem_p * 10 + s;
+            const q_s = Math.floor(val_s / d);
+            const prod_s = q_s * d;
+            const rem_s = val_s - prod_s;
+
+            // Ekstrak digit untuk paparan tolak menegak
+            const p_tens = Math.floor(prod_p / 10);
+            const p_ones = prod_p % 10;
+            const s_tens = Math.floor(prod_s / 10);
+            const s_ones = prod_s % 10;
+
+            return `
+                <table class="mx-auto border-collapse font-mono text-xl sm:text-2xl text-slate-300">
+                    <!-- Baris 1: Jawapan (Quotient) di atas garisan -->
+                    <tr>
+                        <td class="w-16 sm:w-20"></td>
+                        <td class="p-1 text-center"><div class="digit-box ratus mx-auto shadow-sm">${q_r}</div></td>
+                        <td class="p-1 text-center"><div class="digit-box puluh mx-auto shadow-sm">${q_p}</div></td>
+                        <td class="p-1 text-center"><div class="digit-box sa mx-auto shadow-sm">${q_s}</div></td>
+                    </tr>
+                    <!-- Baris 2: Pembahagi & Garisan Bracket & Dividend -->
+                    <tr>
+                        <td class="text-right pr-4 font-black text-2xl sm:text-3xl text-indigo-400 border-r-4 border-slate-650 align-middle select-none">${d}</td>
+                        <td class="p-1 border-t-4 border-slate-650"><div class="digit-box ratus mx-auto">${r}</div></td>
+                        <td class="p-1 border-t-4 border-slate-650"><div class="digit-box puluh mx-auto">${p}</div></td>
+                        <td class="p-1 border-t-4 border-slate-650"><div class="digit-box sa mx-auto">${s}</div></td>
+                    </tr>
+                    <!-- Baris 3: Tolak Ratus -->
+                    <tr>
+                        <td class="text-center text-slate-500 font-bold text-xl select-none">-</td>
+                        <td class="text-center font-bold text-slate-400 text-xl sm:text-2xl py-1">${prod_r}</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <!-- Baris 4: Garisan Bawah Ratus -->
+                    <tr>
+                        <td></td>
+                        <td class="py-1"><div class="border-b-2 border-slate-700 mx-1"></div></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <!-- Baris 5: Baki Ratus + Bawa Turun Puluh -->
+                    <tr>
+                        <td></td>
+                        <td class="text-center font-bold text-slate-500 text-xl sm:text-2xl">${rem_r}</td>
+                        <td class="text-center font-bold text-emerald-400">
+                            <span class="flex flex-col items-center text-xs">
+                                <i class="fa-solid fa-arrow-down text-[10px]"></i>
+                                <span class="bg-emerald-950 text-emerald-300 border border-emerald-800/40 font-black rounded-lg px-2 text-lg sm:text-xl">${p}</span>
+                            </span>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <!-- Baris 6: Tolak Puluh -->
+                    <tr>
+                        <td class="text-center text-slate-500 font-bold text-xl select-none">-</td>
+                        <td class="text-center font-bold text-slate-500 text-xl sm:text-2xl py-1">${p_tens > 0 ? p_tens : ''}</td>
+                        <td class="text-center font-bold text-slate-400 text-xl sm:text-2xl py-1">${p_ones}</td>
+                        <td></td>
+                    </tr>
+                    <!-- Baris 7: Garisan Bawah Puluh -->
+                    <tr>
+                        <td></td>
+                        <td class="py-1"><div class="border-b-2 border-slate-700 mx-1"></div></td>
+                        <td class="py-1"><div class="border-b-2 border-slate-700 mx-1"></div></td>
+                        <td></td>
+                    </tr>
+                    <!-- Baris 8: Baki Puluh + Bawa Turun Sa -->
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td class="text-center font-bold text-slate-500 text-xl sm:text-2xl">${rem_p}</td>
+                        <td class="text-center font-bold text-amber-400">
+                            <span class="flex flex-col items-center text-xs">
+                                <i class="fa-solid fa-arrow-down text-[10px]"></i>
+                                <span class="bg-amber-950 text-amber-300 border border-amber-800/40 font-black rounded-lg px-2 text-lg sm:text-xl">${s}</span>
+                            </span>
+                        </td>
+                    </tr>
+                    <!-- Baris 9: Tolak Sa -->
+                    <tr>
+                        <td class="text-center text-slate-500 font-bold text-xl select-none">-</td>
+                        <td></td>
+                        <td class="text-center font-bold text-slate-500 text-xl sm:text-2xl py-1">${s_tens > 0 ? s_tens : ''}</td>
+                        <td class="text-center font-bold text-slate-400 text-xl sm:text-2xl py-1">${s_ones}</td>
+                    </tr>
+                    <!-- Baris 10: Garisan Bawah Sa (Baki Akhir) -->
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td class="py-1"><div class="border-b-2 border-slate-700 mx-1"></div></td>
+                        <td class="py-1"><div class="border-b-2 border-slate-700 mx-1"></div></td>
+                    </tr>
+                    <!-- Baris 11: Hasil Baki Akhir Semesta -->
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="p-1"><div class="text-center font-black text-rose-300 bg-rose-950/80 rounded-xl py-1 px-3 border border-rose-900/60 text-lg sm:text-xl shadow-inner">${rem_s}</div></td>
+                    </tr>
+                </table>
+            `;
+        }
+
+        function janaPenyelesaian() {
+            hideError();
+            hentikanSemuaSuara();
+            
+            const n1 = parseInt(document.getElementById('num1').value) || 0;
+            const n2 = parseInt(document.getElementById('num2').value) || 0;
+            const op = document.getElementById('operator').value;
+
+            // Pengesahan had nombor untuk paparan visual
+            if (n1 > 999 || n2 > 999) {
+                showError("Untuk edisi visual ini, sila masukkan nombor bernilai 999 ke bawah sahaja ya.");
+                return;
+            }
+            if (n1 < 0 || n2 < 0) {
+                showError("Sila masukkan nombor positif sahaja.");
+                return;
+            }
+
+            // Pengesahan operasi tolak negatif sekolah rendah
+            if (op === '-' && n1 < n2) {
+                showError("Dalam silibus sekolah rendah, nombor pertama mestilah lebih besar atau sama dengan nombor kedua supaya hasil tolak tidak negatif!");
+                return;
+            }
+
+            // Tunjukkan seksyen visual & langkah
+            document.getElementById('visualHouseSection').classList.remove('hidden');
+            document.getElementById('stepsSection').classList.remove('hidden');
+
+            // Pecahkan nombor ke Rumah Nombor untuk paparan
+            setHouseDigits(n1, 'n1');
+            setHouseDigits(n2, 'n2');
+            document.getElementById('simbolOpVisual').innerText = (op === '*' ? '×' : (op === '/' ? '÷' : op));
+
+            // Kira Jawapan & Proses Carry/Borrow
+            let ans = 0;
+            resetVisuals();
+
+            // Sembunyikan/Tunjukkan grid berdasarkan jenis operasi
+            const gridStandard = document.getElementById('gridStandard');
+            const gridBahagi = document.getElementById('gridBahagi');
+
+            if (op === '+') {
+                gridStandard.classList.remove('hidden');
+                gridBahagi.classList.add('hidden');
+                ans = n1 + n2;
+                document.getElementById('labelCarryRow').innerText = "Simpan";
+                senaraiLangkah = prosesTambah(n1, n2);
+                document.getElementById('badgeOperasi').innerText = "TAMBAH";
+                setHouseDigits(ans, 'ans');
+            } else if (op === '-') {
+                gridStandard.classList.remove('hidden');
+                gridBahagi.classList.add('hidden');
+                ans = n1 - n2;
+                document.getElementById('labelCarryRow').innerText = "Pinjam";
+                senaraiLangkah = prosesTolak(n1, n2);
+                document.getElementById('badgeOperasi').innerText = "TOLAK";
+                setHouseDigits(ans, 'ans');
+            } else if (op === '*') {
+                gridStandard.classList.remove('hidden');
+                gridBahagi.classList.add('hidden');
+                ans = n1 * n2;
+                document.getElementById('labelCarryRow').innerText = "Simpan";
+                senaraiLangkah = prosesDarab(n1, n2);
+                document.getElementById('badgeOperasi').innerText = "DARAB";
+                setHouseDigits(ans, 'ans');
+            } else if (op === '/') {
+                if (n2 === 0) {
+                    showError("Eh, tak boleh bahagi dengan sifar (0)!");
+                    return;
+                }
+                gridStandard.classList.add('hidden');
+                gridBahagi.classList.remove('hidden');
+                
+                ans = Math.floor(n1 / n2);
+                
+                // Bina struktur jadual bentuk lazim pembahagian sekolah
+                gridBahagi.innerHTML = janaBentukLazimTable(n1, n2);
+                
+                senaraiLangkah = prosesBahagi(n1, n2);
+                document.getElementById('badgeOperasi').innerText = "BAHAGI";
+            }
+            
+            // Inisialisasi navigasi langkah berperingkat
+            langkahSemasaIndex = 0;
+            paparLangkahSemasa();
+
+            // Simpan Sejarah Soalan
+            saveToHistory(n1, op, n2, ans);
+        }
+
+        function setHouseDigits(num, prefix) {
+            const s = num % 10;
+            const p = Math.floor((num / 10) % 10);
+            
+            // Jika hasil akhir (ans) melebihi 999 (e.g. 1200), letakkan baki ratus ke bahagian Ratus
+            let r = Math.floor((num / 100) % 10);
+            if (prefix === 'ans' && num >= 1000) {
+                r = Math.floor(num / 100);
+            }
+
+            document.getElementById(`${prefix}_s`).innerText = s;
+            document.getElementById(`${prefix}_p`).innerText = p;
+            document.getElementById(`${prefix}_r`).innerText = r;
+        }
+
+        function prosesTambah(n1, n2) {
+            let steps = [];
+            const s1 = n1 % 10; const s2 = n2 % 10;
+            const p1 = Math.floor((n1/10)%10); const p2 = Math.floor((n2/10)%10);
+            const r1 = Math.floor((n1/100)%10); const r2 = Math.floor((n2/100)%10);
+            
+            // Langkah 1: Sa
+            let hasilSa = s1 + s2;
+            let d_sa = `Tengok rumah 🟠 <b>Sa (Oren)</b>: Tambahkan digit Sa atas dengan bawah, iaitu <b>${s1} + ${s2} = ${hasilSa}</b>.`;
+            if (hasilSa >= 10) {
+                d_sa += `<br><br>Oleh sebab hasil tambah melebihi 9, kita tulis <b>${hasilSa%10}</b> di bawah rumah Sa, dan bawa baki <b>1 puluh</b> ke petak simpanan rumah Puluh di sebelah.`;
+                setCarryBox('P', 'carry', '1');
+            } else {
+                d_sa += `<br><br>Kita tulis terus <b>${hasilSa}</b> di bawah rumah Sa.`;
+            }
+            steps.push({t: "Rumah Sa (Mula dari Kanan)", d: d_sa, icon: "fa-1", highlight: "S"});
+
+            // Langkah 2: Puluh
+            let simpanP = hasilSa >= 10 ? 1 : 0;
+            let hasilP = p1 + p2 + simpanP;
+            let d_p = `Tengok rumah 🟢 <b>Puluh (Hijau)</b>: Tambahkan ${p1} + ${p2} ${simpanP ? '+ 1 (yang kita simpan tadi)' : ''} = <b>${hasilP}</b>.`;
+            if (hasilP >= 10) {
+                d_p += `<br><br>Jumlah ini melebihi 9! Tulis <b>${hasilP%10}</b> di bawah rumah Puluh, dan simpan baki <b>1 ratus</b> ke petak simpanan rumah Ratus.`;
+                setCarryBox('R', 'carry', '1');
+            } else {
+                d_p += `<br><br>Tulis <b>${hasilP}</b> di bawah rumah Puluh.`;
+            }
+            steps.push({t: "Rumah Puluh", d: d_p, icon: "fa-2", highlight: "P"});
+
+            // Langkah 3: Ratus
+            let simpanR = hasilP >= 10 ? 1 : 0;
+            let hasilR = r1 + r2 + simpanR;
+            let d_r = `Tengok rumah 🔵 <b>Ratus (Biru)</b>: Tambahkan ${r1} + ${r2} ${simpanR ? '+ 1 (yang kita simpan tadi)' : ''} = <b>${hasilR}</b>.`;
+            d_r += `<br><br>Tulis terus angka <b>${hasilR}</b> di bawah rumah Ratus. Selesai!`;
+            steps.push({t: "Rumah Ratus (Kiri Sekali)", d: d_r, icon: "fa-3", highlight: "R"});
+
+            return steps;
+        }
+
+        function prosesTolak(n1, n2) {
+            let steps = [];
+            const s1 = n1 % 10; const s2 = n2 % 10;
+            const p1 = Math.floor((n1/10)%10); const p2 = Math.floor((n2/10)%10);
+            const r1 = Math.floor((n1/100)%10); const r2 = Math.floor((n2/100)%10);
+
+            let lentToSa = false;
+            let lentToP = false;
+
+            // --- LANGKAH 1: SA ---
+            let hasilSa = 0;
+            let d_sa = `Tengok rumah 🟠 <b>Sa (Oren)</b>: Kita mahu tolak <b>${s1} - ${s2}</b>. `;
+            if (s1 < s2) {
+                lentToSa = true;
+                hasilSa = (s1 + 10) - s2;
+                d_sa += `<br><br>Oleh sebab nombor atas (${s1}) lebih kecil daripada nombor bawah (${s2}), kita kena <b>pinjam 1 puluh (nilai 10)</b> dari rumah Puluh sebelah. <br>
+                Kini rumah Sa bertambah menjadi <b>${s1} + 10 = ${s1+10}</b>. <br>
+                Selesaikan: <b>${s1+10} - ${s2} = ${hasilSa}</b>.`;
+                
+                // Kemas kini visual grid
+                setCarryBox('S', 'received', '+10');
+                setCarryBox('P', 'borrow', '-1');
+            } else {
+                hasilSa = s1 - s2;
+                d_sa += `<br><br>Sebab nombor atas (${s1}) cukup besar, kita tolak terus: <b>${s1} - ${s2} = ${hasilSa}</b>.`;
+            }
+            steps.push({ t: "Rumah Sa (Mula dari Kanan)", d: d_sa, icon: "fa-circle-down", highlight: "S" });
+
+            // --- LANGKAH 2: PULUH ---
+            let bakiP = lentToSa ? p1 - 1 : p1;
+            let hasilP = 0;
+            let d_p = `Tengok rumah 🟢 <b>Puluh (Hijau)</b>: `;
+            
+            if (lentToSa) {
+                d_p += `Sebab tadi telah dipinjamkan 1 ke rumah Sa, baki puluh tinggal <b>${bakiP}</b>. `;
+            } else {
+                d_p += `Nilai puluh ialah <b>${bakiP}</b>. `;
+            }
+
+            // Periksa jika baki puluh kurang daripada p2
+            if (bakiP < p2) {
+                lentToP = true;
+                let bakiPDenganPinjam = bakiP + 10;
+                hasilP = bakiPDenganPinjam - p2;
+                d_p += `<br><br>Oleh sebab <b>${bakiP}</b> kurang daripada nombor bawah (${p2}), kita kena <b>pinjam 1 ratus (nilai 10 puluh)</b> dari rumah Ratus sebelah. <br>
+                Kini rumah Puluh menjadi <b>${bakiP} + 10 = ${bakiPDenganPinjam}</b>. <br>
+                Selesaikan: <b>${bakiPDenganPinjam} - ${p2} = ${hasilP}</b>.`;
+
+                // Kemas kini visual grid
+                setCarryBox('R', 'borrow', '-1');
+                if (lentToSa) {
+                    setCarryBox('P', 'mixed'); // Menerima +10 dan menderma -1
+                } else {
+                    setCarryBox('P', 'received', '+10');
+                }
+            } else {
+                hasilP = bakiP - p2;
+                d_p += `<br><br>Sebab baki puluh (${bakiP}) cukup besar, tolak terus: <b>${bakiP} - ${p2} = ${hasilP}</b>.`;
+            }
+            steps.push({ t: "Rumah Puluh", d: d_p, icon: "fa-circle-down", highlight: "P" });
+
+            // --- LANGKAH 3: RATUS ---
+            let bakiR = lentToP ? r1 - 1 : r1;
+            let hasilR = bakiR - r2;
+            let d_r = `Tengok rumah 🔵 <b>Ratus (Biru)</b>: `;
+            
+            if (lentToP) {
+                d_r += `Sebab tadi telah dipinjamkan 1 ke rumah Puluh, baki ratus tinggal <b>${bakiR}</b>. `;
+            } else {
+                d_r += `Nilai ratus baki <b>${bakiR}</b>. `;
+            }
+            
+            d_r += `<br><br>Selesaikan penolakan akhir: <b>${bakiR} - ${r2} = ${hasilR}</b>. Selesai!`;
+            steps.push({ t: "Rumah Ratus (Kiri Sekali)", d: d_r, icon: "fa-circle-down", highlight: "R" });
+
+            return steps;
+        }
+
+        function prosesDarab(n1, n2) {
+            let steps = [];
+            const s1 = n1 % 10;
+            const p1 = Math.floor((n1 / 10) % 10);
+            const r1 = Math.floor((n1 / 100) % 10);
+
+            if (n2 >= 10) {
+                steps.push({
+                    t: "Pendaraban Multi-Digit (Silibus Lanjut)",
+                    d: `Untuk mendarab dengan angka 2 digit (${n2}), murid digalakkan menyelesaikan mengikut turutan nilai tempat: <br><br>
+                    1. Darabkan ${n1} dengan ${n2 % 10} (Sa) = <b>${n1 * (n2 % 10)}</b>. <br>
+                    2. Darabkan ${n1} dengan ${Math.floor(n2 / 10) * 10} (Puluh) = <b>${n1 * Math.floor(n2 / 10) * 10}</b>. <br>
+                    3. Tambahkan kedua-dua hasil: <b>${n1 * (n2 % 10)} + ${n1 * Math.floor(n2 / 10) * 10} = ${n1 * n2}</b>.`,
+                    icon: "fa-calculator",
+                    highlight: "S"
+                });
+                return steps;
+            }
+
+            // --- RUMAH SA ---
+            let prodS = s1 * n2;
+            let carryP = Math.floor(prodS / 10);
+            let writeS = prodS % 10;
+            let d_s = `Tengok rumah 🟠 <b>Sa (Oren)</b>: Darabkan digit atas dengan pendarab bawah <b>${s1} × ${n2} = ${prodS}</b>. <br>`;
+            if (carryP > 0) {
+                d_s += `<br>Oleh sebab hasilnya melebihi 9, kita tulis <b>${writeS}</b> di bawah rumah Sa, dan <b>simpan ${carryP}</b> di atas rumah Puluh sebelah.`;
+                setCarryBox('P', 'carry', carryP);
+            } else {
+                d_s += `<br>Tulis angka <b>${writeS}</b> di bawah rumah Sa.`;
+            }
+            steps.push({ t: "Darab Rumah Sa", d: d_s, icon: "fa-circle-1", highlight: "S" });
+
+            // --- RUMAH PULUH ---
+            let prodP = p1 * n2;
+            let totalP = prodP + carryP;
+            let carryR = Math.floor(totalP / 10);
+            let writeP = totalP % 10;
+            let d_p = `Tengok rumah 🟢 <b>Puluh (Hijau)</b>: Darabkan digit atas <b>${p1} × ${n2} = ${prodP}</b>. <br>`;
+            if (carryP > 0) {
+                d_p += `Tambahkan nilai simpanan tadi: <b>${prodP} + ${carryP} = ${totalP}</b>. <br>`;
+            }
+            if (carryR > 0) {
+                d_p += `<br>Oleh sebab jumlahnya melebihi 9, kita tulis <b>${writeP}</b> di bawah rumah Puluh, dan <b>simpan ${carryR}</b> di atas rumah Ratus sebelah.`;
+                setCarryBox('R', 'carry', carryR);
+            } else {
+                d_p += `<br>Tulis angka <b>${writeP}</b> di bawah rumah Puluh.`;
+            }
+            steps.push({ t: "Darab Rumah Puluh", d: d_p, icon: "fa-circle-2", highlight: "P" });
+
+            // --- RUMAH RATUS ---
+            let prodR = r1 * n2;
+            let totalR = prodR + carryR;
+            let d_r = `Tengok rumah 🔵 <b>Ratus (Biru)</b>: Darabkan digit atas <b>${r1} × ${n2} = ${prodR}</b>. <br>`;
+            if (carryR > 0) {
+                d_r += `Tambahkan nilai simpanan tadi: <b>${prodR} + ${carryR} = ${totalR}</b>. <br>`;
+            }
+            d_r += `<br>Tulis terus angka <b>${totalR}</b> di bawah rumah Ratus. Selesai!`;
+            steps.push({ t: "Darab Rumah Ratus", d: d_r, icon: "fa-circle-3", highlight: "R" });
+
+            return steps;
+        }
+
+        function prosesBahagi(n1, n2) {
+            let steps = [];
+            const s1 = n1 % 10;
+            const p1 = Math.floor((n1 / 10) % 10);
+            const r1 = Math.floor((n1 / 100) % 10);
+
+            // --- RUMAH RATUS ---
+            let quotR = Math.floor(r1 / n2);
+            let remR = r1 % n2;
+            let d_r = `Tengok rumah 🔵 <b>Ratus (Biru)</b>: Bahagikan digit Ratus <b>${r1} ÷ ${n2} = ${quotR}</b> baki <b>${remR}</b>. <br>`;
+            d_r += `<br>Tulis angka <b>${quotR}</b> di bawah jawapan rumah Ratus. `;
+            if (remR > 0) {
+                d_r += `<br>Bawa baki <b>${remR}</b> ke rumah Puluh sebelah (menjadi nilai puluh).`;
+            }
+            steps.push({ t: "Bahagi Rumah Ratus", d: d_r, icon: "fa-circle-1", highlight: "R" });
+
+            // --- RUMAH PULUH ---
+            let valP = (remR * 10) + p1;
+            let quotP = Math.floor(valP / n2);
+            let remP = valP % n2;
+            let d_p = `Tengok rumah 🟢 <b>Puluh (Hijau)</b>: `;
+            if (remR > 0) {
+                d_p += `Gabungkan baki dari Ratus tadi dengan angka Puluh asli: <b>${remR}0 + ${p1} = ${valP}</b>. <br>`;
+            } else {
+                d_p += `Ambil digit Puluh asli: <b>${p1}</b>. <br>`;
+            }
+            d_p += `<br>Bahagikan: <b>${valP} ÷ ${n2} = ${quotP}</b> baki <b>${remP}</b>. <br>`;
+            d_p += `<br>Tulis angka <b>${quotP}</b> di bawah jawapan rumah Puluh. `;
+            if (remP > 0) {
+                d_p += `<br>Bawa baki <b>${remP}</b> ke rumah Sa sebelah (menjadi nilai sa).`;
+            }
+            steps.push({ t: "Bahagi Rumah Puluh", d: d_p, icon: "fa-circle-2", highlight: "P" });
+
+            // --- RUMAH SA ---
+            let valS = (remP * 10) + s1;
+            let quotS = Math.floor(valS / n2);
+            let remS = valS % n2;
+            let d_s = `Tengok rumah 🟠 <b>Sa (Oren)</b>: `;
+            if (remP > 0) {
+                d_s += `Gabungkan baki dari Puluh tadi dengan angka Sa asli: <b>${remP}0 + ${s1} = ${valS}</b>. <br>`;
+            } else {
+                d_s += `Ambil digit Sa asli: <b>${s1}</b>. <br>`;
+            }
+            d_s += `<br>Bahagikan: <b>${valS} ÷ ${n2} = ${quotS}</b> baki <b>${remS}</b>. <br>`;
+            d_s += `<br>Tulis angka <b>${quotS}</b> di bawah jawapan rumah Sa.`;
+            if (remS > 0) {
+                d_s += `<br><br><b>Nota Baki Akhir:</b> Selesai! Pembahagian ini mempunyai baki akhir sebanyak <b>${remS}</b>.`;
+            } else {
+                d_s += `<br><br><b>Sempurna!</b> Pembahagian selesai sepenuhnya tanpa sebarang baki (Baki = 0).`;
+            }
+            steps.push({ t: "Bahagi Rumah Sa", d: d_s, icon: "fa-circle-3", highlight: "S" });
+
+            return steps;
+        }
+
+        function paparLangkahSemasa() {
+            if (senaraiLangkah.length === 0) return;
+            hentikanSemuaSuara(); // Matikan sebarang audio sedia ada semasa bertukar langkah
+
+            const container = document.getElementById('stepsContainer');
+            const statusLabel = document.getElementById('stepProgress');
+            const btnPrev = document.getElementById('btnPrev');
+            const btnNext = document.getElementById('btnNext');
+
+            // Ambil langkah aktif
+            const s = senaraiLangkah[langkahSemasaIndex];
+
+            // Kemaskini teks status bar progress
+            statusLabel.innerText = `Langkah ${langkahSemasaIndex + 1}/${senaraiLangkah.length}`;
+
+            // Kawal butang aktif/nyahaktif
+            btnPrev.disabled = (langkahSemasaIndex === 0);
+            
+            if (langkahSemasaIndex === senaraiLangkah.length - 1) {
+                btnNext.innerHTML = 'Selesai 🎉';
+                btnNext.className = "px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-2 shadow-md";
+            } else {
+                btnNext.innerHTML = 'Maju <i class="fa-solid fa-arrow-right"></i>';
+                btnNext.className = "px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-2 shadow-md";
+            }
+
+            // Membina HTML kad aktif dengan butang Dengar Suara
+            container.innerHTML = `
+                <div class="step-enter bg-slate-900 p-6 rounded-3xl border border-slate-800 shadow-md flex gap-4">
+                    <div class="flex-shrink-0 w-12 h-12 bg-indigo-950/50 border border-indigo-900 text-indigo-400 rounded-2xl flex items-center justify-center">
+                        <i class="fa-solid ${s.icon || 'fa-arrow-right'} text-lg animate-bounce"></i>
+                    </div>
+                    <div class="flex-grow">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-3 border-b border-slate-800/40 pb-2">
+                            <h4 class="font-black text-indigo-300 text-base">${s.t}</h4>
+                            <button onclick="sebutLangkahSemasa(this)" class="px-3 py-1 bg-indigo-950 hover:bg-indigo-900 border border-indigo-800 rounded-xl text-xs font-bold text-indigo-400 flex items-center gap-1.5 transition-all shadow-sm">
+                                <i class="fa-solid fa-volume-high"></i>
+                                <span>Dengar</span>
+                            </button>
+                        </div>
+                        <p class="text-slate-300 text-sm leading-relaxed">${s.d}</p>
+                    </div>
+                </div>
+            `;
+
+            // Cetuskan sorotan rumah aktif di atas grid visual!
+            pancarkanSorotanRumah(s.highlight);
+        }
+
+        function navigasiLangkah(hala) {
+            langkahSemasaIndex += hala;
+            
+            // Hadkan indeks agar tidak terkeluar dari senarai
+            if (langkahSemasaIndex < 0) {
+                langkahSemasaIndex = 0;
+            } else if (langkahSemasaIndex >= senaraiLangkah.length) {
+                langkahSemasaIndex = senaraiLangkah.length - 1;
+            }
+            
+            paparLangkahSemasa();
+        }
+
+        function pancarkanSorotanRumah(jenisRumah) {
+            // Padamkan semua sorotan lama pada kedua-dua grid
+            document.querySelectorAll('.digit-box, .house-column').forEach(el => {
+                el.classList.remove('box-focus-highlight');
+            });
+
+            // Guna kelas CSS khas bergantung pada nilai tempat yang aktif
+            if (jenisRumah === 'S') {
+                document.querySelectorAll('.sa').forEach(el => {
+                    el.classList.add('box-focus-highlight');
+                });
+            } else if (jenisRumah === 'P') {
+                document.querySelectorAll('.puluh').forEach(el => {
+                    el.classList.add('box-focus-highlight');
+                });
+            } else if (jenisRumah === 'R') {
+                document.querySelectorAll('.ratus').forEach(el => {
+                    el.classList.add('box-focus-highlight');
+                });
+            }
+        }
+
+        function saveToHistory(n1, op, n2, ans) {
+            const baki = op === '/' ? n1 % n2 : 0;
+            const simbol = op === '*' ? '×' : (op === '/' ? '÷' : op);
+            const displayAns = (op === '/' && baki > 0) ? `${ans} (Baki: ${baki})` : ans;
+            
+            history.unshift({ q: `${n1} ${simbol} ${n2}`, a: displayAns });
+            if (history.length > 8) history.pop();
+            renderHistory();
+        }
+
+        function renderHistory() {
+            const log = document.getElementById('historyLog');
+            log.innerHTML = history.map((h, i) => `
+                <div class="bg-slate-950/80 p-4 rounded-2xl border border-slate-850 hover:border-indigo-800 transition-all cursor-pointer group" onclick="muatSemulaSoalan('${h.q}')">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-bold text-slate-500">SOALAN #${history.length - i}</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] text-slate-700 group-hover:text-indigo-400"></i>
+                    </div>
+                    <div class="mt-2 flex justify-between items-baseline">
+                        <p class="text-lg font-bold text-slate-300">${h.q}</p>
+                        <p class="text-xl font-black text-emerald-400">= ${h.a}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function muatSemulaSoalan(soalanTeks) {
+            // Memecahkan string sejarah semula untuk dimuatkan ke input (contoh "125 + 5")
+            const parts = soalanTeks.split(' ');
+            if(parts.length === 3) {
+                document.getElementById('num1').value = parts[0];
+                document.getElementById('num2').value = parts[2];
+                
+                let opValue = '+';
+                if(parts[1] === '-') opValue = '-';
+                else if(parts[1] === '×') opValue = '*';
+                else if(parts[1] === '÷') opValue = '/';
+                
+                document.getElementById('operator').value = opValue;
+                janaPenyelesaian();
+            }
+        }
+
+        function clearHistory() {
+            history = [];
+            renderHistory();
+            document.getElementById('historyLog').innerHTML = '<div class="text-center py-20 text-slate-600 italic text-sm">Cikgu belum buat soalan lagi...</div>';
+        }
+    </script>
+</body>
+</html>
