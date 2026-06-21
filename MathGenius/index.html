@@ -78,7 +78,7 @@
                 </div>
                 <div>
                     <h1 class="text-3xl font-bold text-slate-100 title-font">MathGenius 2.0</h1>
-                    <p class="text-indigo-400 font-bold text-xs uppercase tracking-tighter">Edisi Kesihatan Mata & Sebutan Bahasa Melayu</p>
+                    <p class="text-indigo-400 font-bold text-xs uppercase tracking-tighter">Edisi Kesihatan Mata & Suara Gemini AI (ms-MY)</p>
                 </div>
             </div>
             <div class="flex gap-4">
@@ -110,7 +110,7 @@
                 </h2>
 
                 <!-- Ralat Komponen Amaran (Mesra Murid) -->
-                <div id="errorAlert" class="hidden bg-rose-950/50 border-2 border-rose-900 text-rose-200 p-4 rounded-3xl mb-6 flex items-center gap-3 animate-pulse">
+                <div id="errorAlert" class="hidden bg-rose-950/50 border-2 border-rose-200 text-rose-200 p-4 rounded-3xl mb-6 flex items-center gap-3 animate-pulse">
                     <i class="fa-solid fa-circle-exclamation text-rose-400 text-2xl"></i>
                     <div>
                         <p class="font-extrabold text-sm">Alamak! Cuba semak semula nombor</p>
@@ -147,7 +147,7 @@
             <section id="visualHouseSection" class="hidden bg-slate-900 p-8 rounded-[2.5rem] shadow-xl border border-slate-800">
                 <div class="flex justify-between items-center mb-8">
                     <h3 class="text-lg font-bold text-slate-100">Visual Rumah Nombor</h3>
-                    <div id="badgeOperasi" class="bg-indigo-950 text-indigo-300 px-4 py-1 rounded-full text-xs font-black border border-indigo-900">TAMBAH</div>
+                    <div id="badgeOperasi" class="bg-indigo-100 text-indigo-700 px-4 py-1 rounded-full text-xs font-black border border-indigo-900">TAMBAH</div>
                 </div>
 
                 <div class="flex flex-col items-center">
@@ -249,45 +249,218 @@
         let history = [];
         let senaraiLangkah = [];
         let langkahSemasaIndex = 0;
+        let senaraiSuaraSedia = [];
+        let audioSemasa = null;
 
-        // Persediaan suara text-to-speech Bahasa Melayu
-        window.speechSynthesis.onvoiceschanged = () => {
-            // Memastikan suara telah bersedia dimuatkan oleh pelayar
-        };
+        // Inisialisasi awal senarai suara pelayar untuk sandaran (fallback)
+        function muatSenaraiSuara() {
+            if (typeof window !== 'undefined' && window.speechSynthesis) {
+                senaraiSuaraSedia = window.speechSynthesis.getVoices();
+            }
+        }
+        
+        muatSenaraiSuara();
+        if (typeof window !== 'undefined' && window.speechSynthesis && window.speechSynthesis.onvoiceschanged !== undefined) {
+            window.speechSynthesis.onvoiceschanged = muatSenaraiSuara;
+        }
 
-        function sebutLangkah(teksHTML) {
-            // Hentikan sebutan sedia ada untuk mengelakkan pertindihan suara
-            window.speechSynthesis.cancel();
+        // Penukaran angka digit kepada ejaan perkataan Bahasa Melayu tulen
+        function nomborKePerkataan(num) {
+            if (num === 0) return "kosong";
             
-            // Bersihkan teks daripada tag HTML dan ganti emoji untuk sebutan suara yang lancar
+            const sa = ["", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "lapan", "sembilan"];
+            const belas = ["sepuluh", "sebelas", "dua belas", "tiga belas", "empat belas", "lima belas", "enam belas", "tujuh belas", "lapan belas", "sembilan belas"];
+            const puluh = ["", "sepuluh", "dua puluh", "tiga puluh", "empat puluh", "lima puluh", "enam puluh", "tujuh puluh", "lapan puluh", "sembilan puluh"];
+            
+            let hasil = "";
+            
+            if (num >= 100) {
+                let r = Math.floor(num / 100);
+                if (r === 1) {
+                    hasil += "seratus ";
+                } else {
+                    hasil += sa[r] + " ratus ";
+                }
+                num %= 100;
+            }
+            
+            if (num >= 10 && num < 20) {
+                hasil += belas[num - 10];
+            } else {
+                if (num >= 20) {
+                    let p = Math.floor(num / 10);
+                    hasil += puluh[p] + " ";
+                    num %= 10;
+                }
+                if (num > 0 && num < 10) {
+                    hasil += sa[num];
+                }
+            }
+            
+            return hasil.trim();
+        }
+
+        // Helper untuk menukarkan PCM linear16 (dari Gemini API) ke format WAV yang boleh dimainkan
+        function pcmToWav(pcmBase64, sampleRate) {
+            const binaryString = window.atob(pcmBase64);
+            const len = binaryString.length;
+            const bytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            const buffer = bytes.buffer;
+            
+            // Sediakan WAV Header (44 Bytes)
+            const wavHeader = new ArrayBuffer(44);
+            const view = new DataView(wavHeader);
+            
+            writeString(view, 0, 'RIFF');
+            view.setUint32(4, 36 + buffer.byteLength, true);
+            writeString(view, 8, 'WAVE');
+            writeString(view, 12, 'fmt ');
+            view.setUint32(16, 16, true);
+            view.setUint16(20, 1, true); // format PCM
+            view.setUint16(22, 1, true); // Mono channel
+            view.setUint32(24, sampleRate, true);
+            view.setUint32(28, sampleRate * 2, true); // byte rate
+            view.setUint16(32, 2, true); // block align
+            view.setUint16(34, 16, true); // bit depth 16-bit
+            writeString(view, 36, 'data');
+            view.setUint32(40, buffer.byteLength, true);
+            
+            const blob = new Blob([wavHeader, buffer], { type: 'audio/wav' });
+            return URL.createObjectURL(blob);
+        }
+
+        function writeString(view, offset, string) {
+            for (let i = 0; i < string.length; i++) {
+                view.setUint8(offset + i, string.charCodeAt(i));
+            }
+        }
+
+        // FUNGSI UTAMA: MENYEBUT LANGKAH MENGGUNAKAN GEMINI TTS API
+        async function sebutLangkah(teksHTML) {
+            // Hentikan sebarang bunyi audio sedia ada terlebih dahulu
+            hentikanAudio();
+
             let teksSebutan = teksHTML.replace(/<[^>]*>/g, "");
-            teksSebutan = teksSebutan.replace(/🟠/g, "")
+            teksSebutan = teksSebutan.replace(/÷/g, " bahagi ")
+                                     .replace(/×/g, " darab ")
+                                     .replace(/\+/g, " tambah ")
+                                     .replace(/-/g, " tolak ")
+                                     .replace(/=/g, " sama dengan ")
+                                     .replace(/🟠/g, "")
                                      .replace(/🟢/g, "")
-                                     .replace(/🔵/g, "")
-                                     .replace(/÷/g, "bahagi")
-                                     .replace(/×/g, "darab")
-                                     .replace(/\+/g, "tambah")
-                                     .replace(/-/g, "tolak");
+                                     .replace(/🔵/g, "");
 
-            const sebutan = new SpeechSynthesisUtterance(teksSebutan);
+            // Tukarkan semua digit nombor kepada teks perkataan bahasa Melayu penuh
+            teksSebutan = teksSebutan.replace(/\d+/g, function(match) {
+                return " " + nomborKePerkataan(parseInt(match)) + " ";
+            });
+            teksSebutan = teksSebutan.replace(/\s+/g, " ").trim();
+
+            const apiKey = ""; // Disediakan secara automatik di runtime oleh persekitaran Canvas
             
-            // Cari profil suara Bahasa Melayu Malaysia (ms-MY atau ms)
-            const senaraiSuara = window.speechSynthesis.getVoices();
-            let suaraMelayu = senaraiSuara.find(suara => suara.lang.includes('ms-MY') || suara.lang === 'ms');
+            // Jika API Key tiada, sistem akan beralih ke pembacaan tempatan (fallback)
+            if (!apiKey) {
+                sebutLangkahTempatan(teksSebutan);
+                return;
+            }
+
+            try {
+                setButangSuaraLoading(true);
+
+                // Sediakan arahan sebutan bahasa Melayu Malaysia yang sangat jelas dan mesra murid
+                const promptSuara = `Sebut ayat ini dalam Bahasa Melayu Malaysia (ms-MY) yang sangat natural, mesra kanak-kanak, jelas, dan menggunakan intonasi seorang guru sekolah rendah yang penyayang: ${teksSebutan}`;
+
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: promptSuara }] }],
+                        generationConfig: {
+                            responseModalities: ["AUDIO"],
+                            speechConfig: {
+                                voiceConfig: {
+                                    prebuiltVoiceConfig: {
+                                        voiceName: "Kore" // Suara ramah, sesuai untuk pembelajaran kanak-kanak
+                                    }
+                                }
+                            }
+                        }
+                    })
+                });
+
+                if (!response.ok) throw new Error("Gagal menjana suara dari Gemini TTS");
+                const result = await response.json();
+                
+                const part = result.candidates?.[0]?.content?.parts?.[0];
+                if (part && part.inlineData) {
+                    const base64Data = part.inlineData.data;
+                    const mimeType = part.inlineData.mimeType || "audio/L16;rate=24000";
+                    
+                    let sampleRate = 24000;
+                    const match = mimeType.match(/rate=(\d+)/);
+                    if (match) {
+                        sampleRate = parseInt(match[1]);
+                    }
+                    
+                    const wavUrl = pcmToWav(base64Data, sampleRate);
+                    
+                    audioSemasa = new Audio(wavUrl);
+                    audioSemasa.play();
+                } else {
+                    throw new Error("Format data tidak sah");
+                }
+            } catch (err) {
+                console.error("Gagal menjana suara AI, beralih ke suara sistem tempatan:", err);
+                sebutLangkahTempatan(teksSebutan);
+            } finally {
+                setButangSuaraLoading(false);
+            }
+        }
+
+        // Pembacaan suara sandaran (Local Web Speech API)
+        function sebutLangkahTempatan(teks) {
+            if (typeof window === 'undefined' || !window.speechSynthesis) return;
+
+            window.speechSynthesis.cancel();
+            const sebutan = new SpeechSynthesisUtterance(teks);
             
-            // Jika tiada ms-MY, gunakan suara Bahasa Indonesia (id-ID) sebagai sandaran
+            let suaraMelayu = senaraiSuaraSedia.find(suara => suara.lang.includes('ms-MY') || suara.lang === 'ms');
             if (!suaraMelayu) {
-                suaraMelayu = senaraiSuara.find(suara => suara.lang.includes('id-ID') || suara.lang === 'id');
+                suaraMelayu = senaraiSuaraSedia.find(suara => suara.lang.includes('id-ID') || suara.lang === 'id');
             }
             
             if (suaraMelayu) {
                 sebutan.voice = suaraMelayu;
             }
             
-            sebutan.rate = 0.85; // Ditala sedikit perlahan agar murid mudah faham
-            sebutan.pitch = 1.05; // Ditala sedikit tinggi supaya nada suara kedengaran mesra dan ceria
-            
+            sebutan.rate = 0.82; 
+            sebutan.pitch = 1.05; 
             window.speechSynthesis.speak(sebutan);
+        }
+
+        function hentikanAudio() {
+            if (audioSemasa) {
+                audioSemasa.pause();
+                audioSemasa = null;
+            }
+            if (typeof window !== 'undefined' && window.speechSynthesis) {
+                window.speechSynthesis.cancel();
+            }
+        }
+
+        function setButangSuaraLoading(isLoading) {
+            const btn = document.getElementById('btnDengar');
+            if (!btn) return;
+            if (isLoading) {
+                btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Menjana...`;
+                btn.disabled = true;
+            } else {
+                btn.innerHTML = `<i class="fa-solid fa-volume-high"></i> Dengar`;
+                btn.disabled = false;
+            }
         }
 
         function showError(msg) {
@@ -448,6 +621,7 @@
 
         function janaPenyelesaian() {
             hideError();
+            hentikanAudio();
             
             const n1 = parseInt(document.getElementById('num1').value) || 0;
             const n2 = parseInt(document.getElementById('num2').value) || 0;
@@ -750,7 +924,7 @@
             if (remS > 0) {
                 d_s += `<br><br><b>Nota Baki Akhir:</b> Jalan kerja selesai! Sesi pembahagian ini mempunyai baki akhir sebanyak <b>${remS}</b>.`;
             } else {
-                d_s += `<br><br><b>Sempurna!</b> Pembahagian selesai sepenuhnya tanpa sebarang baki (baki bernilai 0).`;
+                d_s += `<br><br><b>Sempurna!</b> Pembahagian selesai sepenuhnya tanpa sebarang baki (baki bernilai sifar).`;
             }
             steps.push({ t: "Bahagi Rumah Sa", d: d_s, icon: "fa-circle-3", highlight: "S" });
 
@@ -774,7 +948,7 @@
                 btnNext.innerHTML = 'Selesai 🎉';
                 btnNext.className = "px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-2 shadow-md";
             } else {
-                btnNext.innerHTML = 'Maju <i class="fa-solid fa-arrow-right"></i>';
+                btnNext.innerHTML = 'Seterusnya <i class="fa-solid fa-arrow-right"></i>';
                 btnNext.className = "px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-2 shadow-md";
             }
 
@@ -786,7 +960,7 @@
                     <div class="flex-grow">
                         <div class="flex justify-between items-center mb-2 gap-2">
                             <h4 class="font-black text-indigo-300 text-base">${s.t}</h4>
-                            <button onclick="sebutLangkah(senaraiLangkah[langkahSemasaIndex].d)" class="px-3 py-1 bg-indigo-950 hover:bg-indigo-900 text-indigo-400 text-xs rounded-full border border-indigo-800 flex items-center gap-1.5 active:scale-95 transition-all">
+                            <button id="btnDengar" onclick="sebutLangkah(senaraiLangkah[langkahSemasaIndex].d)" class="px-3 py-1 bg-indigo-950 hover:bg-indigo-900 text-indigo-400 text-xs rounded-full border border-indigo-800 flex items-center gap-1.5 active:scale-95 transition-all">
                                 <i class="fa-solid fa-volume-high"></i> Dengar
                             </button>
                         </div>
