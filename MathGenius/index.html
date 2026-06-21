@@ -78,7 +78,7 @@
                 </div>
                 <div>
                     <h1 class="text-3xl font-bold text-slate-100 title-font">MathGenius 2.0</h1>
-                    <p class="text-indigo-400 font-bold text-xs uppercase tracking-tighter">Edisi Kesihatan Mata & Suara Gemini AI (ms-MY)</p>
+                    <p class="text-indigo-400 font-bold text-xs uppercase tracking-tighter">Edisi Kesihatan Mata & Suara Pengajaran</p>
                 </div>
             </div>
             <div class="flex gap-4">
@@ -110,7 +110,7 @@
                 </h2>
 
                 <!-- Ralat Komponen Amaran (Mesra Murid) -->
-                <div id="errorAlert" class="hidden bg-rose-950/50 border-2 border-rose-200 text-rose-200 p-4 rounded-3xl mb-6 flex items-center gap-3 animate-pulse">
+                <div id="errorAlert" class="hidden bg-rose-950/50 border-2 border-rose-900 text-rose-200 p-4 rounded-3xl mb-6 flex items-center gap-3 animate-pulse">
                     <i class="fa-solid fa-circle-exclamation text-rose-400 text-2xl"></i>
                     <div>
                         <p class="font-extrabold text-sm">Alamak! Cuba semak semula nombor</p>
@@ -121,11 +121,11 @@
                 <div class="flex flex-col md:flex-row items-end gap-6 justify-center">
                     <div class="space-y-2 w-full md:w-auto">
                         <label class="text-xs font-bold text-slate-400 ml-2">Nombor Pertama (Maksimum 999)</label>
-                        <input type="number" id="num1" value="125" min="0" max="999" class="w-full md:w-44 text-3xl font-black text-center p-4 bg-slate-950 border-2 border-slate-800 rounded-3xl text-slate-100 focus:border-indigo-500 focus:bg-slate-900 outline-none transition-all">
+                        <input type="number" id="num1" value="125" min="0" max="999" class="w-full md:w-44 text-3xl font-black text-center p-4 bg-slate-950 border-2 border-slate-800 rounded-3xl text-slate-100 focus:border-indigo-500 focus:bg-white outline-none transition-all">
                     </div>
 
                     <div class="pb-2">
-                        <select id="operator" class="bg-indigo-950 border border-indigo-750 text-indigo-300 text-3xl font-black p-4 rounded-2xl cursor-pointer hover:bg-indigo-900 transition-all shadow-md">
+                        <select id="operator" class="bg-indigo-950 border border-indigo-750 text-indigo-300 text-3xl font-black p-4 rounded-2xl cursor-pointer hover:bg-indigo-700 transition-all shadow-md">
                             <option value="+">+</option>
                             <option value="-">-</option>
                             <option value="*">×</option>
@@ -245,12 +245,86 @@
         </div>
     </main>
 
+    <!-- MODAL PANDUAN PENGAKTIFAN SUARA MALAYSIA -->
+    <div id="modalSuara" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-lg rounded-3xl p-6 md:p-8 space-y-6 text-left shadow-2xl">
+            <div class="flex justify-between items-start border-b border-slate-800 pb-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-emerald-950 border border-emerald-800 rounded-xl flex items-center justify-center text-emerald-400">
+                        <i class="fa-solid fa-circle-question text-lg"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-white text-lg">Suara Berloghat Pelik / Indonesia?</h3>
+                        <p class="text-xs text-slate-400">Cara mengaktifkan sebutan Bahasa Melayu tulen</p>
+                    </div>
+                </div>
+                <button onclick="tutupModalSuara()" class="text-slate-500 hover:text-white p-1 rounded-lg transition-colors">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <div class="text-xs text-slate-300 space-y-4 leading-relaxed">
+                <p>
+                    Sesetengah peranti tidak mempunyai data suara <b>Bahasa Melayu (Malaysia)</b> yang sedia dipasang, menyebabkan pelayar web secara automatik beralih kepada loghat Bahasa Indonesia (menyebut "Nol", dsb.). 
+                </p>
+                <p class="font-semibold text-emerald-400">Sila ikut langkah mudah di bawah untuk memuat turun suara Melayu percuma pada peranti anda:</p>
+
+                <!-- Pilihan Platform -->
+                <div class="space-y-3">
+                    <!-- Windows -->
+                    <div class="p-3 bg-slate-950/60 rounded-xl border border-slate-800">
+                        <span class="font-bold text-slate-200 block mb-1"><i class="fa-brands fa-windows text-blue-400 mr-1.5"></i> Komputer / Laptop Windows</span>
+                        <ol class="list-decimal pl-4 space-y-1 text-slate-400">
+                            <li>Buka <b>Settings (Tetapan)</b> -> <b>Time & Language</b> -> <b>Speech</b>.</li>
+                            <li>Klik pada <b>Add voices</b>, taip dan pilih <b>"Malay (Malaysia)"</b>.</li>
+                            <li>Tekan <b>Add</b> dan tunggu muat turun selesai (lebih kurang 2 minit).</li>
+                            <li>Segarkan semula (Refresh) halaman web ini.</li>
+                        </ol>
+                    </div>
+
+                    <!-- Android -->
+                    <div class="p-3 bg-slate-950/60 rounded-xl border border-slate-800">
+                        <span class="font-bold text-slate-200 block mb-1"><i class="fa-brands fa-android text-emerald-400 mr-1.5"></i> Telefon / Tablet Android</span>
+                        <ol class="list-decimal pl-4 space-y-1 text-slate-400">
+                            <li>Buka <b>Settings</b> -> <b>Accessibility (Kebolehcapaian)</b> -> <b>Text-to-speech output</b>.</li>
+                            <li>Klik ikon gear di sebelah <b>Preferred engine (Google TTS)</b> -> <b>Install voice data</b>.</li>
+                            <li>Cari dan muat turun bahasa <b>Malay (Malaysia)</b>.</li>
+                        </ol>
+                    </div>
+
+                    <!-- iOS / Apple -->
+                    <div class="p-3 bg-slate-950/60 rounded-xl border border-slate-800">
+                        <span class="font-bold text-slate-200 block mb-1"><i class="fa-brands fa-apple text-slate-200 mr-1.5"></i> iPhone / iPad (iOS)</span>
+                        <ol class="list-decimal pl-4 space-y-1 text-slate-400">
+                            <li>Buka <b>Settings</b> -> <b>Accessibility</b> -> <b>Spoken Content</b> -> <b>Voices</b>.</li>
+                            <li>Cari dan pilih <b>Malay</b>, pilih nama suara (seperti <b>Amira</b>), klik muat turun.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-800 pt-4 flex justify-end">
+                <button onclick="tutupModalSuara()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition-all">
+                    Saya Faham, Terima Kasih!
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
         let history = [];
         let senaraiLangkah = [];
         let langkahSemasaIndex = 0;
         let senaraiSuaraSedia = [];
         let audioSemasa = null;
+
+        // Modal Helpers
+        function bukaModalSuara() {
+            document.getElementById('modalSuara').classList.remove('hidden');
+        }
+        function tutupModalSuara() {
+            document.getElementById('modalSuara').classList.add('hidden');
+        }
 
         // Inisialisasi awal senarai suara pelayar untuk sandaran (fallback)
         function muatSenaraiSuara() {
@@ -420,23 +494,34 @@
             }
         }
 
-        // Pembacaan suara sandaran (Local Web Speech API)
+        // Pembacaan suara sandaran (Local Web Speech API) dengan carian suara Melayu yang dioptimumkan
         function sebutLangkahTempatan(teks) {
             if (typeof window === 'undefined' || !window.speechSynthesis) return;
 
             window.speechSynthesis.cancel();
             const sebutan = new SpeechSynthesisUtterance(teks);
             
-            let suaraMelayu = senaraiSuaraSedia.find(suara => suara.lang.includes('ms-MY') || suara.lang === 'ms');
+            // Mengesan semua variasi nama atau tag suara Bahasa Melayu (Malaysia)
+            let suaraMelayu = senaraiSuaraSedia.find(suara => 
+                suara.lang.toLowerCase().replace('_', '-').includes('ms-my') || 
+                suara.lang.toLowerCase() === 'ms' ||
+                suara.name.toLowerCase().includes('malay') ||
+                suara.name.toLowerCase().includes('melayu')
+            );
+
+            // Sandaran ke Bahasa Indonesia jika langsung tidak ditemui dalam sistem operasi murid
             if (!suaraMelayu) {
-                suaraMelayu = senaraiSuaraSedia.find(suara => suara.lang.includes('id-ID') || suara.lang === 'id');
+                suaraMelayu = senaraiSuaraSedia.find(suara => 
+                    suara.lang.toLowerCase().startsWith('id') || 
+                    suara.name.toLowerCase().includes('indonesia')
+                );
             }
             
             if (suaraMelayu) {
                 sebutan.voice = suaraMelayu;
             }
             
-            sebutan.rate = 0.82; 
+            sebutan.rate = 0.82; // Tempo diperlahankan sedikit untuk kefahaman murid sekolah rendah
             sebutan.pitch = 1.05; 
             window.speechSynthesis.speak(sebutan);
         }
@@ -960,9 +1045,14 @@
                     <div class="flex-grow">
                         <div class="flex justify-between items-center mb-2 gap-2">
                             <h4 class="font-black text-indigo-300 text-base">${s.t}</h4>
-                            <button id="btnDengar" onclick="sebutLangkah(senaraiLangkah[langkahSemasaIndex].d)" class="px-3 py-1 bg-indigo-950 hover:bg-indigo-900 text-indigo-400 text-xs rounded-full border border-indigo-800 flex items-center gap-1.5 active:scale-95 transition-all">
-                                <i class="fa-solid fa-volume-high"></i> Dengar
-                            </button>
+                            <div class="flex items-center gap-2">
+                                <button id="btnDengar" onclick="sebutLangkah(senaraiLangkah[langkahSemasaIndex].d)" class="px-3 py-1 bg-indigo-950 hover:bg-indigo-900 text-indigo-400 text-xs rounded-full border border-indigo-800 flex items-center gap-1.5 active:scale-95 transition-all">
+                                    <i class="fa-solid fa-volume-high"></i> Dengar
+                                </button>
+                                <button onclick="bukaModalSuara()" class="w-7 h-7 bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white rounded-full flex items-center justify-center text-xs transition-all" title="Bantuan Sebutan Pelik">
+                                    <i class="fa-solid fa-circle-question"></i>
+                                </button>
+                            </div>
                         </div>
                         <p class="text-slate-300 text-sm leading-relaxed">${s.d}</p>
                     </div>
