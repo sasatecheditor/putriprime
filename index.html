@@ -19,12 +19,6 @@
         .hologram-glow {
             box-shadow: 0 0 30px rgba(6, 182, 212, 0.15), inset 0 0 15px rgba(6, 182, 212, 0.05);
         }
-        .hologram-glow-purple {
-            box-shadow: 0 0 30px rgba(217, 70, 239, 0.1), inset 0 0 15px rgba(217, 70, 239, 0.02);
-        }
-        .hologram-glow-emerald {
-            box-shadow: 0 0 30px rgba(16, 185, 129, 0.1), inset 0 0 15px rgba(16, 185, 129, 0.02);
-        }
     </style>
 </head>
 <body class="text-gray-300 min-h-screen flex flex-col justify-between">
@@ -36,13 +30,6 @@
                 <span class="heading-font font-bold tracking-widest text-white text-sm">SASATECH CORP</span>
             </div>
             <div class="flex items-center gap-4">
-                <!-- Pintasan Pintar MathGenius Baru -->
-                <a href="/MathGenius/index.html" onclick="playBeep(659.25, 0.15)" class="hidden sm:block text-[10px] font-mono text-emerald-400 bg-emerald-950/30 px-2 py-1 rounded border border-emerald-900/50 hover:bg-emerald-500 hover:text-black transition-all">
-                    🧮 ACCESS: MATHGENIUS_SYS
-                </a>
-                <a href="/rekoder/index.html" onclick="playBeep(880, 0.15)" class="hidden sm:block text-[10px] font-mono text-fuchsia-400 bg-fuchsia-950/30 px-2 py-1 rounded border border-fuchsia-900/50 hover:bg-fuchsia-500 hover:text-black transition-all">
-                    🎵 ACCESS: REKODER_DATA
-                </a>
                 <div class="text-[11px] font-mono text-cyan-500 bg-cyan-950/30 px-3 py-1 rounded border border-cyan-900/50">
                     SECURE_SERVER // PORTAL_ACTIVE
                 </div>
@@ -77,23 +64,17 @@
         </h1>
 
         <p class="text-base md:text-lg text-gray-400 max-w-xl font-light mb-10 leading-relaxed">
-            Sistem pemantauan anomali dimensi, pengurusan wira elemental Lembah Klang, dan modul latihan frekuensi bunyi tinggi. Log masuk untuk mengakses sistem.
+            Sistem pemantauan anomali dimensi dan pengurusan wira elemental Lembah Klang. Log masuk untuk mengakses sistem.
         </p>
 
-        <!-- Bahagian Navigasi Utama (Diubahsuai kepada 3 Kolom untuk MathGenius) -->
-        <div class="w-full grid grid-cols-1 sm:grid-cols-3 gap-4 mb-16 max-w-4xl">
-            <a href="/bab1/page1.html" onclick="playBeep(523.25, 0.15)" class="bg-gradient-to-r from-cyan-600 to-cyan-500 hover:from-cyan-500 hover:to-cyan-400 text-white font-semibold px-4 py-4 rounded-xl transition-all shadow-lg shadow-cyan-500/10 text-center tracking-wide heading-font transform hover:-translate-y-0.5 text-sm flex items-center justify-center">
+        <!-- Bahagian Navigasi Utama (Diselaraskan untuk E-Book sahaja) -->
+        <div class="w-full max-w-md mb-16">
+            <a href="/bab1/page1.html" onclick="playBeep(523.25, 0.15)" class="bg-gradient-to-r from-cyan-600 to-cyan-500 hover:from-cyan-500 hover:to-cyan-400 text-white font-semibold px-6 py-4 rounded-xl transition-all shadow-lg shadow-cyan-500/10 text-center tracking-wide heading-font transform hover:-translate-y-0.5 text-sm flex items-center justify-center block w-full">
                 MULA MEMBACA (BAB 1)
-            </a>
-            <a href="/MathGenius/index.html" onclick="playBeep(587.33, 0.15)" class="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-semibold px-4 py-4 rounded-xl transition-all shadow-lg shadow-emerald-500/20 text-center tracking-wide heading-font transform hover:-translate-y-0.5 border border-emerald-400/30 text-sm flex items-center justify-center gap-2">
-                🧮 MODUL MATHGENIUS 2.0
-            </a>
-            <a href="/rekoder/index.html" onclick="playBeep(659.25, 0.2)" class="bg-gradient-to-r from-fuchsia-600 to-purple-600 hover:from-fuchsia-500 hover:to-purple-500 text-white font-semibold px-4 py-4 rounded-xl transition-all shadow-lg shadow-fuchsia-500/20 text-center tracking-wide heading-font transform hover:-translate-y-0.5 border border-fuchsia-400/30 text-sm flex items-center justify-center">
-                🎵 MODUL REKODER INTERAKTIF
             </a>
         </div>
 
-        <section id="status" class="w-full border border-gray-900 bg-black/20 rounded-2xl p-6 md:p-8 text-left hologram-glow space-y-6">
+        <section id="status" class="w-full border border-gray-900 bg-black/20 rounded-2xl p-6 md:p-8 text-left hologram-glow space-y-6 max-w-4xl">
             
             <div class="flex items-center justify-between border-b border-gray-900 pb-4">
                 <div>
@@ -128,49 +109,11 @@
                         </div>
                         <div>
                             <h3 class="text-sm font-semibold text-white">Bab 2: Tugasan Harian Mandatori</h3>
-                            <p class="text-xs text-gray-500 mt-1">Mengandungi Halaman 1 sehingga Halaman 3 (Status: Kemas kini mingguan aktif).</p>
+                            <p class="text-xs text-gray-500 mt-1">Mengandungi Halaman 1 sehingga Halaman 6 (Status: Kemas kini mingguan aktif).</p>
                         </div>
                     </div>
                     <a href="/bab2/page1.html" onclick="playBeep(587.33, 0.1)" class="text-xs text-red-400 font-mono hover:underline sm:text-right shrink-0 font-bold animate-pulse">
                         Buka Fail Data &rarr;
-                    </a>
-                </div>
-
-                <!-- Item 03: MathGenius 2.0 (Baru Ditambah) -->
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl bg-emerald-950/10 border border-emerald-900/30 gap-4 hover:border-emerald-800/60 hologram-glow-emerald transition-all group">
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 rounded-lg bg-emerald-950/60 border border-emerald-800/40 flex items-center justify-center font-mono text-emerald-400 font-bold shrink-0 group-hover:bg-emerald-500 group-hover:text-black transition-all">
-                            🧮
-                        </div>
-                        <div>
-                            <div class="flex items-center gap-2">
-                                <h3 class="text-sm font-semibold text-white">MathGenius 2.0: Edisi Visual Rumah Nombor</h3>
-                                <span class="bg-emerald-950 text-emerald-400 border border-emerald-900 text-[9px] font-mono px-1.5 py-0.2 rounded font-bold tracking-wider">NEW_MODULE</span>
-                            </div>
-                            <p class="text-xs text-gray-500 mt-1">Pembelajaran matematik bentuk lazim sekolah rendah (R, P, S) dengan sistem baki simpan/pinjam visual dan interaksi suara Bahasa Melayu.</p>
-                        </div>
-                    </div>
-                    <a href="/MathGenius/index.html" onclick="playBeep(659.25, 0.12)" class="text-xs text-emerald-400 font-mono hover:underline sm:text-right shrink-0 font-bold">
-                        Decrypt Calculation Engine &rarr;
-                    </a>
-                </div>
-
-                <!-- Item 04 -->
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl bg-purple-950/10 border border-purple-900/30 gap-4 hover:border-fuchsia-800/60 hologram-glow-purple transition-all group">
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 rounded-lg bg-fuchsia-950/60 border border-fuchsia-800/40 flex items-center justify-center font-mono text-fuchsia-400 font-bold shrink-0 group-hover:bg-fuchsia-500 group-hover:text-black transition-all">
-                            🎵
-                        </div>
-                        <div>
-                            <div class="flex items-center gap-2">
-                                <h3 class="text-sm font-semibold text-white">E-Book: Belajar Rekoder Interaktif</h3>
-                                <span class="bg-fuchsia-950 text-fuchsia-400 border border-fuchsia-900 text-[9px] font-mono px-1.5 py-0.2 rounded font-bold tracking-wider">NEW_MODULE</span>
-                            </div>
-                            <p class="text-xs text-gray-500 mt-1">Panduan praktikal asas tiupan, penjarian nota muzik, dan modul praktis resonansi audio digital SasaTech.</p>
-                        </div>
-                    </div>
-                    <a href="/rekoder/index.html" onclick="playBeep(783.99, 0.12)" class="text-xs text-fuchsia-400 font-mono hover:underline sm:text-right shrink-0 font-bold">
-                        Decrypt Audio File &rarr;
                     </a>
                 </div>
             </div>
@@ -185,17 +128,16 @@
     </footer>
 
     <script>
-        // Fungsi Penjana Audio Bip Digital (Interaktiviti Tambahan)
         function playBeep(frequency, duration) {
             try {
                 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 const oscillator = audioCtx.createOscillator();
                 const gainNode = audioCtx.createGain();
                 
-                oscillator.type = 'sine'; // Jenis gelombang bunyi futuristik yang bersih
-                oscillator.frequency.value = frequency; // Frekuensi hertz
+                oscillator.type = 'sine';
+                oscillator.frequency.value = frequency;
                 
-                gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime); // Volume perlahan supaya tidak mengejutkan user
+                gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
                 gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + duration);
                 
                 oscillator.connect(gainNode);
@@ -212,14 +154,12 @@
             try {
                 const now = new Date();
                 
-                // Kemas kini Jam
                 const hours = String(now.getHours()).padStart(2, '0');
                 const minutes = String(now.getMinutes()).padStart(2, '0');
                 const seconds = String(now.getSeconds()).padStart(2, '0');
                 const timeElem = document.getElementById('live-time');
                 if(timeElem) timeElem.textContent = hours + ":" + minutes + ":" + seconds;
                 
-                // Kemas kini Tarikh
                 const dateElem = document.getElementById('live-date');
                 if(dateElem) {
                     const options = { day: 'numeric', month: 'short', year: 'numeric' };
@@ -230,11 +170,9 @@
             }
         }
 
-        // Jalankan fungsi
         setInterval(updateSystemMetrics, 1000);
         updateSystemMetrics();
 
-        // Sistem Kaunter Simpanan Selamat
         try {
             let count = localStorage.getItem('sasatech_visitors');
             if (!count) {
@@ -245,9 +183,7 @@
             localStorage.setItem('sasatech_visitors', count);
             const countElem = document.getElementById('visitor-count');
             if(countElem) countElem.textContent = count.toLocaleString('en-US');
-        } catch(e) {
-            // Kekalkan paparan asal jika peranti menyekat storage
-        }
+        } catch(e) {}
     </script>
 
 </body>
